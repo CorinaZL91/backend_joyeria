@@ -1,0 +1,73 @@
+import "dotenv/config";
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import morgan from "morgan";
+/* Routes Import */
+import authRoutes from "./routes/auth.routes.js";
+import categoryRoutes from "./routes/category.routes.js";
+import productRoutes from "./routes/product.routes.js";
+import cartRoutes from "./routes/cart.routes.js";
+import orderRoutes from "./routes/order.routes.js";
+import alertRoutes from "./routes/alert.routes.js";
+import { errorMiddleware } from "./middlewares/error.middleware.js";
+/* Configurations */
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(morgan("common"));
+app.use(cors());
+/* Routes */
+app.get("/", (_req, res) => {
+    res.json({
+        message: "Bienvenido a API Maison C&O Élégance",
+        version: "1.0.0",
+        routes: [
+            {
+                endpoint: "/auth",
+                method: "POST/GET",
+                description: "Autenticación de usuarios (registro, login y perfil)",
+            },
+            {
+                endpoint: "/categories",
+                method: "GET/POST/PUT/DELETE",
+                description: "Gestión de categorías",
+            },
+            {
+                endpoint: "/products",
+                method: "GET/POST/PUT/DELETE",
+                description: "Gestión de productos",
+            },
+            {
+                endpoint: "/cart",
+                method: "GET/POST/PUT/DELETE",
+                description: "Gestión del carrito de compras",
+            },
+            {
+                endpoint: "/orders",
+                method: "GET/POST/PUT",
+                description: "Gestión de pedidos",
+            },
+            {
+                endpoint: "/alerts",
+                method: "GET",
+                description: "Consulta de alertas de stock",
+            },
+        ],
+    });
+});
+app.use("/auth", authRoutes);
+app.use("/categories", categoryRoutes);
+app.use("/products", productRoutes);
+app.use("/cart", cartRoutes);
+app.use("/orders", orderRoutes);
+app.use("/alerts", alertRoutes);
+app.use(errorMiddleware);
+/* Server */
+const port = process.env.PORT || 3000;
+console.log("Iniciando servidor...");
+app.listen(port, () => {
+    console.log(`Server corriendo en http://localhost:${port}`);
+});
+//# sourceMappingURL=index.js.map

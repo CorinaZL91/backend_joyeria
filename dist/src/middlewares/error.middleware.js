@@ -1,4 +1,4 @@
-import { Prisma } from "../../generated/prisma/client";
+import { Prisma } from "../../generated/prisma/client.js";
 import { ZodError } from "zod";
 import { AppError } from "../utils/appError.js";
 export const errorMiddleware = (error, _req, res, _next) => {

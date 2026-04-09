@@ -7,7 +7,7 @@ import {
   EstadoPedido,
   MetodoPago,
   RolUsuario,
-} from "../../generated/prisma/client";
+} from "../../generated/prisma/client.js";
 
 const userSelect = {
   id: true,

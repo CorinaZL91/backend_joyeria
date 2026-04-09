@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { Prisma, RolUsuario } from "../../generated/prisma/client";
+import { Prisma, RolUsuario } from "../../generated/prisma/client.js";
 import { prisma } from "../config/prisma.js";
 import { comparePassword, hashPassword } from "../utils/hash.js";
 import { generateToken } from "../utils/jwt.js";

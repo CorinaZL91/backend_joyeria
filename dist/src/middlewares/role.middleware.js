@@ -1,4 +1,4 @@
-import { RolUsuario } from "../../generated/prisma/client";
+import { RolUsuario } from "../../generated/prisma/client.js";
 export const authorizeRole = (...roles) => {
     return (req, res, next) => {
         if (!req.user) {

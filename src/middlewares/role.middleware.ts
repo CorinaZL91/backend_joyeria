@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
-import { RolUsuario } from "../../generated/prisma/client";
+import { RolUsuario } from "../../generated/prisma/client.js";
 
 export const authorizeRole = (...roles: RolUsuario[]) => {
   return (req: Request, res: Response, next: NextFunction): void => {

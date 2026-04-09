@@ -2,7 +2,7 @@ import { prisma } from "../config/prisma.js";
 import { syncStockAlert } from "../utils/stockAlert.util.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { AppError } from "../utils/appError.js";
-import { EstadoPedido, MetodoPago, RolUsuario, } from "../../generated/prisma/client";
+import { EstadoPedido, MetodoPago, RolUsuario, } from "../../generated/prisma/client.js";
 const userSelect = {
     id: true,
     nombre: true,

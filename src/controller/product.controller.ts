@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { Prisma } from "../../generated/prisma/client";
+import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/prisma.js";
 import { deleteFromCloudinary } from "../utils/cloudinaryDestroy.js";
 import { uploadBufferToCloudinary } from "../utils/cloudinaryUpload.js";

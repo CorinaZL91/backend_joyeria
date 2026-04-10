@@ -209,6 +209,7 @@ export const createProduct = asyncHandler(
     const existingProduct = await prisma.producto.findFirst({
       where: {
         nombre: trimmedNombre,
+        activo: true,
       },
     });
 

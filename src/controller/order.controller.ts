@@ -17,6 +17,10 @@ const userSelect = {
   direccion: true,
 };
 
+const roundToTwo = (value: number): number => {
+  return Number(value.toFixed(2));
+};
+
 export const createOrder = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
@@ -68,15 +72,24 @@ export const createOrder = asyncHandler(
       }
     }
 
-    const total = cartItems.reduce((acc, item) => {
-      return acc + Number(item.producto.precio) * item.cantidad;
-    }, 0);
+    // Subtotal sin IVA
+    const subtotal = roundToTwo(
+      cartItems.reduce((acc, item) => {
+        return acc + Number(item.producto.precio) * item.cantidad;
+      }, 0)
+    );
+
+    // IVA del 16%
+    const iva = roundToTwo(subtotal * 0.16);
+
+    // Total final con IVA
+    const total = roundToTwo(subtotal + iva);
 
     const newOrder = await prisma.$transaction(async (tx) => {
       const createdOrder = await tx.pedido.create({
         data: {
           usuario_id: req.user!.userId,
-          total,
+          total, // <- aquí ya se guarda con IVA incluido
           metodo_pago,
           estado: EstadoPedido.pendiente,
         },
@@ -110,8 +123,8 @@ export const createOrder = asyncHandler(
           );
         }
 
-        const precioUnitario = Number(productoActual.precio);
-        const subtotal = precioUnitario * item.cantidad;
+        const precioUnitario = roundToTwo(Number(productoActual.precio));
+        const subtotalDetalle = roundToTwo(precioUnitario * item.cantidad);
 
         await tx.detallePedido.create({
           data: {
@@ -119,7 +132,7 @@ export const createOrder = asyncHandler(
             producto_id: item.producto_id,
             cantidad: item.cantidad,
             precio_unitario: precioUnitario,
-            subtotal,
+            subtotal: subtotalDetalle, // subtotal por producto, sin IVA
           },
         });
 

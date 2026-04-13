@@ -59,7 +59,8 @@ model Producto {
   descripcion      String
   precio           Decimal  @db.Decimal(10, 2)
   material         String   @default("No especificado")
-  stock            Int
+  usar_tallas      Boolean  @default(false)
+  stock            Int?
   stock_minimo     Int      @default(5)
   imagen_url       String?
   imagen_public_id String?
@@ -69,9 +70,23 @@ model Producto {
   categoria_id Int
   categoria    Categoria @relation(fields: [categoria_id], references: [id])
 
+  tallas ProductoTalla[]
+
   detallesPedido DetallePedido[]
   carrito        Carrito[]
   alertasStock   AlertaStock[]
+}
+
+model ProductoTalla {
+  id    Int    @id @default(autoincrement())
+  talla String
+  stock Int
+
+  producto_id Int
+  producto    Producto @relation(fields: [producto_id], references: [id])
+
+  @@unique([producto_id, talla])
+  @@index([producto_id])
 }
 
 model Pedido {
@@ -90,6 +105,7 @@ model DetallePedido {
   id              Int     @id @default(autoincrement())
   pedido_id       Int
   producto_id     Int
+  talla           String?
   cantidad        Int
   precio_unitario Decimal @db.Decimal(10, 2)
   subtotal        Decimal @db.Decimal(10, 2)
@@ -102,18 +118,21 @@ model Carrito {
   id             Int      @id @default(autoincrement())
   usuario_id     Int
   producto_id    Int
+  talla          String?
   cantidad       Int      @default(1)
   fecha_agregado DateTime @default(now())
 
   usuario  Usuario  @relation(fields: [usuario_id], references: [id])
   producto Producto @relation(fields: [producto_id], references: [id])
 
-  @@unique([usuario_id, producto_id])
+  @@unique([usuario_id, producto_id, talla])
+  @@index([producto_id, talla])
 }
 
 model AlertaStock {
   id           Int      @id @default(autoincrement())
   producto_id  Int
+  talla        String?
   stock_minimo Int
   mensaje      String?
   activa       Boolean  @default(true)

@@ -15,6 +15,16 @@ const parseOptionalTallaId = (value: unknown): number | null => {
   return parsed;
 };
 
+const formatCartItem = (item: any) => {
+  const subtotal = Number(item.producto.precio) * item.cantidad;
+
+  return {
+    ...item,
+    producto_talla: item.productoTalla ?? null,
+    subtotal,
+  };
+};
+
 export const getCart = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
@@ -38,14 +48,7 @@ export const getCart = asyncHandler(
       },
     });
 
-    const formattedItems = cartItems.map((item) => {
-      const subtotal = Number(item.producto.precio) * item.cantidad;
-
-      return {
-        ...item,
-        subtotal,
-      };
-    });
+    const formattedItems = cartItems.map(formatCartItem);
 
     const total = formattedItems.reduce((acc, item) => acc + item.subtotal, 0);
 
@@ -197,7 +200,7 @@ export const addToCart = asyncHandler(
       message: existingCartItem
         ? "Cantidad actualizada en el carrito"
         : "Producto agregado al carrito correctamente",
-      data: cartItem,
+      data: formatCartItem(cartItem),
     });
   }
 );
@@ -307,7 +310,7 @@ export const updateCartItemQuantity = asyncHandler(
     res.status(200).json({
       success: true,
       message: "Cantidad actualizada correctamente",
-      data: updatedCartItem,
+      data: formatCartItem(updatedCartItem),
     });
   }
 );

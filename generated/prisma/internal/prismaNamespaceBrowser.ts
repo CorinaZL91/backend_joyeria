@@ -54,6 +54,7 @@ export const ModelName = {
   Usuario: 'Usuario',
   Categoria: 'Categoria',
   Producto: 'Producto',
+  ProductoTalla: 'ProductoTalla',
   Pedido: 'Pedido',
   DetallePedido: 'DetallePedido',
   Carrito: 'Carrito',
@@ -105,6 +106,7 @@ export const ProductoScalarFieldEnum = {
   descripcion: 'descripcion',
   precio: 'precio',
   material: 'material',
+  usar_tallas: 'usar_tallas',
   stock: 'stock',
   stock_minimo: 'stock_minimo',
   imagen_url: 'imagen_url',
@@ -115,6 +117,18 @@ export const ProductoScalarFieldEnum = {
 } as const
 
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
+
+
+export const ProductoTallaScalarFieldEnum = {
+  id: 'id',
+  talla: 'talla',
+  stock: 'stock',
+  activo: 'activo',
+  fecha_creada: 'fecha_creada',
+  producto_id: 'producto_id'
+} as const
+
+export type ProductoTallaScalarFieldEnum = (typeof ProductoTallaScalarFieldEnum)[keyof typeof ProductoTallaScalarFieldEnum]
 
 
 export const PedidoScalarFieldEnum = {
@@ -133,6 +147,8 @@ export const DetallePedidoScalarFieldEnum = {
   id: 'id',
   pedido_id: 'pedido_id',
   producto_id: 'producto_id',
+  producto_talla_id: 'producto_talla_id',
+  talla: 'talla',
   cantidad: 'cantidad',
   precio_unitario: 'precio_unitario',
   subtotal: 'subtotal'
@@ -145,6 +161,7 @@ export const CarritoScalarFieldEnum = {
   id: 'id',
   usuario_id: 'usuario_id',
   producto_id: 'producto_id',
+  producto_talla_id: 'producto_talla_id',
   cantidad: 'cantidad',
   fecha_agregado: 'fecha_agregado'
 } as const
@@ -155,6 +172,8 @@ export type CarritoScalarFieldEnum = (typeof CarritoScalarFieldEnum)[keyof typeo
 export const AlertaStockScalarFieldEnum = {
   id: 'id',
   producto_id: 'producto_id',
+  producto_talla_id: 'producto_talla_id',
+  talla: 'talla',
   stock_minimo: 'stock_minimo',
   mensaje: 'mensaje',
   activa: 'activa',

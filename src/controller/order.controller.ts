@@ -34,7 +34,12 @@ export const createOrder = asyncHandler(
         usuario_id: req.user.userId,
       },
       include: {
-        producto: true,
+        producto: {
+          include: {
+            tallas: true,
+          },
+        },
+        productoTalla: true,
       },
     });
 
@@ -43,53 +48,85 @@ export const createOrder = asyncHandler(
     }
 
     for (const item of cartItems) {
-      if (!item.producto) {
+      const producto = item.producto;
+
+      if (!producto) {
         throw new AppError(
           "Uno de los productos del carrito ya no existe",
           400
         );
       }
 
-      if (!item.producto.activo) {
+      if (!producto.activo) {
         throw new AppError(
-          `El producto "${item.producto.nombre}" no está disponible`,
+          `El producto "${producto.nombre}" no está disponible`,
           400
         );
       }
 
       if (item.cantidad <= 0) {
-        throw new AppError(
-          `Cantidad inválida para "${item.producto.nombre}"`,
-          400
-        );
+        throw new AppError(`Cantidad inválida para "${producto.nombre}"`, 400);
       }
 
-      if (item.cantidad > item.producto.stock) {
-        throw new AppError(
-          `Stock insuficiente para "${item.producto.nombre}"`,
-          400
-        );
+      if (producto.usar_tallas) {
+        if (!item.producto_talla_id || !item.productoTalla) {
+          throw new AppError(
+            `Debes seleccionar una talla válida para "${producto.nombre}"`,
+            400
+          );
+        }
+
+        if (!item.productoTalla.activo) {
+          throw new AppError(
+            `La talla "${item.productoTalla.talla}" de "${producto.nombre}" ya no está disponible`,
+            400
+          );
+        }
+
+        if (item.productoTalla.producto_id !== producto.id) {
+          throw new AppError(
+            `La talla seleccionada no pertenece al producto "${producto.nombre}"`,
+            400
+          );
+        }
+
+        if (item.cantidad > item.productoTalla.stock) {
+          throw new AppError(
+            `Stock insuficiente para "${producto.nombre}" en talla "${item.productoTalla.talla}"`,
+            400
+          );
+        }
+      } else {
+        if (item.producto_talla_id !== null) {
+          throw new AppError(
+            `El producto "${producto.nombre}" no debería tener talla asociada en el carrito`,
+            400
+          );
+        }
+
+        if (producto.stock === null || item.cantidad > producto.stock) {
+          throw new AppError(
+            `Stock insuficiente para "${producto.nombre}"`,
+            400
+          );
+        }
       }
     }
 
-    // Subtotal sin IVA
     const subtotal = roundToTwo(
       cartItems.reduce((acc, item) => {
         return acc + Number(item.producto.precio) * item.cantidad;
       }, 0)
     );
 
-    // IVA del 16%
     const iva = roundToTwo(subtotal * 0.16);
-
-    // Total final con IVA
     const total = roundToTwo(subtotal + iva);
 
     const newOrder = await prisma.$transaction(async (tx) => {
       const createdOrder = await tx.pedido.create({
         data: {
           usuario_id: req.user!.userId,
-          total, // <- aquí ya se guarda con IVA incluido
+          total,
           metodo_pago,
           estado: EstadoPedido.pendiente,
         },
@@ -116,11 +153,58 @@ export const createOrder = asyncHandler(
           );
         }
 
-        if (productoActual.stock < item.cantidad) {
-          throw new AppError(
-            `Stock insuficiente para "${productoActual.nombre}" durante el procesamiento del pedido`,
-            400
-          );
+        let tallaActual = null as null | {
+          id: number;
+          talla: string;
+          stock: number;
+          activo: boolean;
+          producto_id: number;
+        };
+
+        if (productoActual.usar_tallas) {
+          if (!item.producto_talla_id) {
+            throw new AppError(
+              `Debes seleccionar una talla válida para "${productoActual.nombre}"`,
+              400
+            );
+          }
+
+          tallaActual = await tx.productoTalla.findUnique({
+            where: {
+              id: item.producto_talla_id,
+            },
+          });
+
+          if (!tallaActual || !tallaActual.activo) {
+            throw new AppError(
+              `La talla seleccionada para "${productoActual.nombre}" ya no está disponible`,
+              400
+            );
+          }
+
+          if (tallaActual.producto_id !== productoActual.id) {
+            throw new AppError(
+              `La talla seleccionada no pertenece al producto "${productoActual.nombre}"`,
+              400
+            );
+          }
+
+          if (tallaActual.stock < item.cantidad) {
+            throw new AppError(
+              `Stock insuficiente para "${productoActual.nombre}" en talla "${tallaActual.talla}" durante el procesamiento del pedido`,
+              400
+            );
+          }
+        } else {
+          if (
+            productoActual.stock === null ||
+            productoActual.stock < item.cantidad
+          ) {
+            throw new AppError(
+              `Stock insuficiente para "${productoActual.nombre}" durante el procesamiento del pedido`,
+              400
+            );
+          }
         }
 
         const precioUnitario = roundToTwo(Number(productoActual.precio));
@@ -130,22 +214,41 @@ export const createOrder = asyncHandler(
           data: {
             pedido_id: createdOrder.id,
             producto_id: item.producto_id,
+            ...(item.producto_talla_id !== null
+              ? { producto_talla_id: item.producto_talla_id }
+              : {}),
+            talla: productoActual.usar_tallas
+              ? tallaActual?.talla ?? null
+              : null,
             cantidad: item.cantidad,
             precio_unitario: precioUnitario,
-            subtotal: subtotalDetalle, // subtotal por producto, sin IVA
+            subtotal: subtotalDetalle,
           },
         });
 
-        await tx.producto.update({
-          where: {
-            id: item.producto_id,
-          },
-          data: {
-            stock: {
-              decrement: item.cantidad,
+        if (productoActual.usar_tallas) {
+          await tx.productoTalla.update({
+            where: {
+              id: item.producto_talla_id!,
             },
-          },
-        });
+            data: {
+              stock: {
+                decrement: item.cantidad,
+              },
+            },
+          });
+        } else {
+          await tx.producto.update({
+            where: {
+              id: item.producto_id,
+            },
+            data: {
+              stock: {
+                decrement: item.cantidad,
+              },
+            },
+          });
+        }
       }
 
       await tx.carrito.deleteMany({
@@ -170,6 +273,7 @@ export const createOrder = asyncHandler(
         detalles: {
           include: {
             producto: true,
+            productoTalla: true,
           },
         },
       },
@@ -200,6 +304,7 @@ export const getMyOrders = asyncHandler(
         detalles: {
           include: {
             producto: true,
+            productoTalla: true,
           },
         },
       },
@@ -225,6 +330,7 @@ export const getAllOrders = asyncHandler(
         detalles: {
           include: {
             producto: true,
+            productoTalla: true,
           },
         },
       },
@@ -265,6 +371,7 @@ export const getOrderById = asyncHandler(
                 categoria: true,
               },
             },
+            productoTalla: true,
           },
         },
       },
@@ -331,16 +438,29 @@ export const cancelOrder = asyncHandler(
       });
 
       for (const detalle of order.detalles) {
-        await tx.producto.update({
-          where: {
-            id: detalle.producto_id,
-          },
-          data: {
-            stock: {
-              increment: detalle.cantidad,
+        if (detalle.producto_talla_id !== null) {
+          await tx.productoTalla.update({
+            where: {
+              id: detalle.producto_talla_id,
             },
-          },
-        });
+            data: {
+              stock: {
+                increment: detalle.cantidad,
+              },
+            },
+          });
+        } else {
+          await tx.producto.update({
+            where: {
+              id: detalle.producto_id,
+            },
+            data: {
+              stock: {
+                increment: detalle.cantidad,
+              },
+            },
+          });
+        }
       }
     });
 
@@ -406,16 +526,29 @@ export const updateOrderStatus = asyncHandler(
 
       if (estado === EstadoPedido.cancelado) {
         for (const detalle of order.detalles) {
-          await tx.producto.update({
-            where: {
-              id: detalle.producto_id,
-            },
-            data: {
-              stock: {
-                increment: detalle.cantidad,
+          if (detalle.producto_talla_id !== null) {
+            await tx.productoTalla.update({
+              where: {
+                id: detalle.producto_talla_id,
               },
-            },
-          });
+              data: {
+                stock: {
+                  increment: detalle.cantidad,
+                },
+              },
+            });
+          } else {
+            await tx.producto.update({
+              where: {
+                id: detalle.producto_id,
+              },
+              data: {
+                stock: {
+                  increment: detalle.cantidad,
+                },
+              },
+            });
+          }
         }
       }
     });
@@ -435,6 +568,7 @@ export const updateOrderStatus = asyncHandler(
         detalles: {
           include: {
             producto: true,
+            productoTalla: true,
           },
         },
       },

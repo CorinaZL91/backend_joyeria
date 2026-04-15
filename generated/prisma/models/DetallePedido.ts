@@ -30,6 +30,7 @@ export type DetallePedidoAvgAggregateOutputType = {
   id: number | null
   pedido_id: number | null
   producto_id: number | null
+  producto_talla_id: number | null
   cantidad: number | null
   precio_unitario: runtime.Decimal | null
   subtotal: runtime.Decimal | null
@@ -39,6 +40,7 @@ export type DetallePedidoSumAggregateOutputType = {
   id: number | null
   pedido_id: number | null
   producto_id: number | null
+  producto_talla_id: number | null
   cantidad: number | null
   precio_unitario: runtime.Decimal | null
   subtotal: runtime.Decimal | null
@@ -48,6 +50,8 @@ export type DetallePedidoMinAggregateOutputType = {
   id: number | null
   pedido_id: number | null
   producto_id: number | null
+  producto_talla_id: number | null
+  talla: string | null
   cantidad: number | null
   precio_unitario: runtime.Decimal | null
   subtotal: runtime.Decimal | null
@@ -57,6 +61,8 @@ export type DetallePedidoMaxAggregateOutputType = {
   id: number | null
   pedido_id: number | null
   producto_id: number | null
+  producto_talla_id: number | null
+  talla: string | null
   cantidad: number | null
   precio_unitario: runtime.Decimal | null
   subtotal: runtime.Decimal | null
@@ -66,6 +72,8 @@ export type DetallePedidoCountAggregateOutputType = {
   id: number
   pedido_id: number
   producto_id: number
+  producto_talla_id: number
+  talla: number
   cantidad: number
   precio_unitario: number
   subtotal: number
@@ -77,6 +85,7 @@ export type DetallePedidoAvgAggregateInputType = {
   id?: true
   pedido_id?: true
   producto_id?: true
+  producto_talla_id?: true
   cantidad?: true
   precio_unitario?: true
   subtotal?: true
@@ -86,6 +95,7 @@ export type DetallePedidoSumAggregateInputType = {
   id?: true
   pedido_id?: true
   producto_id?: true
+  producto_talla_id?: true
   cantidad?: true
   precio_unitario?: true
   subtotal?: true
@@ -95,6 +105,8 @@ export type DetallePedidoMinAggregateInputType = {
   id?: true
   pedido_id?: true
   producto_id?: true
+  producto_talla_id?: true
+  talla?: true
   cantidad?: true
   precio_unitario?: true
   subtotal?: true
@@ -104,6 +116,8 @@ export type DetallePedidoMaxAggregateInputType = {
   id?: true
   pedido_id?: true
   producto_id?: true
+  producto_talla_id?: true
+  talla?: true
   cantidad?: true
   precio_unitario?: true
   subtotal?: true
@@ -113,6 +127,8 @@ export type DetallePedidoCountAggregateInputType = {
   id?: true
   pedido_id?: true
   producto_id?: true
+  producto_talla_id?: true
+  talla?: true
   cantidad?: true
   precio_unitario?: true
   subtotal?: true
@@ -209,6 +225,8 @@ export type DetallePedidoGroupByOutputType = {
   id: number
   pedido_id: number
   producto_id: number
+  producto_talla_id: number | null
+  talla: string | null
   cantidad: number
   precio_unitario: runtime.Decimal
   subtotal: runtime.Decimal
@@ -241,22 +259,28 @@ export type DetallePedidoWhereInput = {
   id?: Prisma.IntFilter<"DetallePedido"> | number
   pedido_id?: Prisma.IntFilter<"DetallePedido"> | number
   producto_id?: Prisma.IntFilter<"DetallePedido"> | number
+  producto_talla_id?: Prisma.IntNullableFilter<"DetallePedido"> | number | null
+  talla?: Prisma.StringNullableFilter<"DetallePedido"> | string | null
   cantidad?: Prisma.IntFilter<"DetallePedido"> | number
   precio_unitario?: Prisma.DecimalFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   pedido?: Prisma.XOR<Prisma.PedidoScalarRelationFilter, Prisma.PedidoWhereInput>
   producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>
+  productoTalla?: Prisma.XOR<Prisma.ProductoTallaNullableScalarRelationFilter, Prisma.ProductoTallaWhereInput> | null
 }
 
 export type DetallePedidoOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  talla?: Prisma.SortOrderInput | Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
   pedido?: Prisma.PedidoOrderByWithRelationInput
   producto?: Prisma.ProductoOrderByWithRelationInput
+  productoTalla?: Prisma.ProductoTallaOrderByWithRelationInput
 }
 
 export type DetallePedidoWhereUniqueInput = Prisma.AtLeast<{
@@ -266,17 +290,22 @@ export type DetallePedidoWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.DetallePedidoWhereInput | Prisma.DetallePedidoWhereInput[]
   pedido_id?: Prisma.IntFilter<"DetallePedido"> | number
   producto_id?: Prisma.IntFilter<"DetallePedido"> | number
+  producto_talla_id?: Prisma.IntNullableFilter<"DetallePedido"> | number | null
+  talla?: Prisma.StringNullableFilter<"DetallePedido"> | string | null
   cantidad?: Prisma.IntFilter<"DetallePedido"> | number
   precio_unitario?: Prisma.DecimalFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   pedido?: Prisma.XOR<Prisma.PedidoScalarRelationFilter, Prisma.PedidoWhereInput>
   producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>
+  productoTalla?: Prisma.XOR<Prisma.ProductoTallaNullableScalarRelationFilter, Prisma.ProductoTallaWhereInput> | null
 }, "id">
 
 export type DetallePedidoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrderInput | Prisma.SortOrder
+  talla?: Prisma.SortOrderInput | Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -294,40 +323,50 @@ export type DetallePedidoScalarWhereWithAggregatesInput = {
   id?: Prisma.IntWithAggregatesFilter<"DetallePedido"> | number
   pedido_id?: Prisma.IntWithAggregatesFilter<"DetallePedido"> | number
   producto_id?: Prisma.IntWithAggregatesFilter<"DetallePedido"> | number
+  producto_talla_id?: Prisma.IntNullableWithAggregatesFilter<"DetallePedido"> | number | null
+  talla?: Prisma.StringNullableWithAggregatesFilter<"DetallePedido"> | string | null
   cantidad?: Prisma.IntWithAggregatesFilter<"DetallePedido"> | number
   precio_unitario?: Prisma.DecimalWithAggregatesFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalWithAggregatesFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DetallePedidoCreateInput = {
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   pedido: Prisma.PedidoCreateNestedOneWithoutDetallesInput
   producto: Prisma.ProductoCreateNestedOneWithoutDetallesPedidoInput
+  productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutDetallesPedidoInput
 }
 
 export type DetallePedidoUncheckedCreateInput = {
   id?: number
   pedido_id: number
   producto_id: number
+  producto_talla_id?: number | null
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DetallePedidoUpdateInput = {
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pedido?: Prisma.PedidoUpdateOneRequiredWithoutDetallesNestedInput
   producto?: Prisma.ProductoUpdateOneRequiredWithoutDetallesPedidoNestedInput
+  productoTalla?: Prisma.ProductoTallaUpdateOneWithoutDetallesPedidoNestedInput
 }
 
 export type DetallePedidoUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   pedido_id?: Prisma.IntFieldUpdateOperationsInput | number
   producto_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -337,12 +376,15 @@ export type DetallePedidoCreateManyInput = {
   id?: number
   pedido_id: number
   producto_id: number
+  producto_talla_id?: number | null
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DetallePedidoUpdateManyMutationInput = {
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -352,6 +394,8 @@ export type DetallePedidoUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   pedido_id?: Prisma.IntFieldUpdateOperationsInput | number
   producto_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -371,6 +415,8 @@ export type DetallePedidoCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrder
+  talla?: Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -380,6 +426,7 @@ export type DetallePedidoAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -389,6 +436,8 @@ export type DetallePedidoMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrder
+  talla?: Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -398,6 +447,8 @@ export type DetallePedidoMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrder
+  talla?: Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -407,6 +458,7 @@ export type DetallePedidoSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   pedido_id?: Prisma.SortOrder
   producto_id?: Prisma.SortOrder
+  producto_talla_id?: Prisma.SortOrder
   cantidad?: Prisma.SortOrder
   precio_unitario?: Prisma.SortOrder
   subtotal?: Prisma.SortOrder
@@ -454,6 +506,48 @@ export type DetallePedidoUncheckedUpdateManyWithoutProductoNestedInput = {
   deleteMany?: Prisma.DetallePedidoScalarWhereInput | Prisma.DetallePedidoScalarWhereInput[]
 }
 
+export type DetallePedidoCreateNestedManyWithoutProductoTallaInput = {
+  create?: Prisma.XOR<Prisma.DetallePedidoCreateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput> | Prisma.DetallePedidoCreateWithoutProductoTallaInput[] | Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput[]
+  connectOrCreate?: Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput | Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput[]
+  createMany?: Prisma.DetallePedidoCreateManyProductoTallaInputEnvelope
+  connect?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+}
+
+export type DetallePedidoUncheckedCreateNestedManyWithoutProductoTallaInput = {
+  create?: Prisma.XOR<Prisma.DetallePedidoCreateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput> | Prisma.DetallePedidoCreateWithoutProductoTallaInput[] | Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput[]
+  connectOrCreate?: Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput | Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput[]
+  createMany?: Prisma.DetallePedidoCreateManyProductoTallaInputEnvelope
+  connect?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+}
+
+export type DetallePedidoUpdateManyWithoutProductoTallaNestedInput = {
+  create?: Prisma.XOR<Prisma.DetallePedidoCreateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput> | Prisma.DetallePedidoCreateWithoutProductoTallaInput[] | Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput[]
+  connectOrCreate?: Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput | Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput[]
+  upsert?: Prisma.DetallePedidoUpsertWithWhereUniqueWithoutProductoTallaInput | Prisma.DetallePedidoUpsertWithWhereUniqueWithoutProductoTallaInput[]
+  createMany?: Prisma.DetallePedidoCreateManyProductoTallaInputEnvelope
+  set?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  disconnect?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  delete?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  connect?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  update?: Prisma.DetallePedidoUpdateWithWhereUniqueWithoutProductoTallaInput | Prisma.DetallePedidoUpdateWithWhereUniqueWithoutProductoTallaInput[]
+  updateMany?: Prisma.DetallePedidoUpdateManyWithWhereWithoutProductoTallaInput | Prisma.DetallePedidoUpdateManyWithWhereWithoutProductoTallaInput[]
+  deleteMany?: Prisma.DetallePedidoScalarWhereInput | Prisma.DetallePedidoScalarWhereInput[]
+}
+
+export type DetallePedidoUncheckedUpdateManyWithoutProductoTallaNestedInput = {
+  create?: Prisma.XOR<Prisma.DetallePedidoCreateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput> | Prisma.DetallePedidoCreateWithoutProductoTallaInput[] | Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput[]
+  connectOrCreate?: Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput | Prisma.DetallePedidoCreateOrConnectWithoutProductoTallaInput[]
+  upsert?: Prisma.DetallePedidoUpsertWithWhereUniqueWithoutProductoTallaInput | Prisma.DetallePedidoUpsertWithWhereUniqueWithoutProductoTallaInput[]
+  createMany?: Prisma.DetallePedidoCreateManyProductoTallaInputEnvelope
+  set?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  disconnect?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  delete?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  connect?: Prisma.DetallePedidoWhereUniqueInput | Prisma.DetallePedidoWhereUniqueInput[]
+  update?: Prisma.DetallePedidoUpdateWithWhereUniqueWithoutProductoTallaInput | Prisma.DetallePedidoUpdateWithWhereUniqueWithoutProductoTallaInput[]
+  updateMany?: Prisma.DetallePedidoUpdateManyWithWhereWithoutProductoTallaInput | Prisma.DetallePedidoUpdateManyWithWhereWithoutProductoTallaInput[]
+  deleteMany?: Prisma.DetallePedidoScalarWhereInput | Prisma.DetallePedidoScalarWhereInput[]
+}
+
 export type DetallePedidoCreateNestedManyWithoutPedidoInput = {
   create?: Prisma.XOR<Prisma.DetallePedidoCreateWithoutPedidoInput, Prisma.DetallePedidoUncheckedCreateWithoutPedidoInput> | Prisma.DetallePedidoCreateWithoutPedidoInput[] | Prisma.DetallePedidoUncheckedCreateWithoutPedidoInput[]
   connectOrCreate?: Prisma.DetallePedidoCreateOrConnectWithoutPedidoInput | Prisma.DetallePedidoCreateOrConnectWithoutPedidoInput[]
@@ -497,15 +591,19 @@ export type DetallePedidoUncheckedUpdateManyWithoutPedidoNestedInput = {
 }
 
 export type DetallePedidoCreateWithoutProductoInput = {
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   pedido: Prisma.PedidoCreateNestedOneWithoutDetallesInput
+  productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutDetallesPedidoInput
 }
 
 export type DetallePedidoUncheckedCreateWithoutProductoInput = {
   id?: number
   pedido_id: number
+  producto_talla_id?: number | null
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -544,21 +642,72 @@ export type DetallePedidoScalarWhereInput = {
   id?: Prisma.IntFilter<"DetallePedido"> | number
   pedido_id?: Prisma.IntFilter<"DetallePedido"> | number
   producto_id?: Prisma.IntFilter<"DetallePedido"> | number
+  producto_talla_id?: Prisma.IntNullableFilter<"DetallePedido"> | number | null
+  talla?: Prisma.StringNullableFilter<"DetallePedido"> | string | null
   cantidad?: Prisma.IntFilter<"DetallePedido"> | number
   precio_unitario?: Prisma.DecimalFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFilter<"DetallePedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type DetallePedidoCreateWithoutProductoTallaInput = {
+  talla?: string | null
+  cantidad: number
+  precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+  pedido: Prisma.PedidoCreateNestedOneWithoutDetallesInput
+  producto: Prisma.ProductoCreateNestedOneWithoutDetallesPedidoInput
+}
+
+export type DetallePedidoUncheckedCreateWithoutProductoTallaInput = {
+  id?: number
+  pedido_id: number
+  producto_id: number
+  talla?: string | null
+  cantidad: number
+  precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type DetallePedidoCreateOrConnectWithoutProductoTallaInput = {
+  where: Prisma.DetallePedidoWhereUniqueInput
+  create: Prisma.XOR<Prisma.DetallePedidoCreateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput>
+}
+
+export type DetallePedidoCreateManyProductoTallaInputEnvelope = {
+  data: Prisma.DetallePedidoCreateManyProductoTallaInput | Prisma.DetallePedidoCreateManyProductoTallaInput[]
+  skipDuplicates?: boolean
+}
+
+export type DetallePedidoUpsertWithWhereUniqueWithoutProductoTallaInput = {
+  where: Prisma.DetallePedidoWhereUniqueInput
+  update: Prisma.XOR<Prisma.DetallePedidoUpdateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedUpdateWithoutProductoTallaInput>
+  create: Prisma.XOR<Prisma.DetallePedidoCreateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedCreateWithoutProductoTallaInput>
+}
+
+export type DetallePedidoUpdateWithWhereUniqueWithoutProductoTallaInput = {
+  where: Prisma.DetallePedidoWhereUniqueInput
+  data: Prisma.XOR<Prisma.DetallePedidoUpdateWithoutProductoTallaInput, Prisma.DetallePedidoUncheckedUpdateWithoutProductoTallaInput>
+}
+
+export type DetallePedidoUpdateManyWithWhereWithoutProductoTallaInput = {
+  where: Prisma.DetallePedidoScalarWhereInput
+  data: Prisma.XOR<Prisma.DetallePedidoUpdateManyMutationInput, Prisma.DetallePedidoUncheckedUpdateManyWithoutProductoTallaInput>
+}
+
 export type DetallePedidoCreateWithoutPedidoInput = {
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
   producto: Prisma.ProductoCreateNestedOneWithoutDetallesPedidoInput
+  productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutDetallesPedidoInput
 }
 
 export type DetallePedidoUncheckedCreateWithoutPedidoInput = {
   id?: number
   producto_id: number
+  producto_talla_id?: number | null
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -593,21 +742,27 @@ export type DetallePedidoUpdateManyWithWhereWithoutPedidoInput = {
 export type DetallePedidoCreateManyProductoInput = {
   id?: number
   pedido_id: number
+  producto_talla_id?: number | null
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DetallePedidoUpdateWithoutProductoInput = {
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   pedido?: Prisma.PedidoUpdateOneRequiredWithoutDetallesNestedInput
+  productoTalla?: Prisma.ProductoTallaUpdateOneWithoutDetallesPedidoNestedInput
 }
 
 export type DetallePedidoUncheckedUpdateWithoutProductoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   pedido_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -616,6 +771,47 @@ export type DetallePedidoUncheckedUpdateWithoutProductoInput = {
 export type DetallePedidoUncheckedUpdateManyWithoutProductoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   pedido_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cantidad?: Prisma.IntFieldUpdateOperationsInput | number
+  precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type DetallePedidoCreateManyProductoTallaInput = {
+  id?: number
+  pedido_id: number
+  producto_id: number
+  talla?: string | null
+  cantidad: number
+  precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type DetallePedidoUpdateWithoutProductoTallaInput = {
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cantidad?: Prisma.IntFieldUpdateOperationsInput | number
+  precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  pedido?: Prisma.PedidoUpdateOneRequiredWithoutDetallesNestedInput
+  producto?: Prisma.ProductoUpdateOneRequiredWithoutDetallesPedidoNestedInput
+}
+
+export type DetallePedidoUncheckedUpdateWithoutProductoTallaInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  pedido_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_id?: Prisma.IntFieldUpdateOperationsInput | number
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  cantidad?: Prisma.IntFieldUpdateOperationsInput | number
+  precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
+export type DetallePedidoUncheckedUpdateManyWithoutProductoTallaInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  pedido_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_id?: Prisma.IntFieldUpdateOperationsInput | number
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -624,21 +820,27 @@ export type DetallePedidoUncheckedUpdateManyWithoutProductoInput = {
 export type DetallePedidoCreateManyPedidoInput = {
   id?: number
   producto_id: number
+  producto_talla_id?: number | null
+  talla?: string | null
   cantidad: number
   precio_unitario: runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
 export type DetallePedidoUpdateWithoutPedidoInput = {
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   producto?: Prisma.ProductoUpdateOneRequiredWithoutDetallesPedidoNestedInput
+  productoTalla?: Prisma.ProductoTallaUpdateOneWithoutDetallesPedidoNestedInput
 }
 
 export type DetallePedidoUncheckedUpdateWithoutPedidoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   producto_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -647,6 +849,8 @@ export type DetallePedidoUncheckedUpdateWithoutPedidoInput = {
 export type DetallePedidoUncheckedUpdateManyWithoutPedidoInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   producto_id?: Prisma.IntFieldUpdateOperationsInput | number
+  producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   cantidad?: Prisma.IntFieldUpdateOperationsInput | number
   precio_unitario?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   subtotal?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -658,56 +862,70 @@ export type DetallePedidoSelect<ExtArgs extends runtime.Types.Extensions.Interna
   id?: boolean
   pedido_id?: boolean
   producto_id?: boolean
+  producto_talla_id?: boolean
+  talla?: boolean
   cantidad?: boolean
   precio_unitario?: boolean
   subtotal?: boolean
   pedido?: boolean | Prisma.PedidoDefaultArgs<ExtArgs>
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
+  productoTalla?: boolean | Prisma.DetallePedido$productoTallaArgs<ExtArgs>
 }, ExtArgs["result"]["detallePedido"]>
 
 export type DetallePedidoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   pedido_id?: boolean
   producto_id?: boolean
+  producto_talla_id?: boolean
+  talla?: boolean
   cantidad?: boolean
   precio_unitario?: boolean
   subtotal?: boolean
   pedido?: boolean | Prisma.PedidoDefaultArgs<ExtArgs>
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
+  productoTalla?: boolean | Prisma.DetallePedido$productoTallaArgs<ExtArgs>
 }, ExtArgs["result"]["detallePedido"]>
 
 export type DetallePedidoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   pedido_id?: boolean
   producto_id?: boolean
+  producto_talla_id?: boolean
+  talla?: boolean
   cantidad?: boolean
   precio_unitario?: boolean
   subtotal?: boolean
   pedido?: boolean | Prisma.PedidoDefaultArgs<ExtArgs>
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
+  productoTalla?: boolean | Prisma.DetallePedido$productoTallaArgs<ExtArgs>
 }, ExtArgs["result"]["detallePedido"]>
 
 export type DetallePedidoSelectScalar = {
   id?: boolean
   pedido_id?: boolean
   producto_id?: boolean
+  producto_talla_id?: boolean
+  talla?: boolean
   cantidad?: boolean
   precio_unitario?: boolean
   subtotal?: boolean
 }
 
-export type DetallePedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pedido_id" | "producto_id" | "cantidad" | "precio_unitario" | "subtotal", ExtArgs["result"]["detallePedido"]>
+export type DetallePedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "pedido_id" | "producto_id" | "producto_talla_id" | "talla" | "cantidad" | "precio_unitario" | "subtotal", ExtArgs["result"]["detallePedido"]>
 export type DetallePedidoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pedido?: boolean | Prisma.PedidoDefaultArgs<ExtArgs>
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
+  productoTalla?: boolean | Prisma.DetallePedido$productoTallaArgs<ExtArgs>
 }
 export type DetallePedidoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pedido?: boolean | Prisma.PedidoDefaultArgs<ExtArgs>
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
+  productoTalla?: boolean | Prisma.DetallePedido$productoTallaArgs<ExtArgs>
 }
 export type DetallePedidoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   pedido?: boolean | Prisma.PedidoDefaultArgs<ExtArgs>
   producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>
+  productoTalla?: boolean | Prisma.DetallePedido$productoTallaArgs<ExtArgs>
 }
 
 export type $DetallePedidoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -715,11 +933,14 @@ export type $DetallePedidoPayload<ExtArgs extends runtime.Types.Extensions.Inter
   objects: {
     pedido: Prisma.$PedidoPayload<ExtArgs>
     producto: Prisma.$ProductoPayload<ExtArgs>
+    productoTalla: Prisma.$ProductoTallaPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     pedido_id: number
     producto_id: number
+    producto_talla_id: number | null
+    talla: string | null
     cantidad: number
     precio_unitario: runtime.Decimal
     subtotal: runtime.Decimal
@@ -1119,6 +1340,7 @@ export interface Prisma__DetallePedidoClient<T, Null = never, ExtArgs extends ru
   readonly [Symbol.toStringTag]: "PrismaPromise"
   pedido<T extends Prisma.PedidoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PedidoDefaultArgs<ExtArgs>>): Prisma.Prisma__PedidoClient<runtime.Types.Result.GetResult<Prisma.$PedidoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   producto<T extends Prisma.ProductoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductoDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductoClient<runtime.Types.Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  productoTalla<T extends Prisma.DetallePedido$productoTallaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.DetallePedido$productoTallaArgs<ExtArgs>>): Prisma.Prisma__ProductoTallaClient<runtime.Types.Result.GetResult<Prisma.$ProductoTallaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1151,6 +1373,8 @@ export interface DetallePedidoFieldRefs {
   readonly id: Prisma.FieldRef<"DetallePedido", 'Int'>
   readonly pedido_id: Prisma.FieldRef<"DetallePedido", 'Int'>
   readonly producto_id: Prisma.FieldRef<"DetallePedido", 'Int'>
+  readonly producto_talla_id: Prisma.FieldRef<"DetallePedido", 'Int'>
+  readonly talla: Prisma.FieldRef<"DetallePedido", 'String'>
   readonly cantidad: Prisma.FieldRef<"DetallePedido", 'Int'>
   readonly precio_unitario: Prisma.FieldRef<"DetallePedido", 'Decimal'>
   readonly subtotal: Prisma.FieldRef<"DetallePedido", 'Decimal'>
@@ -1547,6 +1771,25 @@ export type DetallePedidoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many DetallePedidos to delete.
    */
   limit?: number
+}
+
+/**
+ * DetallePedido.productoTalla
+ */
+export type DetallePedido$productoTallaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductoTalla
+   */
+  select?: Prisma.ProductoTallaSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductoTalla
+   */
+  omit?: Prisma.ProductoTallaOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductoTallaInclude<ExtArgs> | null
+  where?: Prisma.ProductoTallaWhereInput
 }
 
 /**

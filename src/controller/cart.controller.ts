@@ -3,6 +3,18 @@ import { prisma } from "../config/prisma.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { AppError } from "../utils/appError.js";
 
+const parseOptionalTallaId = (value: unknown): number | null => {
+  if (value === undefined || value === null || value === "") return null;
+
+  const parsed = Number(value);
+
+  if (Number.isNaN(parsed) || parsed <= 0 || !Number.isInteger(parsed)) {
+    throw new AppError("producto_talla_id inválido", 400);
+  }
+
+  return parsed;
+};
+
 export const getCart = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
@@ -19,6 +31,7 @@ export const getCart = asyncHandler(
             categoria: true,
           },
         },
+        productoTalla: true,
       },
       orderBy: {
         id: "desc",
@@ -52,45 +65,93 @@ export const addToCart = asyncHandler(
       throw new AppError("No autenticado", 401);
     }
 
-    const productId = Number(req.body.producto_id);
-    const quantity = Number(req.body.cantidad);
+    const usuarioId = req.user.userId;
+    const productoId = Number(req.body.producto_id);
+    const cantidad = Number(req.body.cantidad);
+    const productoTallaId = parseOptionalTallaId(req.body.producto_talla_id);
 
-    if (Number.isNaN(productId) || productId <= 0) {
+    if (Number.isNaN(productoId) || productoId <= 0) {
       throw new AppError("producto_id inválido", 400);
     }
 
-    if (Number.isNaN(quantity) || quantity <= 0) {
-      throw new AppError("La cantidad debe ser mayor a 0", 400);
+    if (
+      Number.isNaN(cantidad) ||
+      cantidad <= 0 ||
+      !Number.isInteger(cantidad)
+    ) {
+      throw new AppError("La cantidad debe ser un entero mayor a 0", 400);
     }
 
-    const product = await prisma.producto.findUnique({
-      where: { id: productId },
-    });
-
-    if (!product || !product.activo) {
-      throw new AppError("Producto no encontrado o inactivo", 404);
-    }
-
-    if (product.stock <= 0) {
-      throw new AppError("Producto sin stock", 400);
-    }
-
-    const existingCartItem = await prisma.carrito.findUnique({
-      where: {
-        usuario_id_producto_id: {
-          usuario_id: req.user.userId,
-          producto_id: productId,
-        },
+    const producto = await prisma.producto.findUnique({
+      where: { id: productoId },
+      include: {
+        tallas: true,
       },
     });
 
-    const newQuantity = existingCartItem
-      ? existingCartItem.cantidad + quantity
-      : quantity;
+    if (!producto || !producto.activo) {
+      throw new AppError("Producto no encontrado o inactivo", 404);
+    }
 
-    if (newQuantity > product.stock) {
+    let stockDisponible = 0;
+
+    if (producto.usar_tallas) {
+      if (productoTallaId === null) {
+        throw new AppError("Debes seleccionar una talla", 400);
+      }
+
+      const talla = producto.tallas.find(
+        (item) => item.id === productoTallaId && item.activo
+      );
+
+      if (!talla) {
+        throw new AppError("Talla no válida", 400);
+      }
+
+      if (talla.stock <= 0) {
+        throw new AppError("Esa talla no tiene stock disponible", 400);
+      }
+
+      stockDisponible = talla.stock;
+    } else {
+      if (productoTallaId !== null) {
+        throw new AppError(
+          "Este producto no usa tallas, no debes enviar producto_talla_id",
+          400
+        );
+      }
+
+      if (producto.stock === null || producto.stock <= 0) {
+        throw new AppError("Producto sin stock", 400);
+      }
+
+      stockDisponible = producto.stock;
+    }
+
+    const existingCartItem =
+      productoTallaId !== null
+        ? await prisma.carrito.findFirst({
+            where: {
+              usuario_id: usuarioId,
+              producto_id: productoId,
+              producto_talla_id: productoTallaId,
+            },
+          })
+        : await prisma.carrito.findFirst({
+            where: {
+              usuario_id: usuarioId,
+              producto_id: productoId,
+              producto_talla_id: null,
+            },
+          });
+
+    const nuevaCantidad = existingCartItem
+      ? existingCartItem.cantidad + cantidad
+      : cantidad;
+
+    if (nuevaCantidad > stockDisponible) {
       throw new AppError(
-        `La cantidad solicitada excede el stock disponible. Solo hay ${product.stock} pieza(s).`,
+        `La cantidad solicitada excede el stock disponible. Solo hay ${stockDisponible} pieza(s).`,
         400
       );
     }
@@ -98,13 +159,10 @@ export const addToCart = asyncHandler(
     const cartItem = existingCartItem
       ? await prisma.carrito.update({
           where: {
-            usuario_id_producto_id: {
-              usuario_id: req.user.userId,
-              producto_id: productId,
-            },
+            id: existingCartItem.id,
           },
           data: {
-            cantidad: newQuantity,
+            cantidad: nuevaCantidad,
           },
           include: {
             producto: {
@@ -112,13 +170,17 @@ export const addToCart = asyncHandler(
                 categoria: true,
               },
             },
+            productoTalla: true,
           },
         })
       : await prisma.carrito.create({
           data: {
-            usuario_id: req.user.userId,
-            producto_id: productId,
-            cantidad: quantity,
+            usuario_id: usuarioId,
+            producto_id: productoId,
+            ...(productoTallaId !== null
+              ? { producto_talla_id: productoTallaId }
+              : {}),
+            cantidad,
           },
           include: {
             producto: {
@@ -126,6 +188,7 @@ export const addToCart = asyncHandler(
                 categoria: true,
               },
             },
+            productoTalla: true,
           },
         });
 
@@ -145,49 +208,91 @@ export const updateCartItemQuantity = asyncHandler(
       throw new AppError("No autenticado", 401);
     }
 
+    const usuarioId = req.user.userId;
     const productoId = Number(req.params.producto_id);
-    const quantity = Number(req.body.cantidad);
+    const cantidad = Number(req.body.cantidad);
+    const productoTallaId = parseOptionalTallaId(req.body.producto_talla_id);
 
     if (Number.isNaN(productoId) || productoId <= 0) {
       throw new AppError("producto_id inválido", 400);
     }
 
-    if (Number.isNaN(quantity) || quantity <= 0) {
-      throw new AppError("La cantidad debe ser mayor a 0", 400);
+    if (
+      Number.isNaN(cantidad) ||
+      cantidad <= 0 ||
+      !Number.isInteger(cantidad)
+    ) {
+      throw new AppError("La cantidad debe ser un entero mayor a 0", 400);
     }
 
-    const cartItem = await prisma.carrito.findUnique({
-      where: {
-        usuario_id_producto_id: {
-          usuario_id: req.user.userId,
-          producto_id: productoId,
-        },
-      },
-      include: {
-        producto: true,
-      },
-    });
+    const cartItem =
+      productoTallaId !== null
+        ? await prisma.carrito.findFirst({
+            where: {
+              usuario_id: usuarioId,
+              producto_id: productoId,
+              producto_talla_id: productoTallaId,
+            },
+            include: {
+              producto: {
+                include: {
+                  tallas: true,
+                  categoria: true,
+                },
+              },
+              productoTalla: true,
+            },
+          })
+        : await prisma.carrito.findFirst({
+            where: {
+              usuario_id: usuarioId,
+              producto_id: productoId,
+              producto_talla_id: null,
+            },
+            include: {
+              producto: {
+                include: {
+                  tallas: true,
+                  categoria: true,
+                },
+              },
+              productoTalla: true,
+            },
+          });
 
     if (!cartItem) {
       throw new AppError("Producto no encontrado en el carrito", 404);
     }
 
-    if (quantity > cartItem.producto.stock) {
+    let stockDisponible = 0;
+
+    if (cartItem.producto.usar_tallas) {
+      if (!cartItem.productoTalla || !cartItem.productoTalla.activo) {
+        throw new AppError("La talla seleccionada ya no está disponible", 400);
+      }
+
+      stockDisponible = cartItem.productoTalla.stock;
+    } else {
+      if (cartItem.producto.stock === null || cartItem.producto.stock <= 0) {
+        throw new AppError("Producto sin stock disponible", 400);
+      }
+
+      stockDisponible = cartItem.producto.stock;
+    }
+
+    if (cantidad > stockDisponible) {
       throw new AppError(
-        `La cantidad solicitada excede el stock disponible. Solo hay ${cartItem.producto.stock} pieza(s).`,
+        `La cantidad solicitada excede el stock disponible. Solo hay ${stockDisponible} pieza(s).`,
         400
       );
     }
 
     const updatedCartItem = await prisma.carrito.update({
       where: {
-        usuario_id_producto_id: {
-          usuario_id: req.user.userId,
-          producto_id: productoId,
-        },
+        id: cartItem.id,
       },
       data: {
-        cantidad: quantity,
+        cantidad,
       },
       include: {
         producto: {
@@ -195,6 +300,7 @@ export const updateCartItemQuantity = asyncHandler(
             categoria: true,
           },
         },
+        productoTalla: true,
       },
     });
 
@@ -212,20 +318,30 @@ export const removeCartItem = asyncHandler(
       throw new AppError("No autenticado", 401);
     }
 
+    const usuarioId = req.user.userId;
     const productoId = Number(req.params.producto_id);
+    const productoTallaId = parseOptionalTallaId(req.body.producto_talla_id);
 
     if (Number.isNaN(productoId) || productoId <= 0) {
       throw new AppError("producto_id inválido", 400);
     }
 
-    const cartItem = await prisma.carrito.findUnique({
-      where: {
-        usuario_id_producto_id: {
-          usuario_id: req.user.userId,
-          producto_id: productoId,
-        },
-      },
-    });
+    const cartItem =
+      productoTallaId !== null
+        ? await prisma.carrito.findFirst({
+            where: {
+              usuario_id: usuarioId,
+              producto_id: productoId,
+              producto_talla_id: productoTallaId,
+            },
+          })
+        : await prisma.carrito.findFirst({
+            where: {
+              usuario_id: usuarioId,
+              producto_id: productoId,
+              producto_talla_id: null,
+            },
+          });
 
     if (!cartItem) {
       throw new AppError("Producto no encontrado en el carrito", 404);
@@ -233,10 +349,7 @@ export const removeCartItem = asyncHandler(
 
     await prisma.carrito.delete({
       where: {
-        usuario_id_producto_id: {
-          usuario_id: req.user.userId,
-          producto_id: productoId,
-        },
+        id: cartItem.id,
       },
     });
 

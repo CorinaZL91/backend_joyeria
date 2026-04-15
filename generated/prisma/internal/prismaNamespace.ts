@@ -387,6 +387,7 @@ export const ModelName = {
   Usuario: 'Usuario',
   Categoria: 'Categoria',
   Producto: 'Producto',
+  ProductoTalla: 'ProductoTalla',
   Pedido: 'Pedido',
   DetallePedido: 'DetallePedido',
   Carrito: 'Carrito',
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "categoria" | "producto" | "pedido" | "detallePedido" | "carrito" | "alertaStock"
+    modelProps: "usuario" | "categoria" | "producto" | "productoTalla" | "pedido" | "detallePedido" | "carrito" | "alertaStock"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -629,6 +630,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProductoCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProductoCountAggregateOutputType> | number
+        }
+      }
+    }
+    ProductoTalla: {
+      payload: Prisma.$ProductoTallaPayload<ExtArgs>
+      fields: Prisma.ProductoTallaFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ProductoTallaFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ProductoTallaFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>
+        }
+        findFirst: {
+          args: Prisma.ProductoTallaFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ProductoTallaFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>
+        }
+        findMany: {
+          args: Prisma.ProductoTallaFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>[]
+        }
+        create: {
+          args: Prisma.ProductoTallaCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>
+        }
+        createMany: {
+          args: Prisma.ProductoTallaCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ProductoTallaCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>[]
+        }
+        delete: {
+          args: Prisma.ProductoTallaDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>
+        }
+        update: {
+          args: Prisma.ProductoTallaUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>
+        }
+        deleteMany: {
+          args: Prisma.ProductoTallaDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ProductoTallaUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ProductoTallaUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>[]
+        }
+        upsert: {
+          args: Prisma.ProductoTallaUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>
+        }
+        aggregate: {
+          args: Prisma.ProductoTallaAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductoTalla>
+        }
+        groupBy: {
+          args: Prisma.ProductoTallaGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductoTallaGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ProductoTallaCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductoTallaCountAggregateOutputType> | number
         }
       }
     }
@@ -996,6 +1071,7 @@ export const ProductoScalarFieldEnum = {
   descripcion: 'descripcion',
   precio: 'precio',
   material: 'material',
+  usar_tallas: 'usar_tallas',
   stock: 'stock',
   stock_minimo: 'stock_minimo',
   imagen_url: 'imagen_url',
@@ -1006,6 +1082,18 @@ export const ProductoScalarFieldEnum = {
 } as const
 
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum]
+
+
+export const ProductoTallaScalarFieldEnum = {
+  id: 'id',
+  talla: 'talla',
+  stock: 'stock',
+  activo: 'activo',
+  fecha_creada: 'fecha_creada',
+  producto_id: 'producto_id'
+} as const
+
+export type ProductoTallaScalarFieldEnum = (typeof ProductoTallaScalarFieldEnum)[keyof typeof ProductoTallaScalarFieldEnum]
 
 
 export const PedidoScalarFieldEnum = {
@@ -1024,6 +1112,8 @@ export const DetallePedidoScalarFieldEnum = {
   id: 'id',
   pedido_id: 'pedido_id',
   producto_id: 'producto_id',
+  producto_talla_id: 'producto_talla_id',
+  talla: 'talla',
   cantidad: 'cantidad',
   precio_unitario: 'precio_unitario',
   subtotal: 'subtotal'
@@ -1036,6 +1126,7 @@ export const CarritoScalarFieldEnum = {
   id: 'id',
   usuario_id: 'usuario_id',
   producto_id: 'producto_id',
+  producto_talla_id: 'producto_talla_id',
   cantidad: 'cantidad',
   fecha_agregado: 'fecha_agregado'
 } as const
@@ -1046,6 +1137,8 @@ export type CarritoScalarFieldEnum = (typeof CarritoScalarFieldEnum)[keyof typeo
 export const AlertaStockScalarFieldEnum = {
   id: 'id',
   producto_id: 'producto_id',
+  producto_talla_id: 'producto_talla_id',
+  talla: 'talla',
   stock_minimo: 'stock_minimo',
   mensaje: 'mensaje',
   activa: 'activa',
@@ -1302,6 +1395,7 @@ export type GlobalOmitConfig = {
   usuario?: Prisma.UsuarioOmit
   categoria?: Prisma.CategoriaOmit
   producto?: Prisma.ProductoOmit
+  productoTalla?: Prisma.ProductoTallaOmit
   pedido?: Prisma.PedidoOmit
   detallePedido?: Prisma.DetallePedidoOmit
   carrito?: Prisma.CarritoOmit

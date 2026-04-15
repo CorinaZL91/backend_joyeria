@@ -33,6 +33,11 @@ export type Categoria = Prisma.CategoriaModel
  */
 export type Producto = Prisma.ProductoModel
 /**
+ * Model ProductoTalla
+ * 
+ */
+export type ProductoTalla = Prisma.ProductoTallaModel
+/**
  * Model Pedido
  * 
  */

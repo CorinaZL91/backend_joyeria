@@ -4,6 +4,9 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -70,23 +73,33 @@ model Producto {
   categoria_id Int
   categoria    Categoria @relation(fields: [categoria_id], references: [id])
 
-  tallas ProductoTalla[]
-
+  tallas         ProductoTalla[]
   detallesPedido DetallePedido[]
   carrito        Carrito[]
   alertasStock   AlertaStock[]
+
+  @@index([categoria_id])
+  @@index([activo])
+  @@index([usar_tallas])
 }
 
 model ProductoTalla {
-  id    Int    @id @default(autoincrement())
-  talla String
-  stock Int
+  id           Int      @id @default(autoincrement())
+  talla        String
+  stock        Int
+  activo       Boolean  @default(true)
+  fecha_creada DateTime @default(now())
 
   producto_id Int
-  producto    Producto @relation(fields: [producto_id], references: [id])
+  producto    Producto @relation(fields: [producto_id], references: [id], onDelete: Cascade)
+
+  carrito        Carrito[]
+  detallesPedido DetallePedido[]
+  alertasStock   AlertaStock[]
 
   @@unique([producto_id, talla])
   @@index([producto_id])
+  @@index([activo])
 }
 
 model Pedido {
@@ -99,45 +112,64 @@ model Pedido {
 
   usuario  Usuario         @relation(fields: [usuario_id], references: [id])
   detalles DetallePedido[]
+
+  @@index([usuario_id])
+  @@index([estado])
+  @@index([fecha_pedido])
 }
 
 model DetallePedido {
-  id              Int     @id @default(autoincrement())
-  pedido_id       Int
-  producto_id     Int
-  talla           String?
-  cantidad        Int
-  precio_unitario Decimal @db.Decimal(10, 2)
-  subtotal        Decimal @db.Decimal(10, 2)
+  id                Int     @id @default(autoincrement())
+  pedido_id         Int
+  producto_id       Int
+  producto_talla_id Int?
+  talla             String?
+  cantidad          Int
+  precio_unitario   Decimal @db.Decimal(10, 2)
+  subtotal          Decimal @db.Decimal(10, 2)
 
-  pedido   Pedido   @relation(fields: [pedido_id], references: [id])
-  producto Producto @relation(fields: [producto_id], references: [id])
+  pedido        Pedido         @relation(fields: [pedido_id], references: [id], onDelete: Cascade)
+  producto      Producto       @relation(fields: [producto_id], references: [id])
+  productoTalla ProductoTalla? @relation(fields: [producto_talla_id], references: [id])
+
+  @@index([pedido_id])
+  @@index([producto_id])
+  @@index([producto_talla_id])
 }
 
 model Carrito {
-  id             Int      @id @default(autoincrement())
-  usuario_id     Int
-  producto_id    Int
-  talla          String?
-  cantidad       Int      @default(1)
-  fecha_agregado DateTime @default(now())
+  id                Int      @id @default(autoincrement())
+  usuario_id        Int
+  producto_id       Int
+  producto_talla_id Int?
+  cantidad          Int      @default(1)
+  fecha_agregado    DateTime @default(now())
 
-  usuario  Usuario  @relation(fields: [usuario_id], references: [id])
-  producto Producto @relation(fields: [producto_id], references: [id])
+  usuario       Usuario        @relation(fields: [usuario_id], references: [id], onDelete: Cascade)
+  producto      Producto       @relation(fields: [producto_id], references: [id], onDelete: Cascade)
+  productoTalla ProductoTalla? @relation(fields: [producto_talla_id], references: [id])
 
-  @@unique([usuario_id, producto_id, talla])
-  @@index([producto_id, talla])
+  @@unique([usuario_id, producto_id, producto_talla_id])
+  @@index([usuario_id])
+  @@index([producto_id])
+  @@index([producto_talla_id])
 }
 
 model AlertaStock {
-  id           Int      @id @default(autoincrement())
-  producto_id  Int
-  talla        String?
-  stock_minimo Int
-  mensaje      String?
-  activa       Boolean  @default(true)
-  fecha_alerta DateTime @default(now())
-  fecha_update DateTime @updatedAt
+  id                Int      @id @default(autoincrement())
+  producto_id       Int
+  producto_talla_id Int?
+  talla             String?
+  stock_minimo      Int
+  mensaje           String?
+  activa            Boolean  @default(true)
+  fecha_alerta      DateTime @default(now())
+  fecha_update      DateTime @updatedAt
 
-  producto Producto @relation(fields: [producto_id], references: [id])
+  producto      Producto       @relation(fields: [producto_id], references: [id], onDelete: Cascade)
+  productoTalla ProductoTalla? @relation(fields: [producto_talla_id], references: [id])
+
+  @@index([producto_id])
+  @@index([producto_talla_id])
+  @@index([activa])
 }

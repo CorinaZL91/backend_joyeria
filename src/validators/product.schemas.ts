@@ -18,6 +18,22 @@ const toBoolean = z.preprocess((value) => {
   return value;
 }, z.boolean({ message: "Debe ser un valor booleano" }));
 
+const parseTallas = (value: unknown) => {
+  if (value === undefined || value === null || value === "") return undefined;
+
+  if (Array.isArray(value)) return value;
+
+  if (typeof value === "string") {
+    try {
+      return JSON.parse(value);
+    } catch {
+      return value;
+    }
+  }
+
+  return value;
+};
+
 const tallaItemSchema = z.object({
   talla: z.string().trim().min(1, "La talla es obligatoria"),
 
@@ -41,14 +57,16 @@ export const createProductSchema = z
     usar_tallas: toBoolean.optional().default(false),
 
     stock: z.preprocess((value) => {
-      if (value === undefined || value === null || value === "")
+      if (value === undefined || value === null || value === "") {
         return undefined;
+      }
       return value;
     }, toNumber("El stock").int("El stock debe ser entero").min(0, "El stock no puede ser negativo").optional()),
 
     stock_minimo: z.preprocess((value) => {
-      if (value === undefined || value === null || value === "")
+      if (value === undefined || value === null || value === "") {
         return undefined;
+      }
       return value;
     }, toNumber("El stock mínimo").int("El stock mínimo debe ser entero").min(0, "El stock mínimo no puede ser negativo").optional()),
 
@@ -58,7 +76,7 @@ export const createProductSchema = z
 
     activo: toBoolean.optional(),
 
-    tallas: z.array(tallaItemSchema).optional(),
+    tallas: z.preprocess(parseTallas, z.array(tallaItemSchema).optional()),
   })
   .superRefine((data, ctx) => {
     if (data.usar_tallas) {
@@ -117,8 +135,9 @@ export const updateProductSchema = z
       .optional(),
 
     precio: z.preprocess((value) => {
-      if (value === undefined || value === null || value === "")
+      if (value === undefined || value === null || value === "") {
         return undefined;
+      }
       return value;
     }, toNumber("El precio").positive("El precio debe ser mayor a 0").optional()),
 
@@ -127,26 +146,30 @@ export const updateProductSchema = z
     usar_tallas: toBoolean.optional(),
 
     stock: z.preprocess((value) => {
-      if (value === undefined || value === null || value === "")
+      if (value === undefined || value === null || value === "") {
         return undefined;
+      }
       return value;
     }, toNumber("El stock").int("El stock debe ser entero").min(0, "El stock no puede ser negativo").optional()),
 
     stock_minimo: z.preprocess((value) => {
-      if (value === undefined || value === null || value === "")
+      if (value === undefined || value === null || value === "") {
         return undefined;
+      }
       return value;
     }, toNumber("El stock mínimo").int("El stock mínimo debe ser entero").min(0, "El stock mínimo no puede ser negativo").optional()),
 
     categoria_id: z.preprocess((value) => {
-      if (value === undefined || value === null || value === "")
+      if (value === undefined || value === null || value === "") {
         return undefined;
+      }
       return value;
     }, toNumber("La categoría").int("La categoría debe ser entera").positive("La categoría es obligatoria").optional()),
 
     activo: toBoolean.optional(),
     removeImage: toBoolean.optional(),
-    tallas: z.array(tallaItemSchema).optional(),
+
+    tallas: z.preprocess(parseTallas, z.array(tallaItemSchema).optional()),
   })
   .superRefine((data, ctx) => {
     if (Object.keys(data).length === 0) {

@@ -21,6 +21,16 @@ const roundToTwo = (value: number): number => {
   return Number(value.toFixed(2));
 };
 
+const formatOrderDetail = (detail: any) => ({
+  ...detail,
+  producto_talla: detail.productoTalla ?? null,
+});
+
+const formatOrder = (order: any) => ({
+  ...order,
+  detalles: order.detalles?.map(formatOrderDetail) ?? [],
+});
+
 export const createOrder = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     if (!req.user) {
@@ -282,7 +292,9 @@ export const createOrder = asyncHandler(
     res.status(201).json({
       success: true,
       message: "Pedido creado correctamente",
-      data: createdOrderWithRelations,
+      data: createdOrderWithRelations
+        ? formatOrder(createdOrderWithRelations)
+        : null,
     });
   }
 );
@@ -315,7 +327,7 @@ export const getMyOrders = asyncHandler(
 
     res.status(200).json({
       success: true,
-      data: orders,
+      data: orders.map(formatOrder),
     });
   }
 );
@@ -341,7 +353,7 @@ export const getAllOrders = asyncHandler(
 
     res.status(200).json({
       success: true,
-      data: orders,
+      data: orders.map(formatOrder),
     });
   }
 );
@@ -390,7 +402,7 @@ export const getOrderById = asyncHandler(
 
     res.status(200).json({
       success: true,
-      data: order,
+      data: formatOrder(order),
     });
   }
 );
@@ -577,7 +589,7 @@ export const updateOrderStatus = asyncHandler(
     res.status(200).json({
       success: true,
       message: "Estado del pedido actualizado correctamente",
-      data: updatedOrder,
+      data: updatedOrder ? formatOrder(updatedOrder) : null,
     });
   }
 );

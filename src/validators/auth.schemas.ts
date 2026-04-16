@@ -10,9 +10,12 @@ export const registerSchema = z.object({
 
   password: z.string().min(6, "La contraseña debe tener al menos 6 caracteres"),
 
-  telefono: z.string().trim().optional(),
-
-  direccion: z.string().trim().optional(),
+  telefono: z
+    .string()
+    .trim()
+    .min(1, "El teléfono es obligatorio")
+    .min(10, "El teléfono debe tener al menos 10 caracteres")
+    .max(20, "El teléfono no puede exceder 20 caracteres"),
 });
 
 export const loginSchema = z.object({

@@ -1050,6 +1050,9 @@ export const UsuarioScalarFieldEnum = {
   rol: 'rol',
   telefono: 'telefono',
   direccion: 'direccion',
+  direccion_calle: 'direccion_calle',
+  direccion_ciudad: 'direccion_ciudad',
+  direccion_codigo_postal: 'direccion_codigo_postal',
   fecha_registro: 'fecha_registro'
 } as const
 
@@ -1102,7 +1105,10 @@ export const PedidoScalarFieldEnum = {
   fecha_pedido: 'fecha_pedido',
   total: 'total',
   metodo_pago: 'metodo_pago',
-  estado: 'estado'
+  estado: 'estado',
+  direccion_calle: 'direccion_calle',
+  direccion_ciudad: 'direccion_ciudad',
+  direccion_codigo_postal: 'direccion_codigo_postal'
 } as const
 
 export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum]

@@ -15,10 +15,19 @@ const userSelect = {
   correo: true,
   telefono: true,
   direccion: true,
+  direccion_calle: true,
+  direccion_ciudad: true,
+  direccion_codigo_postal: true,
 };
 
 const roundToTwo = (value: number): number => {
   return Number(value.toFixed(2));
+};
+
+const normalizeOptionalString = (value: unknown): string | null => {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
 };
 
 const formatOrderDetail = (detail: any) => ({
@@ -38,6 +47,77 @@ export const createOrder = asyncHandler(
     }
 
     const { metodo_pago } = req.body as { metodo_pago: MetodoPago };
+
+    if (!metodo_pago) {
+      throw new AppError("El método de pago es obligatorio", 400);
+    }
+
+    let direccionPedido = {
+      direccion_calle: null as string | null,
+      direccion_ciudad: null as string | null,
+      direccion_codigo_postal: null as string | null,
+    };
+
+    if (metodo_pago === MetodoPago.tarjeta) {
+      const direccionCalleBody = normalizeOptionalString(
+        req.body.direccion_calle
+      );
+      const direccionCiudadBody = normalizeOptionalString(
+        req.body.direccion_ciudad
+      );
+      const direccionCodigoPostalBody = normalizeOptionalString(
+        req.body.direccion_codigo_postal
+      );
+
+      const usuario = await prisma.usuario.findUnique({
+        where: { id: req.user.userId },
+        select: {
+          id: true,
+          direccion_calle: true,
+          direccion_ciudad: true,
+          direccion_codigo_postal: true,
+        },
+      });
+
+      if (!usuario) {
+        throw new AppError("Usuario no encontrado", 404);
+      }
+
+      const calleFinal = direccionCalleBody ?? usuario.direccion_calle ?? null;
+      const ciudadFinal =
+        direccionCiudadBody ?? usuario.direccion_ciudad ?? null;
+      const codigoPostalFinal =
+        direccionCodigoPostalBody ?? usuario.direccion_codigo_postal ?? null;
+
+      if (!calleFinal || !ciudadFinal || !codigoPostalFinal) {
+        throw new AppError(
+          "Debes proporcionar calle, ciudad y código postal para pagos con tarjeta",
+          400
+        );
+      }
+
+      direccionPedido = {
+        direccion_calle: calleFinal,
+        direccion_ciudad: ciudadFinal,
+        direccion_codigo_postal: codigoPostalFinal,
+      };
+
+      const envioDireccionNueva =
+        direccionCalleBody !== null ||
+        direccionCiudadBody !== null ||
+        direccionCodigoPostalBody !== null;
+
+      if (envioDireccionNueva) {
+        await prisma.usuario.update({
+          where: { id: req.user.userId },
+          data: {
+            direccion_calle: calleFinal,
+            direccion_ciudad: ciudadFinal,
+            direccion_codigo_postal: codigoPostalFinal,
+          },
+        });
+      }
+    }
 
     const cartItems = await prisma.carrito.findMany({
       where: {
@@ -139,6 +219,9 @@ export const createOrder = asyncHandler(
           total,
           metodo_pago,
           estado: EstadoPedido.pendiente,
+          direccion_calle: direccionPedido.direccion_calle,
+          direccion_ciudad: direccionPedido.direccion_ciudad,
+          direccion_codigo_postal: direccionPedido.direccion_codigo_postal,
         },
       });
 

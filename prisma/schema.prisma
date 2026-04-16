@@ -1,12 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -35,14 +26,18 @@ enum MetodoPago {
 }
 
 model Usuario {
-  id             Int        @id @default(autoincrement())
-  nombre         String
-  correo         String     @unique
-  password_hash  String
-  rol            RolUsuario @default(cliente)
-  telefono       String?
-  direccion      String?
-  fecha_registro DateTime   @default(now())
+  id                      Int        @id @default(autoincrement())
+  nombre                  String
+  correo                  String     @unique
+  password_hash           String
+  rol                     RolUsuario @default(cliente)
+  telefono                String?
+  direccion               String?
+  direccion_calle         String?
+  direccion_ciudad        String?
+  direccion_codigo_postal String?
+
+  fecha_registro DateTime @default(now())
 
   pedidos Pedido[]
   carrito Carrito[]
@@ -109,6 +104,11 @@ model Pedido {
   total        Decimal      @db.Decimal(10, 2)
   metodo_pago  MetodoPago
   estado       EstadoPedido @default(pendiente)
+
+  // Dirección usada en este pedido
+  direccion_calle         String?
+  direccion_ciudad        String?
+  direccion_codigo_postal String?
 
   usuario  Usuario         @relation(fields: [usuario_id], references: [id])
   detalles DetallePedido[]

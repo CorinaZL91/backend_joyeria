@@ -45,6 +45,9 @@ export type PedidoMinAggregateOutputType = {
   total: runtime.Decimal | null
   metodo_pago: $Enums.MetodoPago | null
   estado: $Enums.EstadoPedido | null
+  direccion_calle: string | null
+  direccion_ciudad: string | null
+  direccion_codigo_postal: string | null
 }
 
 export type PedidoMaxAggregateOutputType = {
@@ -54,6 +57,9 @@ export type PedidoMaxAggregateOutputType = {
   total: runtime.Decimal | null
   metodo_pago: $Enums.MetodoPago | null
   estado: $Enums.EstadoPedido | null
+  direccion_calle: string | null
+  direccion_ciudad: string | null
+  direccion_codigo_postal: string | null
 }
 
 export type PedidoCountAggregateOutputType = {
@@ -63,6 +69,9 @@ export type PedidoCountAggregateOutputType = {
   total: number
   metodo_pago: number
   estado: number
+  direccion_calle: number
+  direccion_ciudad: number
+  direccion_codigo_postal: number
   _all: number
 }
 
@@ -86,6 +95,9 @@ export type PedidoMinAggregateInputType = {
   total?: true
   metodo_pago?: true
   estado?: true
+  direccion_calle?: true
+  direccion_ciudad?: true
+  direccion_codigo_postal?: true
 }
 
 export type PedidoMaxAggregateInputType = {
@@ -95,6 +107,9 @@ export type PedidoMaxAggregateInputType = {
   total?: true
   metodo_pago?: true
   estado?: true
+  direccion_calle?: true
+  direccion_ciudad?: true
+  direccion_codigo_postal?: true
 }
 
 export type PedidoCountAggregateInputType = {
@@ -104,6 +119,9 @@ export type PedidoCountAggregateInputType = {
   total?: true
   metodo_pago?: true
   estado?: true
+  direccion_calle?: true
+  direccion_ciudad?: true
+  direccion_codigo_postal?: true
   _all?: true
 }
 
@@ -200,6 +218,9 @@ export type PedidoGroupByOutputType = {
   total: runtime.Decimal
   metodo_pago: $Enums.MetodoPago
   estado: $Enums.EstadoPedido
+  direccion_calle: string | null
+  direccion_ciudad: string | null
+  direccion_codigo_postal: string | null
   _count: PedidoCountAggregateOutputType | null
   _avg: PedidoAvgAggregateOutputType | null
   _sum: PedidoSumAggregateOutputType | null
@@ -232,6 +253,9 @@ export type PedidoWhereInput = {
   total?: Prisma.DecimalFilter<"Pedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFilter<"Pedido"> | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFilter<"Pedido"> | $Enums.EstadoPedido
+  direccion_calle?: Prisma.StringNullableFilter<"Pedido"> | string | null
+  direccion_ciudad?: Prisma.StringNullableFilter<"Pedido"> | string | null
+  direccion_codigo_postal?: Prisma.StringNullableFilter<"Pedido"> | string | null
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   detalles?: Prisma.DetallePedidoListRelationFilter
 }
@@ -243,6 +267,9 @@ export type PedidoOrderByWithRelationInput = {
   total?: Prisma.SortOrder
   metodo_pago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  direccion_calle?: Prisma.SortOrderInput | Prisma.SortOrder
+  direccion_ciudad?: Prisma.SortOrderInput | Prisma.SortOrder
+  direccion_codigo_postal?: Prisma.SortOrderInput | Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
   detalles?: Prisma.DetallePedidoOrderByRelationAggregateInput
 }
@@ -257,6 +284,9 @@ export type PedidoWhereUniqueInput = Prisma.AtLeast<{
   total?: Prisma.DecimalFilter<"Pedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFilter<"Pedido"> | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFilter<"Pedido"> | $Enums.EstadoPedido
+  direccion_calle?: Prisma.StringNullableFilter<"Pedido"> | string | null
+  direccion_ciudad?: Prisma.StringNullableFilter<"Pedido"> | string | null
+  direccion_codigo_postal?: Prisma.StringNullableFilter<"Pedido"> | string | null
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   detalles?: Prisma.DetallePedidoListRelationFilter
 }, "id">
@@ -268,6 +298,9 @@ export type PedidoOrderByWithAggregationInput = {
   total?: Prisma.SortOrder
   metodo_pago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  direccion_calle?: Prisma.SortOrderInput | Prisma.SortOrder
+  direccion_ciudad?: Prisma.SortOrderInput | Prisma.SortOrder
+  direccion_codigo_postal?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.PedidoCountOrderByAggregateInput
   _avg?: Prisma.PedidoAvgOrderByAggregateInput
   _max?: Prisma.PedidoMaxOrderByAggregateInput
@@ -285,6 +318,9 @@ export type PedidoScalarWhereWithAggregatesInput = {
   total?: Prisma.DecimalWithAggregatesFilter<"Pedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoWithAggregatesFilter<"Pedido"> | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoWithAggregatesFilter<"Pedido"> | $Enums.EstadoPedido
+  direccion_calle?: Prisma.StringNullableWithAggregatesFilter<"Pedido"> | string | null
+  direccion_ciudad?: Prisma.StringNullableWithAggregatesFilter<"Pedido"> | string | null
+  direccion_codigo_postal?: Prisma.StringNullableWithAggregatesFilter<"Pedido"> | string | null
 }
 
 export type PedidoCreateInput = {
@@ -292,6 +328,9 @@ export type PedidoCreateInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
   usuario: Prisma.UsuarioCreateNestedOneWithoutPedidosInput
   detalles?: Prisma.DetallePedidoCreateNestedManyWithoutPedidoInput
 }
@@ -303,6 +342,9 @@ export type PedidoUncheckedCreateInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
   detalles?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutPedidoInput
 }
 
@@ -311,6 +353,9 @@ export type PedidoUpdateInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidosNestedInput
   detalles?: Prisma.DetallePedidoUpdateManyWithoutPedidoNestedInput
 }
@@ -322,6 +367,9 @@ export type PedidoUncheckedUpdateInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetallePedidoUncheckedUpdateManyWithoutPedidoNestedInput
 }
 
@@ -332,6 +380,9 @@ export type PedidoCreateManyInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
 }
 
 export type PedidoUpdateManyMutationInput = {
@@ -339,6 +390,9 @@ export type PedidoUpdateManyMutationInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PedidoUncheckedUpdateManyInput = {
@@ -348,6 +402,9 @@ export type PedidoUncheckedUpdateManyInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PedidoListRelationFilter = {
@@ -367,6 +424,9 @@ export type PedidoCountOrderByAggregateInput = {
   total?: Prisma.SortOrder
   metodo_pago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  direccion_calle?: Prisma.SortOrder
+  direccion_ciudad?: Prisma.SortOrder
+  direccion_codigo_postal?: Prisma.SortOrder
 }
 
 export type PedidoAvgOrderByAggregateInput = {
@@ -382,6 +442,9 @@ export type PedidoMaxOrderByAggregateInput = {
   total?: Prisma.SortOrder
   metodo_pago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  direccion_calle?: Prisma.SortOrder
+  direccion_ciudad?: Prisma.SortOrder
+  direccion_codigo_postal?: Prisma.SortOrder
 }
 
 export type PedidoMinOrderByAggregateInput = {
@@ -391,6 +454,9 @@ export type PedidoMinOrderByAggregateInput = {
   total?: Prisma.SortOrder
   metodo_pago?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  direccion_calle?: Prisma.SortOrder
+  direccion_ciudad?: Prisma.SortOrder
+  direccion_codigo_postal?: Prisma.SortOrder
 }
 
 export type PedidoSumOrderByAggregateInput = {
@@ -473,6 +539,9 @@ export type PedidoCreateWithoutUsuarioInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
   detalles?: Prisma.DetallePedidoCreateNestedManyWithoutPedidoInput
 }
 
@@ -482,6 +551,9 @@ export type PedidoUncheckedCreateWithoutUsuarioInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
   detalles?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutPedidoInput
 }
 
@@ -521,6 +593,9 @@ export type PedidoScalarWhereInput = {
   total?: Prisma.DecimalFilter<"Pedido"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFilter<"Pedido"> | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFilter<"Pedido"> | $Enums.EstadoPedido
+  direccion_calle?: Prisma.StringNullableFilter<"Pedido"> | string | null
+  direccion_ciudad?: Prisma.StringNullableFilter<"Pedido"> | string | null
+  direccion_codigo_postal?: Prisma.StringNullableFilter<"Pedido"> | string | null
 }
 
 export type PedidoCreateWithoutDetallesInput = {
@@ -528,6 +603,9 @@ export type PedidoCreateWithoutDetallesInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
   usuario: Prisma.UsuarioCreateNestedOneWithoutPedidosInput
 }
 
@@ -538,6 +616,9 @@ export type PedidoUncheckedCreateWithoutDetallesInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
 }
 
 export type PedidoCreateOrConnectWithoutDetallesInput = {
@@ -561,6 +642,9 @@ export type PedidoUpdateWithoutDetallesInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidosNestedInput
 }
 
@@ -571,6 +655,9 @@ export type PedidoUncheckedUpdateWithoutDetallesInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type PedidoCreateManyUsuarioInput = {
@@ -579,6 +666,9 @@ export type PedidoCreateManyUsuarioInput = {
   total: runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago: $Enums.MetodoPago
   estado?: $Enums.EstadoPedido
+  direccion_calle?: string | null
+  direccion_ciudad?: string | null
+  direccion_codigo_postal?: string | null
 }
 
 export type PedidoUpdateWithoutUsuarioInput = {
@@ -586,6 +676,9 @@ export type PedidoUpdateWithoutUsuarioInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetallePedidoUpdateManyWithoutPedidoNestedInput
 }
 
@@ -595,6 +688,9 @@ export type PedidoUncheckedUpdateWithoutUsuarioInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   detalles?: Prisma.DetallePedidoUncheckedUpdateManyWithoutPedidoNestedInput
 }
 
@@ -604,6 +700,9 @@ export type PedidoUncheckedUpdateManyWithoutUsuarioInput = {
   total?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   metodo_pago?: Prisma.EnumMetodoPagoFieldUpdateOperationsInput | $Enums.MetodoPago
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 
@@ -644,6 +743,9 @@ export type PedidoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   total?: boolean
   metodo_pago?: boolean
   estado?: boolean
+  direccion_calle?: boolean
+  direccion_ciudad?: boolean
+  direccion_codigo_postal?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   detalles?: boolean | Prisma.Pedido$detallesArgs<ExtArgs>
   _count?: boolean | Prisma.PedidoCountOutputTypeDefaultArgs<ExtArgs>
@@ -656,6 +758,9 @@ export type PedidoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   total?: boolean
   metodo_pago?: boolean
   estado?: boolean
+  direccion_calle?: boolean
+  direccion_ciudad?: boolean
+  direccion_codigo_postal?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pedido"]>
 
@@ -666,6 +771,9 @@ export type PedidoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   total?: boolean
   metodo_pago?: boolean
   estado?: boolean
+  direccion_calle?: boolean
+  direccion_ciudad?: boolean
+  direccion_codigo_postal?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pedido"]>
 
@@ -676,9 +784,12 @@ export type PedidoSelectScalar = {
   total?: boolean
   metodo_pago?: boolean
   estado?: boolean
+  direccion_calle?: boolean
+  direccion_ciudad?: boolean
+  direccion_codigo_postal?: boolean
 }
 
-export type PedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "fecha_pedido" | "total" | "metodo_pago" | "estado", ExtArgs["result"]["pedido"]>
+export type PedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "fecha_pedido" | "total" | "metodo_pago" | "estado" | "direccion_calle" | "direccion_ciudad" | "direccion_codigo_postal", ExtArgs["result"]["pedido"]>
 export type PedidoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   detalles?: boolean | Prisma.Pedido$detallesArgs<ExtArgs>
@@ -704,6 +815,9 @@ export type $PedidoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     total: runtime.Decimal
     metodo_pago: $Enums.MetodoPago
     estado: $Enums.EstadoPedido
+    direccion_calle: string | null
+    direccion_ciudad: string | null
+    direccion_codigo_postal: string | null
   }, ExtArgs["result"]["pedido"]>
   composites: {}
 }
@@ -1135,6 +1249,9 @@ export interface PedidoFieldRefs {
   readonly total: Prisma.FieldRef<"Pedido", 'Decimal'>
   readonly metodo_pago: Prisma.FieldRef<"Pedido", 'MetodoPago'>
   readonly estado: Prisma.FieldRef<"Pedido", 'EstadoPedido'>
+  readonly direccion_calle: Prisma.FieldRef<"Pedido", 'String'>
+  readonly direccion_ciudad: Prisma.FieldRef<"Pedido", 'String'>
+  readonly direccion_codigo_postal: Prisma.FieldRef<"Pedido", 'String'>
 }
     
 

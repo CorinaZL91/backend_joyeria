@@ -8,9 +8,27 @@ import { AppError } from "../utils/appError.js";
 
 export const register = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
-    const { nombre, correo, password, telefono, direccion } = req.body;
+    const { nombre, correo, password, telefono } = req.body;
 
+    if (!nombre || typeof nombre !== "string" || nombre.trim() === "") {
+      throw new AppError("El nombre es obligatorio", 400);
+    }
+
+    if (!correo || typeof correo !== "string" || correo.trim() === "") {
+      throw new AppError("El correo es obligatorio", 400);
+    }
+
+    if (!password || typeof password !== "string" || password.trim() === "") {
+      throw new AppError("La contraseña es obligatoria", 400);
+    }
+
+    if (!telefono || typeof telefono !== "string" || telefono.trim() === "") {
+      throw new AppError("El teléfono es obligatorio", 400);
+    }
+
+    const nombreNormalizado = nombre.trim();
     const correoNormalizado = correo.trim().toLowerCase();
+    const telefonoNormalizado = telefono.trim();
 
     const existingUser = await prisma.usuario.findUnique({
       where: { correo: correoNormalizado },
@@ -25,11 +43,10 @@ export const register = asyncHandler(
     try {
       const newUser = await prisma.usuario.create({
         data: {
-          nombre: nombre.trim(),
+          nombre: nombreNormalizado,
           correo: correoNormalizado,
           password_hash: hashedPassword,
-          telefono: telefono.trim(),
-          direccion: direccion.trim(),
+          telefono: telefonoNormalizado,
           rol: RolUsuario.cliente,
         },
         select: {
@@ -38,6 +55,9 @@ export const register = asyncHandler(
           correo: true,
           telefono: true,
           direccion: true,
+          direccion_calle: true,
+          direccion_ciudad: true,
+          direccion_codigo_postal: true,
           rol: true,
         },
       });
@@ -60,7 +80,9 @@ export const register = asyncHandler(
         error instanceof Prisma.PrismaClientKnownRequestError &&
         error.code === "P2002"
       ) {
-        const target = (error.meta?.target as string[]) || [];
+        const target = Array.isArray(error.meta?.target)
+          ? (error.meta.target as string[])
+          : [];
 
         if (target.includes("correo")) {
           throw new AppError("Ya existe un usuario con ese correo", 409);
@@ -82,10 +104,30 @@ export const login = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     const { correo, password } = req.body;
 
+    if (!correo || typeof correo !== "string" || correo.trim() === "") {
+      throw new AppError("El correo es obligatorio", 400);
+    }
+
+    if (!password || typeof password !== "string" || password.trim() === "") {
+      throw new AppError("La contraseña es obligatoria", 400);
+    }
+
     const correoNormalizado = correo.trim().toLowerCase();
 
     const user = await prisma.usuario.findUnique({
       where: { correo: correoNormalizado },
+      select: {
+        id: true,
+        nombre: true,
+        correo: true,
+        telefono: true,
+        direccion: true,
+        direccion_calle: true,
+        direccion_ciudad: true,
+        direccion_codigo_postal: true,
+        rol: true,
+        password_hash: true,
+      },
     });
 
     if (!user) {
@@ -114,6 +156,9 @@ export const login = asyncHandler(
           correo: user.correo,
           telefono: user.telefono,
           direccion: user.direccion,
+          direccion_calle: user.direccion_calle,
+          direccion_ciudad: user.direccion_ciudad,
+          direccion_codigo_postal: user.direccion_codigo_postal,
           rol: user.rol,
         },
       },
@@ -135,6 +180,9 @@ export const me = asyncHandler(
         correo: true,
         telefono: true,
         direccion: true,
+        direccion_calle: true,
+        direccion_ciudad: true,
+        direccion_codigo_postal: true,
         rol: true,
       },
     });

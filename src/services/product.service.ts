@@ -46,15 +46,15 @@ const getActiveExistingTallas = (
   tallas: Array<{
     talla: string;
     stock: number;
-    activo: boolean;
+    activo?: boolean | null;
   }>
 ): ProductTallaInput[] => {
   return tallas
-    .filter((item) => item.activo)
+    .filter((item) => item.activo ?? true)
     .map((item) => ({
       talla: item.talla,
       stock: item.stock,
-      activo: item.activo,
+      activo: item.activo ?? true,
     }));
 };
 
@@ -109,7 +109,6 @@ const buildProductFilters = (
           usar_tallas: true,
           tallas: {
             some: {
-              activo: true,
               stock: {
                 gt: 0,
               },
@@ -126,11 +125,13 @@ const buildProductFilters = (
 export const productService = {
   getProducts: async (query: ProductQueryInput) => {
     const filters = buildProductFilters(query, false);
+
     return productRepository.findPublicProducts(filters);
   },
 
   getAdminProducts: async (query: ProductQueryInput) => {
     const filters = buildProductFilters(query, true);
+
     return productRepository.findAdminProducts(filters);
   },
 

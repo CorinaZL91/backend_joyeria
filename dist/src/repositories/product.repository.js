@@ -1,8 +1,15 @@
 import { Prisma } from "../../generated/prisma/client.js";
 import { prisma } from "../config/prisma.js";
+const tallasSelect = {
+    id: true,
+    producto_id: true,
+    talla: true,
+    stock: true,
+};
 const productInclude = {
     categoria: true,
     tallas: {
+        select: tallasSelect,
         orderBy: {
             id: "asc",
         },
@@ -11,6 +18,7 @@ const productInclude = {
 const adminProductInclude = {
     categoria: true,
     tallas: {
+        select: tallasSelect,
         orderBy: {
             id: "asc",
         },
@@ -56,7 +64,12 @@ export const productRepository = {
         return prisma.producto.findUnique({
             where: { id },
             include: {
-                tallas: true,
+                tallas: {
+                    select: tallasSelect,
+                    orderBy: {
+                        id: "asc",
+                    },
+                },
             },
         });
     },

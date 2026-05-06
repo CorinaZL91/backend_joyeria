@@ -12,10 +12,8 @@ export declare const productService: {
         tallas: {
             id: number;
             stock: number;
-            activo: boolean;
             talla: string;
             producto_id: number;
-            fecha_creada: Date;
         }[];
     } & {
         nombre: string;
@@ -41,10 +39,8 @@ export declare const productService: {
         tallas: {
             id: number;
             stock: number;
-            activo: boolean;
             talla: string;
             producto_id: number;
-            fecha_creada: Date;
         }[];
     } & {
         nombre: string;
@@ -70,10 +66,8 @@ export declare const productService: {
         tallas: {
             id: number;
             stock: number;
-            activo: boolean;
             talla: string;
             producto_id: number;
-            fecha_creada: Date;
         }[];
     } & {
         nombre: string;
@@ -99,10 +93,8 @@ export declare const productService: {
         tallas: {
             id: number;
             stock: number;
-            activo: boolean;
             talla: string;
             producto_id: number;
-            fecha_creada: Date;
         }[];
     } & {
         nombre: string;
@@ -128,10 +120,8 @@ export declare const productService: {
         tallas: {
             id: number;
             stock: number;
-            activo: boolean;
             talla: string;
             producto_id: number;
-            fecha_creada: Date;
         }[];
     } & {
         nombre: string;
@@ -157,10 +147,8 @@ export declare const productService: {
         tallas: {
             id: number;
             stock: number;
-            activo: boolean;
             talla: string;
             producto_id: number;
-            fecha_creada: Date;
         }[];
     } & {
         nombre: string;

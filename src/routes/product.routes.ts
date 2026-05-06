@@ -8,14 +8,18 @@ import {
   getProducts,
   updateProduct,
 } from "../controller/product.controller.js";
+
 import { authenticate } from "../middlewares/auth.middleware.js";
 import { authorizeRole } from "../middlewares/role.middleware.js";
 import { upload } from "../middlewares/upload.middleware.js";
 import { validate } from "../middlewares/validate.middleware.js";
+
 import {
   createProductSchema,
   updateProductSchema,
+  productQuerySchema,
 } from "../validators/product.schemas.js";
+
 import { RolUsuario } from "../../generated/prisma/client.js";
 
 const router = Router();
@@ -25,7 +29,7 @@ const productIdParamsSchema = z.object({
 });
 
 // catálogo
-router.get("/", getProducts);
+router.get("/", validate({ query: productQuerySchema }), getProducts);
 
 router.get(
   "/admin/all",

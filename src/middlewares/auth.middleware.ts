@@ -9,15 +9,20 @@ export const authenticate = (
   try {
     const authHeader = req.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      res.status(401).json({ message: "Token no proporcionado" });
-      return;
-    }
+    const tokenFromCookie = req.cookies?.token;
 
-    const token = authHeader.split(" ")[1];
+    const tokenFromHeader =
+      authHeader && authHeader.startsWith("Bearer ")
+        ? authHeader.split(" ")[1]
+        : undefined;
+
+    const token = tokenFromCookie || tokenFromHeader;
 
     if (!token) {
-      res.status(401).json({ message: "Token no proporcionado" });
+      res.status(401).json({
+        success: false,
+        message: "Token no proporcionado",
+      });
       return;
     }
 
@@ -30,6 +35,9 @@ export const authenticate = (
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Token inválido o expirado" });
+    res.status(401).json({
+      success: false,
+      message: "Token inválido o expirado",
+    });
   }
 };

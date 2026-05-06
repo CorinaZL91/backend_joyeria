@@ -29,6 +29,7 @@ export declare const ModelName: {
     readonly Usuario: "Usuario";
     readonly Categoria: "Categoria";
     readonly Producto: "Producto";
+    readonly ProductoTalla: "ProductoTalla";
     readonly Pedido: "Pedido";
     readonly DetallePedido: "DetallePedido";
     readonly Carrito: "Carrito";
@@ -50,6 +51,9 @@ export declare const UsuarioScalarFieldEnum: {
     readonly rol: "rol";
     readonly telefono: "telefono";
     readonly direccion: "direccion";
+    readonly direccion_calle: "direccion_calle";
+    readonly direccion_ciudad: "direccion_ciudad";
+    readonly direccion_codigo_postal: "direccion_codigo_postal";
     readonly fecha_registro: "fecha_registro";
 };
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum];
@@ -65,6 +69,7 @@ export declare const ProductoScalarFieldEnum: {
     readonly descripcion: "descripcion";
     readonly precio: "precio";
     readonly material: "material";
+    readonly usar_tallas: "usar_tallas";
     readonly stock: "stock";
     readonly stock_minimo: "stock_minimo";
     readonly imagen_url: "imagen_url";
@@ -74,6 +79,15 @@ export declare const ProductoScalarFieldEnum: {
     readonly categoria_id: "categoria_id";
 };
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum];
+export declare const ProductoTallaScalarFieldEnum: {
+    readonly id: "id";
+    readonly talla: "talla";
+    readonly stock: "stock";
+    readonly activo: "activo";
+    readonly fecha_creada: "fecha_creada";
+    readonly producto_id: "producto_id";
+};
+export type ProductoTallaScalarFieldEnum = (typeof ProductoTallaScalarFieldEnum)[keyof typeof ProductoTallaScalarFieldEnum];
 export declare const PedidoScalarFieldEnum: {
     readonly id: "id";
     readonly usuario_id: "usuario_id";
@@ -81,12 +95,17 @@ export declare const PedidoScalarFieldEnum: {
     readonly total: "total";
     readonly metodo_pago: "metodo_pago";
     readonly estado: "estado";
+    readonly direccion_calle: "direccion_calle";
+    readonly direccion_ciudad: "direccion_ciudad";
+    readonly direccion_codigo_postal: "direccion_codigo_postal";
 };
 export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum];
 export declare const DetallePedidoScalarFieldEnum: {
     readonly id: "id";
     readonly pedido_id: "pedido_id";
     readonly producto_id: "producto_id";
+    readonly producto_talla_id: "producto_talla_id";
+    readonly talla: "talla";
     readonly cantidad: "cantidad";
     readonly precio_unitario: "precio_unitario";
     readonly subtotal: "subtotal";
@@ -96,6 +115,7 @@ export declare const CarritoScalarFieldEnum: {
     readonly id: "id";
     readonly usuario_id: "usuario_id";
     readonly producto_id: "producto_id";
+    readonly producto_talla_id: "producto_talla_id";
     readonly cantidad: "cantidad";
     readonly fecha_agregado: "fecha_agregado";
 };
@@ -103,6 +123,8 @@ export type CarritoScalarFieldEnum = (typeof CarritoScalarFieldEnum)[keyof typeo
 export declare const AlertaStockScalarFieldEnum: {
     readonly id: "id";
     readonly producto_id: "producto_id";
+    readonly producto_talla_id: "producto_talla_id";
+    readonly talla: "talla";
     readonly stock_minimo: "stock_minimo";
     readonly mensaje: "mensaje";
     readonly activa: "activa";

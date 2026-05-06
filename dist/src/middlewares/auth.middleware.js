@@ -2,13 +2,16 @@ import { verifyToken } from "../utils/jwt.js";
 export const authenticate = (req, res, next) => {
     try {
         const authHeader = req.headers.authorization;
-        if (!authHeader || !authHeader.startsWith("Bearer ")) {
-            res.status(401).json({ message: "Token no proporcionado" });
-            return;
-        }
-        const token = authHeader.split(" ")[1];
+        const tokenFromCookie = req.cookies?.token;
+        const tokenFromHeader = authHeader && authHeader.startsWith("Bearer ")
+            ? authHeader.split(" ")[1]
+            : undefined;
+        const token = tokenFromCookie || tokenFromHeader;
         if (!token) {
-            res.status(401).json({ message: "Token no proporcionado" });
+            res.status(401).json({
+                success: false,
+                message: "Token no proporcionado",
+            });
             return;
         }
         const decoded = verifyToken(token);
@@ -19,7 +22,10 @@ export const authenticate = (req, res, next) => {
         next();
     }
     catch (error) {
-        res.status(401).json({ message: "Token inválido o expirado" });
+        res.status(401).json({
+            success: false,
+            message: "Token inválido o expirado",
+        });
     }
 };
 //# sourceMappingURL=auth.middleware.js.map

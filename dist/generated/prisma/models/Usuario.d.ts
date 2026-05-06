@@ -27,6 +27,9 @@ export type UsuarioMinAggregateOutputType = {
     rol: $Enums.RolUsuario | null;
     telefono: string | null;
     direccion: string | null;
+    direccion_calle: string | null;
+    direccion_ciudad: string | null;
+    direccion_codigo_postal: string | null;
     fecha_registro: Date | null;
 };
 export type UsuarioMaxAggregateOutputType = {
@@ -37,6 +40,9 @@ export type UsuarioMaxAggregateOutputType = {
     rol: $Enums.RolUsuario | null;
     telefono: string | null;
     direccion: string | null;
+    direccion_calle: string | null;
+    direccion_ciudad: string | null;
+    direccion_codigo_postal: string | null;
     fecha_registro: Date | null;
 };
 export type UsuarioCountAggregateOutputType = {
@@ -47,6 +53,9 @@ export type UsuarioCountAggregateOutputType = {
     rol: number;
     telefono: number;
     direccion: number;
+    direccion_calle: number;
+    direccion_ciudad: number;
+    direccion_codigo_postal: number;
     fecha_registro: number;
     _all: number;
 };
@@ -64,6 +73,9 @@ export type UsuarioMinAggregateInputType = {
     rol?: true;
     telefono?: true;
     direccion?: true;
+    direccion_calle?: true;
+    direccion_ciudad?: true;
+    direccion_codigo_postal?: true;
     fecha_registro?: true;
 };
 export type UsuarioMaxAggregateInputType = {
@@ -74,6 +86,9 @@ export type UsuarioMaxAggregateInputType = {
     rol?: true;
     telefono?: true;
     direccion?: true;
+    direccion_calle?: true;
+    direccion_ciudad?: true;
+    direccion_codigo_postal?: true;
     fecha_registro?: true;
 };
 export type UsuarioCountAggregateInputType = {
@@ -84,6 +99,9 @@ export type UsuarioCountAggregateInputType = {
     rol?: true;
     telefono?: true;
     direccion?: true;
+    direccion_calle?: true;
+    direccion_ciudad?: true;
+    direccion_codigo_postal?: true;
     fecha_registro?: true;
     _all?: true;
 };
@@ -171,6 +189,9 @@ export type UsuarioGroupByOutputType = {
     rol: $Enums.RolUsuario;
     telefono: string | null;
     direccion: string | null;
+    direccion_calle: string | null;
+    direccion_ciudad: string | null;
+    direccion_codigo_postal: string | null;
     fecha_registro: Date;
     _count: UsuarioCountAggregateOutputType | null;
     _avg: UsuarioAvgAggregateOutputType | null;
@@ -192,6 +213,9 @@ export type UsuarioWhereInput = {
     rol?: Prisma.EnumRolUsuarioFilter<"Usuario"> | $Enums.RolUsuario;
     telefono?: Prisma.StringNullableFilter<"Usuario"> | string | null;
     direccion?: Prisma.StringNullableFilter<"Usuario"> | string | null;
+    direccion_calle?: Prisma.StringNullableFilter<"Usuario"> | string | null;
+    direccion_ciudad?: Prisma.StringNullableFilter<"Usuario"> | string | null;
+    direccion_codigo_postal?: Prisma.StringNullableFilter<"Usuario"> | string | null;
     fecha_registro?: Prisma.DateTimeFilter<"Usuario"> | Date | string;
     pedidos?: Prisma.PedidoListRelationFilter;
     carrito?: Prisma.CarritoListRelationFilter;
@@ -204,6 +228,9 @@ export type UsuarioOrderByWithRelationInput = {
     rol?: Prisma.SortOrder;
     telefono?: Prisma.SortOrderInput | Prisma.SortOrder;
     direccion?: Prisma.SortOrderInput | Prisma.SortOrder;
+    direccion_calle?: Prisma.SortOrderInput | Prisma.SortOrder;
+    direccion_ciudad?: Prisma.SortOrderInput | Prisma.SortOrder;
+    direccion_codigo_postal?: Prisma.SortOrderInput | Prisma.SortOrder;
     fecha_registro?: Prisma.SortOrder;
     pedidos?: Prisma.PedidoOrderByRelationAggregateInput;
     carrito?: Prisma.CarritoOrderByRelationAggregateInput;
@@ -219,6 +246,9 @@ export type UsuarioWhereUniqueInput = Prisma.AtLeast<{
     rol?: Prisma.EnumRolUsuarioFilter<"Usuario"> | $Enums.RolUsuario;
     telefono?: Prisma.StringNullableFilter<"Usuario"> | string | null;
     direccion?: Prisma.StringNullableFilter<"Usuario"> | string | null;
+    direccion_calle?: Prisma.StringNullableFilter<"Usuario"> | string | null;
+    direccion_ciudad?: Prisma.StringNullableFilter<"Usuario"> | string | null;
+    direccion_codigo_postal?: Prisma.StringNullableFilter<"Usuario"> | string | null;
     fecha_registro?: Prisma.DateTimeFilter<"Usuario"> | Date | string;
     pedidos?: Prisma.PedidoListRelationFilter;
     carrito?: Prisma.CarritoListRelationFilter;
@@ -231,6 +261,9 @@ export type UsuarioOrderByWithAggregationInput = {
     rol?: Prisma.SortOrder;
     telefono?: Prisma.SortOrderInput | Prisma.SortOrder;
     direccion?: Prisma.SortOrderInput | Prisma.SortOrder;
+    direccion_calle?: Prisma.SortOrderInput | Prisma.SortOrder;
+    direccion_ciudad?: Prisma.SortOrderInput | Prisma.SortOrder;
+    direccion_codigo_postal?: Prisma.SortOrderInput | Prisma.SortOrder;
     fecha_registro?: Prisma.SortOrder;
     _count?: Prisma.UsuarioCountOrderByAggregateInput;
     _avg?: Prisma.UsuarioAvgOrderByAggregateInput;
@@ -249,6 +282,9 @@ export type UsuarioScalarWhereWithAggregatesInput = {
     rol?: Prisma.EnumRolUsuarioWithAggregatesFilter<"Usuario"> | $Enums.RolUsuario;
     telefono?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null;
     direccion?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null;
+    direccion_calle?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null;
+    direccion_ciudad?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null;
+    direccion_codigo_postal?: Prisma.StringNullableWithAggregatesFilter<"Usuario"> | string | null;
     fecha_registro?: Prisma.DateTimeWithAggregatesFilter<"Usuario"> | Date | string;
 };
 export type UsuarioCreateInput = {
@@ -258,6 +294,9 @@ export type UsuarioCreateInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
     pedidos?: Prisma.PedidoCreateNestedManyWithoutUsuarioInput;
     carrito?: Prisma.CarritoCreateNestedManyWithoutUsuarioInput;
@@ -270,6 +309,9 @@ export type UsuarioUncheckedCreateInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
     pedidos?: Prisma.PedidoUncheckedCreateNestedManyWithoutUsuarioInput;
     carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutUsuarioInput;
@@ -281,6 +323,9 @@ export type UsuarioUpdateInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     pedidos?: Prisma.PedidoUpdateManyWithoutUsuarioNestedInput;
     carrito?: Prisma.CarritoUpdateManyWithoutUsuarioNestedInput;
@@ -293,6 +338,9 @@ export type UsuarioUncheckedUpdateInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     pedidos?: Prisma.PedidoUncheckedUpdateManyWithoutUsuarioNestedInput;
     carrito?: Prisma.CarritoUncheckedUpdateManyWithoutUsuarioNestedInput;
@@ -305,6 +353,9 @@ export type UsuarioCreateManyInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
 };
 export type UsuarioUpdateManyMutationInput = {
@@ -314,6 +365,9 @@ export type UsuarioUpdateManyMutationInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type UsuarioUncheckedUpdateManyInput = {
@@ -324,6 +378,9 @@ export type UsuarioUncheckedUpdateManyInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type UsuarioCountOrderByAggregateInput = {
@@ -334,6 +391,9 @@ export type UsuarioCountOrderByAggregateInput = {
     rol?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
     direccion?: Prisma.SortOrder;
+    direccion_calle?: Prisma.SortOrder;
+    direccion_ciudad?: Prisma.SortOrder;
+    direccion_codigo_postal?: Prisma.SortOrder;
     fecha_registro?: Prisma.SortOrder;
 };
 export type UsuarioAvgOrderByAggregateInput = {
@@ -347,6 +407,9 @@ export type UsuarioMaxOrderByAggregateInput = {
     rol?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
     direccion?: Prisma.SortOrder;
+    direccion_calle?: Prisma.SortOrder;
+    direccion_ciudad?: Prisma.SortOrder;
+    direccion_codigo_postal?: Prisma.SortOrder;
     fecha_registro?: Prisma.SortOrder;
 };
 export type UsuarioMinOrderByAggregateInput = {
@@ -357,6 +420,9 @@ export type UsuarioMinOrderByAggregateInput = {
     rol?: Prisma.SortOrder;
     telefono?: Prisma.SortOrder;
     direccion?: Prisma.SortOrder;
+    direccion_calle?: Prisma.SortOrder;
+    direccion_ciudad?: Prisma.SortOrder;
+    direccion_codigo_postal?: Prisma.SortOrder;
     fecha_registro?: Prisma.SortOrder;
 };
 export type UsuarioSumOrderByAggregateInput = {
@@ -416,6 +482,9 @@ export type UsuarioCreateWithoutPedidosInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
     carrito?: Prisma.CarritoCreateNestedManyWithoutUsuarioInput;
 };
@@ -427,6 +496,9 @@ export type UsuarioUncheckedCreateWithoutPedidosInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
     carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutUsuarioInput;
 };
@@ -450,6 +522,9 @@ export type UsuarioUpdateWithoutPedidosInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     carrito?: Prisma.CarritoUpdateManyWithoutUsuarioNestedInput;
 };
@@ -461,6 +536,9 @@ export type UsuarioUncheckedUpdateWithoutPedidosInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     carrito?: Prisma.CarritoUncheckedUpdateManyWithoutUsuarioNestedInput;
 };
@@ -471,6 +549,9 @@ export type UsuarioCreateWithoutCarritoInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
     pedidos?: Prisma.PedidoCreateNestedManyWithoutUsuarioInput;
 };
@@ -482,6 +563,9 @@ export type UsuarioUncheckedCreateWithoutCarritoInput = {
     rol?: $Enums.RolUsuario;
     telefono?: string | null;
     direccion?: string | null;
+    direccion_calle?: string | null;
+    direccion_ciudad?: string | null;
+    direccion_codigo_postal?: string | null;
     fecha_registro?: Date | string;
     pedidos?: Prisma.PedidoUncheckedCreateNestedManyWithoutUsuarioInput;
 };
@@ -505,6 +589,9 @@ export type UsuarioUpdateWithoutCarritoInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     pedidos?: Prisma.PedidoUpdateManyWithoutUsuarioNestedInput;
 };
@@ -516,6 +603,9 @@ export type UsuarioUncheckedUpdateWithoutCarritoInput = {
     rol?: Prisma.EnumRolUsuarioFieldUpdateOperationsInput | $Enums.RolUsuario;
     telefono?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     direccion?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_calle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_ciudad?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    direccion_codigo_postal?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     fecha_registro?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     pedidos?: Prisma.PedidoUncheckedUpdateManyWithoutUsuarioNestedInput;
 };
@@ -559,6 +649,9 @@ export type UsuarioSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     rol?: boolean;
     telefono?: boolean;
     direccion?: boolean;
+    direccion_calle?: boolean;
+    direccion_ciudad?: boolean;
+    direccion_codigo_postal?: boolean;
     fecha_registro?: boolean;
     pedidos?: boolean | Prisma.Usuario$pedidosArgs<ExtArgs>;
     carrito?: boolean | Prisma.Usuario$carritoArgs<ExtArgs>;
@@ -572,6 +665,9 @@ export type UsuarioSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
     rol?: boolean;
     telefono?: boolean;
     direccion?: boolean;
+    direccion_calle?: boolean;
+    direccion_ciudad?: boolean;
+    direccion_codigo_postal?: boolean;
     fecha_registro?: boolean;
 }, ExtArgs["result"]["usuario"]>;
 export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -582,6 +678,9 @@ export type UsuarioSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
     rol?: boolean;
     telefono?: boolean;
     direccion?: boolean;
+    direccion_calle?: boolean;
+    direccion_ciudad?: boolean;
+    direccion_codigo_postal?: boolean;
     fecha_registro?: boolean;
 }, ExtArgs["result"]["usuario"]>;
 export type UsuarioSelectScalar = {
@@ -592,9 +691,12 @@ export type UsuarioSelectScalar = {
     rol?: boolean;
     telefono?: boolean;
     direccion?: boolean;
+    direccion_calle?: boolean;
+    direccion_ciudad?: boolean;
+    direccion_codigo_postal?: boolean;
     fecha_registro?: boolean;
 };
-export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "correo" | "password_hash" | "rol" | "telefono" | "direccion" | "fecha_registro", ExtArgs["result"]["usuario"]>;
+export type UsuarioOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "correo" | "password_hash" | "rol" | "telefono" | "direccion" | "direccion_calle" | "direccion_ciudad" | "direccion_codigo_postal" | "fecha_registro", ExtArgs["result"]["usuario"]>;
 export type UsuarioInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     pedidos?: boolean | Prisma.Usuario$pedidosArgs<ExtArgs>;
     carrito?: boolean | Prisma.Usuario$carritoArgs<ExtArgs>;
@@ -616,6 +718,9 @@ export type $UsuarioPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
         rol: $Enums.RolUsuario;
         telefono: string | null;
         direccion: string | null;
+        direccion_calle: string | null;
+        direccion_ciudad: string | null;
+        direccion_codigo_postal: string | null;
         fecha_registro: Date;
     }, ExtArgs["result"]["usuario"]>;
     composites: {};
@@ -980,6 +1085,9 @@ export interface UsuarioFieldRefs {
     readonly rol: Prisma.FieldRef<"Usuario", 'RolUsuario'>;
     readonly telefono: Prisma.FieldRef<"Usuario", 'String'>;
     readonly direccion: Prisma.FieldRef<"Usuario", 'String'>;
+    readonly direccion_calle: Prisma.FieldRef<"Usuario", 'String'>;
+    readonly direccion_ciudad: Prisma.FieldRef<"Usuario", 'String'>;
+    readonly direccion_codigo_postal: Prisma.FieldRef<"Usuario", 'String'>;
     readonly fecha_registro: Prisma.FieldRef<"Usuario", 'DateTime'>;
 }
 /**

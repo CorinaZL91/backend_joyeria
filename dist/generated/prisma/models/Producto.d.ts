@@ -32,6 +32,7 @@ export type ProductoMinAggregateOutputType = {
     descripcion: string | null;
     precio: runtime.Decimal | null;
     material: string | null;
+    usar_tallas: boolean | null;
     stock: number | null;
     stock_minimo: number | null;
     imagen_url: string | null;
@@ -46,6 +47,7 @@ export type ProductoMaxAggregateOutputType = {
     descripcion: string | null;
     precio: runtime.Decimal | null;
     material: string | null;
+    usar_tallas: boolean | null;
     stock: number | null;
     stock_minimo: number | null;
     imagen_url: string | null;
@@ -60,6 +62,7 @@ export type ProductoCountAggregateOutputType = {
     descripcion: number;
     precio: number;
     material: number;
+    usar_tallas: number;
     stock: number;
     stock_minimo: number;
     imagen_url: number;
@@ -89,6 +92,7 @@ export type ProductoMinAggregateInputType = {
     descripcion?: true;
     precio?: true;
     material?: true;
+    usar_tallas?: true;
     stock?: true;
     stock_minimo?: true;
     imagen_url?: true;
@@ -103,6 +107,7 @@ export type ProductoMaxAggregateInputType = {
     descripcion?: true;
     precio?: true;
     material?: true;
+    usar_tallas?: true;
     stock?: true;
     stock_minimo?: true;
     imagen_url?: true;
@@ -117,6 +122,7 @@ export type ProductoCountAggregateInputType = {
     descripcion?: true;
     precio?: true;
     material?: true;
+    usar_tallas?: true;
     stock?: true;
     stock_minimo?: true;
     imagen_url?: true;
@@ -208,7 +214,8 @@ export type ProductoGroupByOutputType = {
     descripcion: string;
     precio: runtime.Decimal;
     material: string;
-    stock: number;
+    usar_tallas: boolean;
+    stock: number | null;
     stock_minimo: number;
     imagen_url: string | null;
     imagen_public_id: string | null;
@@ -233,7 +240,8 @@ export type ProductoWhereInput = {
     descripcion?: Prisma.StringFilter<"Producto"> | string;
     precio?: Prisma.DecimalFilter<"Producto"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFilter<"Producto"> | string;
-    stock?: Prisma.IntFilter<"Producto"> | number;
+    usar_tallas?: Prisma.BoolFilter<"Producto"> | boolean;
+    stock?: Prisma.IntNullableFilter<"Producto"> | number | null;
     stock_minimo?: Prisma.IntFilter<"Producto"> | number;
     imagen_url?: Prisma.StringNullableFilter<"Producto"> | string | null;
     imagen_public_id?: Prisma.StringNullableFilter<"Producto"> | string | null;
@@ -241,6 +249,7 @@ export type ProductoWhereInput = {
     fecha_creacion?: Prisma.DateTimeFilter<"Producto"> | Date | string;
     categoria_id?: Prisma.IntFilter<"Producto"> | number;
     categoria?: Prisma.XOR<Prisma.CategoriaScalarRelationFilter, Prisma.CategoriaWhereInput>;
+    tallas?: Prisma.ProductoTallaListRelationFilter;
     detallesPedido?: Prisma.DetallePedidoListRelationFilter;
     carrito?: Prisma.CarritoListRelationFilter;
     alertasStock?: Prisma.AlertaStockListRelationFilter;
@@ -251,7 +260,8 @@ export type ProductoOrderByWithRelationInput = {
     descripcion?: Prisma.SortOrder;
     precio?: Prisma.SortOrder;
     material?: Prisma.SortOrder;
-    stock?: Prisma.SortOrder;
+    usar_tallas?: Prisma.SortOrder;
+    stock?: Prisma.SortOrderInput | Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     imagen_url?: Prisma.SortOrderInput | Prisma.SortOrder;
     imagen_public_id?: Prisma.SortOrderInput | Prisma.SortOrder;
@@ -259,6 +269,7 @@ export type ProductoOrderByWithRelationInput = {
     fecha_creacion?: Prisma.SortOrder;
     categoria_id?: Prisma.SortOrder;
     categoria?: Prisma.CategoriaOrderByWithRelationInput;
+    tallas?: Prisma.ProductoTallaOrderByRelationAggregateInput;
     detallesPedido?: Prisma.DetallePedidoOrderByRelationAggregateInput;
     carrito?: Prisma.CarritoOrderByRelationAggregateInput;
     alertasStock?: Prisma.AlertaStockOrderByRelationAggregateInput;
@@ -272,7 +283,8 @@ export type ProductoWhereUniqueInput = Prisma.AtLeast<{
     descripcion?: Prisma.StringFilter<"Producto"> | string;
     precio?: Prisma.DecimalFilter<"Producto"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFilter<"Producto"> | string;
-    stock?: Prisma.IntFilter<"Producto"> | number;
+    usar_tallas?: Prisma.BoolFilter<"Producto"> | boolean;
+    stock?: Prisma.IntNullableFilter<"Producto"> | number | null;
     stock_minimo?: Prisma.IntFilter<"Producto"> | number;
     imagen_url?: Prisma.StringNullableFilter<"Producto"> | string | null;
     imagen_public_id?: Prisma.StringNullableFilter<"Producto"> | string | null;
@@ -280,6 +292,7 @@ export type ProductoWhereUniqueInput = Prisma.AtLeast<{
     fecha_creacion?: Prisma.DateTimeFilter<"Producto"> | Date | string;
     categoria_id?: Prisma.IntFilter<"Producto"> | number;
     categoria?: Prisma.XOR<Prisma.CategoriaScalarRelationFilter, Prisma.CategoriaWhereInput>;
+    tallas?: Prisma.ProductoTallaListRelationFilter;
     detallesPedido?: Prisma.DetallePedidoListRelationFilter;
     carrito?: Prisma.CarritoListRelationFilter;
     alertasStock?: Prisma.AlertaStockListRelationFilter;
@@ -290,7 +303,8 @@ export type ProductoOrderByWithAggregationInput = {
     descripcion?: Prisma.SortOrder;
     precio?: Prisma.SortOrder;
     material?: Prisma.SortOrder;
-    stock?: Prisma.SortOrder;
+    usar_tallas?: Prisma.SortOrder;
+    stock?: Prisma.SortOrderInput | Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     imagen_url?: Prisma.SortOrderInput | Prisma.SortOrder;
     imagen_public_id?: Prisma.SortOrderInput | Prisma.SortOrder;
@@ -312,7 +326,8 @@ export type ProductoScalarWhereWithAggregatesInput = {
     descripcion?: Prisma.StringWithAggregatesFilter<"Producto"> | string;
     precio?: Prisma.DecimalWithAggregatesFilter<"Producto"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringWithAggregatesFilter<"Producto"> | string;
-    stock?: Prisma.IntWithAggregatesFilter<"Producto"> | number;
+    usar_tallas?: Prisma.BoolWithAggregatesFilter<"Producto"> | boolean;
+    stock?: Prisma.IntNullableWithAggregatesFilter<"Producto"> | number | null;
     stock_minimo?: Prisma.IntWithAggregatesFilter<"Producto"> | number;
     imagen_url?: Prisma.StringNullableWithAggregatesFilter<"Producto"> | string | null;
     imagen_public_id?: Prisma.StringNullableWithAggregatesFilter<"Producto"> | string | null;
@@ -325,13 +340,15 @@ export type ProductoCreateInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria: Prisma.CategoriaCreateNestedOneWithoutProductosInput;
+    tallas?: Prisma.ProductoTallaCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockCreateNestedManyWithoutProductoInput;
@@ -342,13 +359,15 @@ export type ProductoUncheckedCreateInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria_id: number;
+    tallas?: Prisma.ProductoTallaUncheckedCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockUncheckedCreateNestedManyWithoutProductoInput;
@@ -358,13 +377,15 @@ export type ProductoUpdateInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria?: Prisma.CategoriaUpdateOneRequiredWithoutProductosNestedInput;
+    tallas?: Prisma.ProductoTallaUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUpdateManyWithoutProductoNestedInput;
@@ -375,13 +396,15 @@ export type ProductoUncheckedUpdateInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    tallas?: Prisma.ProductoTallaUncheckedUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUncheckedUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUncheckedUpdateManyWithoutProductoNestedInput;
@@ -392,7 +415,8 @@ export type ProductoCreateManyInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
@@ -405,7 +429,8 @@ export type ProductoUpdateManyMutationInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -418,7 +443,8 @@ export type ProductoUncheckedUpdateManyInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -440,6 +466,7 @@ export type ProductoCountOrderByAggregateInput = {
     descripcion?: Prisma.SortOrder;
     precio?: Prisma.SortOrder;
     material?: Prisma.SortOrder;
+    usar_tallas?: Prisma.SortOrder;
     stock?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     imagen_url?: Prisma.SortOrder;
@@ -461,6 +488,7 @@ export type ProductoMaxOrderByAggregateInput = {
     descripcion?: Prisma.SortOrder;
     precio?: Prisma.SortOrder;
     material?: Prisma.SortOrder;
+    usar_tallas?: Prisma.SortOrder;
     stock?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     imagen_url?: Prisma.SortOrder;
@@ -475,6 +503,7 @@ export type ProductoMinOrderByAggregateInput = {
     descripcion?: Prisma.SortOrder;
     precio?: Prisma.SortOrder;
     material?: Prisma.SortOrder;
+    usar_tallas?: Prisma.SortOrder;
     stock?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     imagen_url?: Prisma.SortOrder;
@@ -542,6 +571,25 @@ export type DecimalFieldUpdateOperationsInput = {
 export type BoolFieldUpdateOperationsInput = {
     set?: boolean;
 };
+export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null;
+    increment?: number;
+    decrement?: number;
+    multiply?: number;
+    divide?: number;
+};
+export type ProductoCreateNestedOneWithoutTallasInput = {
+    create?: Prisma.XOR<Prisma.ProductoCreateWithoutTallasInput, Prisma.ProductoUncheckedCreateWithoutTallasInput>;
+    connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutTallasInput;
+    connect?: Prisma.ProductoWhereUniqueInput;
+};
+export type ProductoUpdateOneRequiredWithoutTallasNestedInput = {
+    create?: Prisma.XOR<Prisma.ProductoCreateWithoutTallasInput, Prisma.ProductoUncheckedCreateWithoutTallasInput>;
+    connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutTallasInput;
+    upsert?: Prisma.ProductoUpsertWithoutTallasInput;
+    connect?: Prisma.ProductoWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.ProductoUpdateToOneWithWhereWithoutTallasInput, Prisma.ProductoUpdateWithoutTallasInput>, Prisma.ProductoUncheckedUpdateWithoutTallasInput>;
+};
 export type ProductoCreateNestedOneWithoutDetallesPedidoInput = {
     create?: Prisma.XOR<Prisma.ProductoCreateWithoutDetallesPedidoInput, Prisma.ProductoUncheckedCreateWithoutDetallesPedidoInput>;
     connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutDetallesPedidoInput;
@@ -583,12 +631,14 @@ export type ProductoCreateWithoutCategoriaInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
+    tallas?: Prisma.ProductoTallaCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockCreateNestedManyWithoutProductoInput;
@@ -599,12 +649,14 @@ export type ProductoUncheckedCreateWithoutCategoriaInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
+    tallas?: Prisma.ProductoTallaUncheckedCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockUncheckedCreateNestedManyWithoutProductoInput;
@@ -639,7 +691,8 @@ export type ProductoScalarWhereInput = {
     descripcion?: Prisma.StringFilter<"Producto"> | string;
     precio?: Prisma.DecimalFilter<"Producto"> | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFilter<"Producto"> | string;
-    stock?: Prisma.IntFilter<"Producto"> | number;
+    usar_tallas?: Prisma.BoolFilter<"Producto"> | boolean;
+    stock?: Prisma.IntNullableFilter<"Producto"> | number | null;
     stock_minimo?: Prisma.IntFilter<"Producto"> | number;
     imagen_url?: Prisma.StringNullableFilter<"Producto"> | string | null;
     imagen_public_id?: Prisma.StringNullableFilter<"Producto"> | string | null;
@@ -647,18 +700,103 @@ export type ProductoScalarWhereInput = {
     fecha_creacion?: Prisma.DateTimeFilter<"Producto"> | Date | string;
     categoria_id?: Prisma.IntFilter<"Producto"> | number;
 };
-export type ProductoCreateWithoutDetallesPedidoInput = {
+export type ProductoCreateWithoutTallasInput = {
     nombre: string;
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria: Prisma.CategoriaCreateNestedOneWithoutProductosInput;
+    detallesPedido?: Prisma.DetallePedidoCreateNestedManyWithoutProductoInput;
+    carrito?: Prisma.CarritoCreateNestedManyWithoutProductoInput;
+    alertasStock?: Prisma.AlertaStockCreateNestedManyWithoutProductoInput;
+};
+export type ProductoUncheckedCreateWithoutTallasInput = {
+    id?: number;
+    nombre: string;
+    descripcion: string;
+    precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    material?: string;
+    usar_tallas?: boolean;
+    stock?: number | null;
+    stock_minimo?: number;
+    imagen_url?: string | null;
+    imagen_public_id?: string | null;
+    activo?: boolean;
+    fecha_creacion?: Date | string;
+    categoria_id: number;
+    detallesPedido?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutProductoInput;
+    carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutProductoInput;
+    alertasStock?: Prisma.AlertaStockUncheckedCreateNestedManyWithoutProductoInput;
+};
+export type ProductoCreateOrConnectWithoutTallasInput = {
+    where: Prisma.ProductoWhereUniqueInput;
+    create: Prisma.XOR<Prisma.ProductoCreateWithoutTallasInput, Prisma.ProductoUncheckedCreateWithoutTallasInput>;
+};
+export type ProductoUpsertWithoutTallasInput = {
+    update: Prisma.XOR<Prisma.ProductoUpdateWithoutTallasInput, Prisma.ProductoUncheckedUpdateWithoutTallasInput>;
+    create: Prisma.XOR<Prisma.ProductoCreateWithoutTallasInput, Prisma.ProductoUncheckedCreateWithoutTallasInput>;
+    where?: Prisma.ProductoWhereInput;
+};
+export type ProductoUpdateToOneWithWhereWithoutTallasInput = {
+    where?: Prisma.ProductoWhereInput;
+    data: Prisma.XOR<Prisma.ProductoUpdateWithoutTallasInput, Prisma.ProductoUncheckedUpdateWithoutTallasInput>;
+};
+export type ProductoUpdateWithoutTallasInput = {
+    nombre?: Prisma.StringFieldUpdateOperationsInput | string;
+    descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
+    precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    material?: Prisma.StringFieldUpdateOperationsInput | string;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
+    imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    categoria?: Prisma.CategoriaUpdateOneRequiredWithoutProductosNestedInput;
+    detallesPedido?: Prisma.DetallePedidoUpdateManyWithoutProductoNestedInput;
+    carrito?: Prisma.CarritoUpdateManyWithoutProductoNestedInput;
+    alertasStock?: Prisma.AlertaStockUpdateManyWithoutProductoNestedInput;
+};
+export type ProductoUncheckedUpdateWithoutTallasInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    nombre?: Prisma.StringFieldUpdateOperationsInput | string;
+    descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
+    precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
+    material?: Prisma.StringFieldUpdateOperationsInput | string;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
+    imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    categoria_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    detallesPedido?: Prisma.DetallePedidoUncheckedUpdateManyWithoutProductoNestedInput;
+    carrito?: Prisma.CarritoUncheckedUpdateManyWithoutProductoNestedInput;
+    alertasStock?: Prisma.AlertaStockUncheckedUpdateManyWithoutProductoNestedInput;
+};
+export type ProductoCreateWithoutDetallesPedidoInput = {
+    nombre: string;
+    descripcion: string;
+    precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
+    material?: string;
+    usar_tallas?: boolean;
+    stock?: number | null;
+    stock_minimo?: number;
+    imagen_url?: string | null;
+    imagen_public_id?: string | null;
+    activo?: boolean;
+    fecha_creacion?: Date | string;
+    categoria: Prisma.CategoriaCreateNestedOneWithoutProductosInput;
+    tallas?: Prisma.ProductoTallaCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockCreateNestedManyWithoutProductoInput;
 };
@@ -668,13 +806,15 @@ export type ProductoUncheckedCreateWithoutDetallesPedidoInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria_id: number;
+    tallas?: Prisma.ProductoTallaUncheckedCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockUncheckedCreateNestedManyWithoutProductoInput;
 };
@@ -696,13 +836,15 @@ export type ProductoUpdateWithoutDetallesPedidoInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria?: Prisma.CategoriaUpdateOneRequiredWithoutProductosNestedInput;
+    tallas?: Prisma.ProductoTallaUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUpdateManyWithoutProductoNestedInput;
 };
@@ -712,13 +854,15 @@ export type ProductoUncheckedUpdateWithoutDetallesPedidoInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    tallas?: Prisma.ProductoTallaUncheckedUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUncheckedUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUncheckedUpdateManyWithoutProductoNestedInput;
 };
@@ -727,13 +871,15 @@ export type ProductoCreateWithoutCarritoInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria: Prisma.CategoriaCreateNestedOneWithoutProductosInput;
+    tallas?: Prisma.ProductoTallaCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockCreateNestedManyWithoutProductoInput;
 };
@@ -743,13 +889,15 @@ export type ProductoUncheckedCreateWithoutCarritoInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria_id: number;
+    tallas?: Prisma.ProductoTallaUncheckedCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutProductoInput;
     alertasStock?: Prisma.AlertaStockUncheckedCreateNestedManyWithoutProductoInput;
 };
@@ -771,13 +919,15 @@ export type ProductoUpdateWithoutCarritoInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria?: Prisma.CategoriaUpdateOneRequiredWithoutProductosNestedInput;
+    tallas?: Prisma.ProductoTallaUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUpdateManyWithoutProductoNestedInput;
 };
@@ -787,13 +937,15 @@ export type ProductoUncheckedUpdateWithoutCarritoInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    tallas?: Prisma.ProductoTallaUncheckedUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUncheckedUpdateManyWithoutProductoNestedInput;
 };
@@ -802,13 +954,15 @@ export type ProductoCreateWithoutAlertasStockInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria: Prisma.CategoriaCreateNestedOneWithoutProductosInput;
+    tallas?: Prisma.ProductoTallaCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoCreateNestedManyWithoutProductoInput;
 };
@@ -818,13 +972,15 @@ export type ProductoUncheckedCreateWithoutAlertasStockInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
     activo?: boolean;
     fecha_creacion?: Date | string;
     categoria_id: number;
+    tallas?: Prisma.ProductoTallaUncheckedCreateNestedManyWithoutProductoInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedCreateNestedManyWithoutProductoInput;
     carrito?: Prisma.CarritoUncheckedCreateNestedManyWithoutProductoInput;
 };
@@ -846,13 +1002,15 @@ export type ProductoUpdateWithoutAlertasStockInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria?: Prisma.CategoriaUpdateOneRequiredWithoutProductosNestedInput;
+    tallas?: Prisma.ProductoTallaUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUpdateManyWithoutProductoNestedInput;
 };
@@ -862,13 +1020,15 @@ export type ProductoUncheckedUpdateWithoutAlertasStockInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     categoria_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    tallas?: Prisma.ProductoTallaUncheckedUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUncheckedUpdateManyWithoutProductoNestedInput;
 };
@@ -878,7 +1038,8 @@ export type ProductoCreateManyCategoriaInput = {
     descripcion: string;
     precio: runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: string;
-    stock: number;
+    usar_tallas?: boolean;
+    stock?: number | null;
     stock_minimo?: number;
     imagen_url?: string | null;
     imagen_public_id?: string | null;
@@ -890,12 +1051,14 @@ export type ProductoUpdateWithoutCategoriaInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    tallas?: Prisma.ProductoTallaUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUpdateManyWithoutProductoNestedInput;
@@ -906,12 +1069,14 @@ export type ProductoUncheckedUpdateWithoutCategoriaInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activo?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    tallas?: Prisma.ProductoTallaUncheckedUpdateManyWithoutProductoNestedInput;
     detallesPedido?: Prisma.DetallePedidoUncheckedUpdateManyWithoutProductoNestedInput;
     carrito?: Prisma.CarritoUncheckedUpdateManyWithoutProductoNestedInput;
     alertasStock?: Prisma.AlertaStockUncheckedUpdateManyWithoutProductoNestedInput;
@@ -922,7 +1087,8 @@ export type ProductoUncheckedUpdateManyWithoutCategoriaInput = {
     descripcion?: Prisma.StringFieldUpdateOperationsInput | string;
     precio?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string;
     material?: Prisma.StringFieldUpdateOperationsInput | string;
-    stock?: Prisma.IntFieldUpdateOperationsInput | number;
+    usar_tallas?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     imagen_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     imagen_public_id?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
@@ -933,11 +1099,13 @@ export type ProductoUncheckedUpdateManyWithoutCategoriaInput = {
  * Count Type ProductoCountOutputType
  */
 export type ProductoCountOutputType = {
+    tallas: number;
     detallesPedido: number;
     carrito: number;
     alertasStock: number;
 };
 export type ProductoCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    tallas?: boolean | ProductoCountOutputTypeCountTallasArgs;
     detallesPedido?: boolean | ProductoCountOutputTypeCountDetallesPedidoArgs;
     carrito?: boolean | ProductoCountOutputTypeCountCarritoArgs;
     alertasStock?: boolean | ProductoCountOutputTypeCountAlertasStockArgs;
@@ -950,6 +1118,12 @@ export type ProductoCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
      * Select specific fields to fetch from the ProductoCountOutputType
      */
     select?: Prisma.ProductoCountOutputTypeSelect<ExtArgs> | null;
+};
+/**
+ * ProductoCountOutputType without action
+ */
+export type ProductoCountOutputTypeCountTallasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    where?: Prisma.ProductoTallaWhereInput;
 };
 /**
  * ProductoCountOutputType without action
@@ -975,6 +1149,7 @@ export type ProductoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
     descripcion?: boolean;
     precio?: boolean;
     material?: boolean;
+    usar_tallas?: boolean;
     stock?: boolean;
     stock_minimo?: boolean;
     imagen_url?: boolean;
@@ -983,6 +1158,7 @@ export type ProductoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
     fecha_creacion?: boolean;
     categoria_id?: boolean;
     categoria?: boolean | Prisma.CategoriaDefaultArgs<ExtArgs>;
+    tallas?: boolean | Prisma.Producto$tallasArgs<ExtArgs>;
     detallesPedido?: boolean | Prisma.Producto$detallesPedidoArgs<ExtArgs>;
     carrito?: boolean | Prisma.Producto$carritoArgs<ExtArgs>;
     alertasStock?: boolean | Prisma.Producto$alertasStockArgs<ExtArgs>;
@@ -994,6 +1170,7 @@ export type ProductoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
     descripcion?: boolean;
     precio?: boolean;
     material?: boolean;
+    usar_tallas?: boolean;
     stock?: boolean;
     stock_minimo?: boolean;
     imagen_url?: boolean;
@@ -1009,6 +1186,7 @@ export type ProductoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
     descripcion?: boolean;
     precio?: boolean;
     material?: boolean;
+    usar_tallas?: boolean;
     stock?: boolean;
     stock_minimo?: boolean;
     imagen_url?: boolean;
@@ -1024,6 +1202,7 @@ export type ProductoSelectScalar = {
     descripcion?: boolean;
     precio?: boolean;
     material?: boolean;
+    usar_tallas?: boolean;
     stock?: boolean;
     stock_minimo?: boolean;
     imagen_url?: boolean;
@@ -1032,9 +1211,10 @@ export type ProductoSelectScalar = {
     fecha_creacion?: boolean;
     categoria_id?: boolean;
 };
-export type ProductoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "precio" | "material" | "stock" | "stock_minimo" | "imagen_url" | "imagen_public_id" | "activo" | "fecha_creacion" | "categoria_id", ExtArgs["result"]["producto"]>;
+export type ProductoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nombre" | "descripcion" | "precio" | "material" | "usar_tallas" | "stock" | "stock_minimo" | "imagen_url" | "imagen_public_id" | "activo" | "fecha_creacion" | "categoria_id", ExtArgs["result"]["producto"]>;
 export type ProductoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     categoria?: boolean | Prisma.CategoriaDefaultArgs<ExtArgs>;
+    tallas?: boolean | Prisma.Producto$tallasArgs<ExtArgs>;
     detallesPedido?: boolean | Prisma.Producto$detallesPedidoArgs<ExtArgs>;
     carrito?: boolean | Prisma.Producto$carritoArgs<ExtArgs>;
     alertasStock?: boolean | Prisma.Producto$alertasStockArgs<ExtArgs>;
@@ -1050,6 +1230,7 @@ export type $ProductoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     name: "Producto";
     objects: {
         categoria: Prisma.$CategoriaPayload<ExtArgs>;
+        tallas: Prisma.$ProductoTallaPayload<ExtArgs>[];
         detallesPedido: Prisma.$DetallePedidoPayload<ExtArgs>[];
         carrito: Prisma.$CarritoPayload<ExtArgs>[];
         alertasStock: Prisma.$AlertaStockPayload<ExtArgs>[];
@@ -1060,7 +1241,8 @@ export type $ProductoPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
         descripcion: string;
         precio: runtime.Decimal;
         material: string;
-        stock: number;
+        usar_tallas: boolean;
+        stock: number | null;
         stock_minimo: number;
         imagen_url: string | null;
         imagen_public_id: string | null;
@@ -1397,6 +1579,7 @@ export interface ProductoDelegate<ExtArgs extends runtime.Types.Extensions.Inter
 export interface Prisma__ProductoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     categoria<T extends Prisma.CategoriaDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoriaDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoriaClient<runtime.Types.Result.GetResult<Prisma.$CategoriaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    tallas<T extends Prisma.Producto$tallasArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$tallasArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductoTallaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     detallesPedido<T extends Prisma.Producto$detallesPedidoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$detallesPedidoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DetallePedidoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     carrito<T extends Prisma.Producto$carritoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$carritoArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CarritoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
     alertasStock<T extends Prisma.Producto$alertasStockArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Producto$alertasStockArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AlertaStockPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
@@ -1430,6 +1613,7 @@ export interface ProductoFieldRefs {
     readonly descripcion: Prisma.FieldRef<"Producto", 'String'>;
     readonly precio: Prisma.FieldRef<"Producto", 'Decimal'>;
     readonly material: Prisma.FieldRef<"Producto", 'String'>;
+    readonly usar_tallas: Prisma.FieldRef<"Producto", 'Boolean'>;
     readonly stock: Prisma.FieldRef<"Producto", 'Int'>;
     readonly stock_minimo: Prisma.FieldRef<"Producto", 'Int'>;
     readonly imagen_url: Prisma.FieldRef<"Producto", 'String'>;
@@ -1814,6 +1998,29 @@ export type ProductoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
      * Limit how many Productos to delete.
      */
     limit?: number;
+};
+/**
+ * Producto.tallas
+ */
+export type Producto$tallasArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductoTalla
+     */
+    select?: Prisma.ProductoTallaSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductoTalla
+     */
+    omit?: Prisma.ProductoTallaOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProductoTallaInclude<ExtArgs> | null;
+    where?: Prisma.ProductoTallaWhereInput;
+    orderBy?: Prisma.ProductoTallaOrderByWithRelationInput | Prisma.ProductoTallaOrderByWithRelationInput[];
+    cursor?: Prisma.ProductoTallaWhereUniqueInput;
+    take?: number;
+    skip?: number;
+    distinct?: Prisma.ProductoTallaScalarFieldEnum | Prisma.ProductoTallaScalarFieldEnum[];
 };
 /**
  * Producto.detallesPedido

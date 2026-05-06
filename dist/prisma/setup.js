@@ -23,13 +23,42 @@ const adminEmail = envAdminEmail;
 const adminPassword = envAdminPassword;
 const adapter = new PrismaPg({ connectionString });
 const prisma = new PrismaClient({ adapter });
+async function syncUsuarioIdSequence() {
+    const result = await prisma.usuario.aggregate({
+        _max: {
+            id: true,
+        },
+    });
+    const maxId = result._max.id ?? 0;
+    const nextId = maxId + 1;
+    await prisma.$executeRawUnsafe(`
+    SELECT setval(
+      pg_get_serial_sequence('"Usuario"', 'id'),
+      ${nextId},
+      false
+    );
+  `);
+    console.log(`Secuencia de Usuario.id ajustada a ${nextId}`);
+}
 async function main() {
     console.log("Inicializando sistema...");
+    const hashedPassword = await bcrypt.hash(adminPassword, 12);
     const existingAdmin = await prisma.usuario.findUnique({
         where: { correo: adminEmail },
     });
-    if (!existingAdmin) {
-        const hashedPassword = await bcrypt.hash(adminPassword, 12);
+    if (existingAdmin) {
+        await prisma.usuario.update({
+            where: { correo: adminEmail },
+            data: {
+                nombre: adminName,
+                password_hash: hashedPassword,
+                rol: RolUsuario.administrador,
+            },
+        });
+        console.log("Usuario administrador ya existía, se actualizó correctamente");
+    }
+    else {
+        await syncUsuarioIdSequence();
         await prisma.usuario.create({
             data: {
                 nombre: adminName,
@@ -38,10 +67,7 @@ async function main() {
                 rol: RolUsuario.administrador,
             },
         });
-        console.log("Usuario administrador creado");
-    }
-    else {
-        console.log("Usuario administrador ya existe");
+        console.log("Usuario administrador creado correctamente");
     }
     console.log("Sistema inicializado correctamente");
 }

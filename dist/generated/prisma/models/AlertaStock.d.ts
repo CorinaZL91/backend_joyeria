@@ -15,16 +15,20 @@ export type AggregateAlertaStock = {
 export type AlertaStockAvgAggregateOutputType = {
     id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
     stock_minimo: number | null;
 };
 export type AlertaStockSumAggregateOutputType = {
     id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
     stock_minimo: number | null;
 };
 export type AlertaStockMinAggregateOutputType = {
     id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
+    talla: string | null;
     stock_minimo: number | null;
     mensaje: string | null;
     activa: boolean | null;
@@ -34,6 +38,8 @@ export type AlertaStockMinAggregateOutputType = {
 export type AlertaStockMaxAggregateOutputType = {
     id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
+    talla: string | null;
     stock_minimo: number | null;
     mensaje: string | null;
     activa: boolean | null;
@@ -43,6 +49,8 @@ export type AlertaStockMaxAggregateOutputType = {
 export type AlertaStockCountAggregateOutputType = {
     id: number;
     producto_id: number;
+    producto_talla_id: number;
+    talla: number;
     stock_minimo: number;
     mensaje: number;
     activa: number;
@@ -53,16 +61,20 @@ export type AlertaStockCountAggregateOutputType = {
 export type AlertaStockAvgAggregateInputType = {
     id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     stock_minimo?: true;
 };
 export type AlertaStockSumAggregateInputType = {
     id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     stock_minimo?: true;
 };
 export type AlertaStockMinAggregateInputType = {
     id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
+    talla?: true;
     stock_minimo?: true;
     mensaje?: true;
     activa?: true;
@@ -72,6 +84,8 @@ export type AlertaStockMinAggregateInputType = {
 export type AlertaStockMaxAggregateInputType = {
     id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
+    talla?: true;
     stock_minimo?: true;
     mensaje?: true;
     activa?: true;
@@ -81,6 +95,8 @@ export type AlertaStockMaxAggregateInputType = {
 export type AlertaStockCountAggregateInputType = {
     id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
+    talla?: true;
     stock_minimo?: true;
     mensaje?: true;
     activa?: true;
@@ -167,6 +183,8 @@ export type AlertaStockGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inte
 export type AlertaStockGroupByOutputType = {
     id: number;
     producto_id: number;
+    producto_talla_id: number | null;
+    talla: string | null;
     stock_minimo: number;
     mensaje: string | null;
     activa: boolean;
@@ -187,22 +205,28 @@ export type AlertaStockWhereInput = {
     NOT?: Prisma.AlertaStockWhereInput | Prisma.AlertaStockWhereInput[];
     id?: Prisma.IntFilter<"AlertaStock"> | number;
     producto_id?: Prisma.IntFilter<"AlertaStock"> | number;
+    producto_talla_id?: Prisma.IntNullableFilter<"AlertaStock"> | number | null;
+    talla?: Prisma.StringNullableFilter<"AlertaStock"> | string | null;
     stock_minimo?: Prisma.IntFilter<"AlertaStock"> | number;
     mensaje?: Prisma.StringNullableFilter<"AlertaStock"> | string | null;
     activa?: Prisma.BoolFilter<"AlertaStock"> | boolean;
     fecha_alerta?: Prisma.DateTimeFilter<"AlertaStock"> | Date | string;
     fecha_update?: Prisma.DateTimeFilter<"AlertaStock"> | Date | string;
     producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>;
+    productoTalla?: Prisma.XOR<Prisma.ProductoTallaNullableScalarRelationFilter, Prisma.ProductoTallaWhereInput> | null;
 };
 export type AlertaStockOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrderInput | Prisma.SortOrder;
+    talla?: Prisma.SortOrderInput | Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     mensaje?: Prisma.SortOrderInput | Prisma.SortOrder;
     activa?: Prisma.SortOrder;
     fecha_alerta?: Prisma.SortOrder;
     fecha_update?: Prisma.SortOrder;
     producto?: Prisma.ProductoOrderByWithRelationInput;
+    productoTalla?: Prisma.ProductoTallaOrderByWithRelationInput;
 };
 export type AlertaStockWhereUniqueInput = Prisma.AtLeast<{
     id?: number;
@@ -210,16 +234,21 @@ export type AlertaStockWhereUniqueInput = Prisma.AtLeast<{
     OR?: Prisma.AlertaStockWhereInput[];
     NOT?: Prisma.AlertaStockWhereInput | Prisma.AlertaStockWhereInput[];
     producto_id?: Prisma.IntFilter<"AlertaStock"> | number;
+    producto_talla_id?: Prisma.IntNullableFilter<"AlertaStock"> | number | null;
+    talla?: Prisma.StringNullableFilter<"AlertaStock"> | string | null;
     stock_minimo?: Prisma.IntFilter<"AlertaStock"> | number;
     mensaje?: Prisma.StringNullableFilter<"AlertaStock"> | string | null;
     activa?: Prisma.BoolFilter<"AlertaStock"> | boolean;
     fecha_alerta?: Prisma.DateTimeFilter<"AlertaStock"> | Date | string;
     fecha_update?: Prisma.DateTimeFilter<"AlertaStock"> | Date | string;
     producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>;
+    productoTalla?: Prisma.XOR<Prisma.ProductoTallaNullableScalarRelationFilter, Prisma.ProductoTallaWhereInput> | null;
 }, "id">;
 export type AlertaStockOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrderInput | Prisma.SortOrder;
+    talla?: Prisma.SortOrderInput | Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     mensaje?: Prisma.SortOrderInput | Prisma.SortOrder;
     activa?: Prisma.SortOrder;
@@ -237,6 +266,8 @@ export type AlertaStockScalarWhereWithAggregatesInput = {
     NOT?: Prisma.AlertaStockScalarWhereWithAggregatesInput | Prisma.AlertaStockScalarWhereWithAggregatesInput[];
     id?: Prisma.IntWithAggregatesFilter<"AlertaStock"> | number;
     producto_id?: Prisma.IntWithAggregatesFilter<"AlertaStock"> | number;
+    producto_talla_id?: Prisma.IntNullableWithAggregatesFilter<"AlertaStock"> | number | null;
+    talla?: Prisma.StringNullableWithAggregatesFilter<"AlertaStock"> | string | null;
     stock_minimo?: Prisma.IntWithAggregatesFilter<"AlertaStock"> | number;
     mensaje?: Prisma.StringNullableWithAggregatesFilter<"AlertaStock"> | string | null;
     activa?: Prisma.BoolWithAggregatesFilter<"AlertaStock"> | boolean;
@@ -244,16 +275,20 @@ export type AlertaStockScalarWhereWithAggregatesInput = {
     fecha_update?: Prisma.DateTimeWithAggregatesFilter<"AlertaStock"> | Date | string;
 };
 export type AlertaStockCreateInput = {
+    talla?: string | null;
     stock_minimo: number;
     mensaje?: string | null;
     activa?: boolean;
     fecha_alerta?: Date | string;
     fecha_update?: Date | string;
     producto: Prisma.ProductoCreateNestedOneWithoutAlertasStockInput;
+    productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutAlertasStockInput;
 };
 export type AlertaStockUncheckedCreateInput = {
     id?: number;
     producto_id: number;
+    producto_talla_id?: number | null;
+    talla?: string | null;
     stock_minimo: number;
     mensaje?: string | null;
     activa?: boolean;
@@ -261,16 +296,20 @@ export type AlertaStockUncheckedCreateInput = {
     fecha_update?: Date | string;
 };
 export type AlertaStockUpdateInput = {
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_alerta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fecha_update?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     producto?: Prisma.ProductoUpdateOneRequiredWithoutAlertasStockNestedInput;
+    productoTalla?: Prisma.ProductoTallaUpdateOneWithoutAlertasStockNestedInput;
 };
 export type AlertaStockUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -280,6 +319,8 @@ export type AlertaStockUncheckedUpdateInput = {
 export type AlertaStockCreateManyInput = {
     id?: number;
     producto_id: number;
+    producto_talla_id?: number | null;
+    talla?: string | null;
     stock_minimo: number;
     mensaje?: string | null;
     activa?: boolean;
@@ -287,6 +328,7 @@ export type AlertaStockCreateManyInput = {
     fecha_update?: Date | string;
 };
 export type AlertaStockUpdateManyMutationInput = {
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -296,6 +338,8 @@ export type AlertaStockUpdateManyMutationInput = {
 export type AlertaStockUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -313,6 +357,8 @@ export type AlertaStockOrderByRelationAggregateInput = {
 export type AlertaStockCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
+    talla?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     mensaje?: Prisma.SortOrder;
     activa?: Prisma.SortOrder;
@@ -322,11 +368,14 @@ export type AlertaStockCountOrderByAggregateInput = {
 export type AlertaStockAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
 };
 export type AlertaStockMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
+    talla?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     mensaje?: Prisma.SortOrder;
     activa?: Prisma.SortOrder;
@@ -336,6 +385,8 @@ export type AlertaStockMaxOrderByAggregateInput = {
 export type AlertaStockMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
+    talla?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
     mensaje?: Prisma.SortOrder;
     activa?: Prisma.SortOrder;
@@ -345,6 +396,7 @@ export type AlertaStockMinOrderByAggregateInput = {
 export type AlertaStockSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     stock_minimo?: Prisma.SortOrder;
 };
 export type AlertaStockCreateNestedManyWithoutProductoInput = {
@@ -385,15 +437,57 @@ export type AlertaStockUncheckedUpdateManyWithoutProductoNestedInput = {
     updateMany?: Prisma.AlertaStockUpdateManyWithWhereWithoutProductoInput | Prisma.AlertaStockUpdateManyWithWhereWithoutProductoInput[];
     deleteMany?: Prisma.AlertaStockScalarWhereInput | Prisma.AlertaStockScalarWhereInput[];
 };
+export type AlertaStockCreateNestedManyWithoutProductoTallaInput = {
+    create?: Prisma.XOR<Prisma.AlertaStockCreateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput> | Prisma.AlertaStockCreateWithoutProductoTallaInput[] | Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput | Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput[];
+    createMany?: Prisma.AlertaStockCreateManyProductoTallaInputEnvelope;
+    connect?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+};
+export type AlertaStockUncheckedCreateNestedManyWithoutProductoTallaInput = {
+    create?: Prisma.XOR<Prisma.AlertaStockCreateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput> | Prisma.AlertaStockCreateWithoutProductoTallaInput[] | Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput | Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput[];
+    createMany?: Prisma.AlertaStockCreateManyProductoTallaInputEnvelope;
+    connect?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+};
+export type AlertaStockUpdateManyWithoutProductoTallaNestedInput = {
+    create?: Prisma.XOR<Prisma.AlertaStockCreateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput> | Prisma.AlertaStockCreateWithoutProductoTallaInput[] | Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput | Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput[];
+    upsert?: Prisma.AlertaStockUpsertWithWhereUniqueWithoutProductoTallaInput | Prisma.AlertaStockUpsertWithWhereUniqueWithoutProductoTallaInput[];
+    createMany?: Prisma.AlertaStockCreateManyProductoTallaInputEnvelope;
+    set?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    disconnect?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    delete?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    connect?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    update?: Prisma.AlertaStockUpdateWithWhereUniqueWithoutProductoTallaInput | Prisma.AlertaStockUpdateWithWhereUniqueWithoutProductoTallaInput[];
+    updateMany?: Prisma.AlertaStockUpdateManyWithWhereWithoutProductoTallaInput | Prisma.AlertaStockUpdateManyWithWhereWithoutProductoTallaInput[];
+    deleteMany?: Prisma.AlertaStockScalarWhereInput | Prisma.AlertaStockScalarWhereInput[];
+};
+export type AlertaStockUncheckedUpdateManyWithoutProductoTallaNestedInput = {
+    create?: Prisma.XOR<Prisma.AlertaStockCreateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput> | Prisma.AlertaStockCreateWithoutProductoTallaInput[] | Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput | Prisma.AlertaStockCreateOrConnectWithoutProductoTallaInput[];
+    upsert?: Prisma.AlertaStockUpsertWithWhereUniqueWithoutProductoTallaInput | Prisma.AlertaStockUpsertWithWhereUniqueWithoutProductoTallaInput[];
+    createMany?: Prisma.AlertaStockCreateManyProductoTallaInputEnvelope;
+    set?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    disconnect?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    delete?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    connect?: Prisma.AlertaStockWhereUniqueInput | Prisma.AlertaStockWhereUniqueInput[];
+    update?: Prisma.AlertaStockUpdateWithWhereUniqueWithoutProductoTallaInput | Prisma.AlertaStockUpdateWithWhereUniqueWithoutProductoTallaInput[];
+    updateMany?: Prisma.AlertaStockUpdateManyWithWhereWithoutProductoTallaInput | Prisma.AlertaStockUpdateManyWithWhereWithoutProductoTallaInput[];
+    deleteMany?: Prisma.AlertaStockScalarWhereInput | Prisma.AlertaStockScalarWhereInput[];
+};
 export type AlertaStockCreateWithoutProductoInput = {
+    talla?: string | null;
     stock_minimo: number;
     mensaje?: string | null;
     activa?: boolean;
     fecha_alerta?: Date | string;
     fecha_update?: Date | string;
+    productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutAlertasStockInput;
 };
 export type AlertaStockUncheckedCreateWithoutProductoInput = {
     id?: number;
+    producto_talla_id?: number | null;
+    talla?: string | null;
     stock_minimo: number;
     mensaje?: string | null;
     activa?: boolean;
@@ -427,14 +521,58 @@ export type AlertaStockScalarWhereInput = {
     NOT?: Prisma.AlertaStockScalarWhereInput | Prisma.AlertaStockScalarWhereInput[];
     id?: Prisma.IntFilter<"AlertaStock"> | number;
     producto_id?: Prisma.IntFilter<"AlertaStock"> | number;
+    producto_talla_id?: Prisma.IntNullableFilter<"AlertaStock"> | number | null;
+    talla?: Prisma.StringNullableFilter<"AlertaStock"> | string | null;
     stock_minimo?: Prisma.IntFilter<"AlertaStock"> | number;
     mensaje?: Prisma.StringNullableFilter<"AlertaStock"> | string | null;
     activa?: Prisma.BoolFilter<"AlertaStock"> | boolean;
     fecha_alerta?: Prisma.DateTimeFilter<"AlertaStock"> | Date | string;
     fecha_update?: Prisma.DateTimeFilter<"AlertaStock"> | Date | string;
 };
+export type AlertaStockCreateWithoutProductoTallaInput = {
+    talla?: string | null;
+    stock_minimo: number;
+    mensaje?: string | null;
+    activa?: boolean;
+    fecha_alerta?: Date | string;
+    fecha_update?: Date | string;
+    producto: Prisma.ProductoCreateNestedOneWithoutAlertasStockInput;
+};
+export type AlertaStockUncheckedCreateWithoutProductoTallaInput = {
+    id?: number;
+    producto_id: number;
+    talla?: string | null;
+    stock_minimo: number;
+    mensaje?: string | null;
+    activa?: boolean;
+    fecha_alerta?: Date | string;
+    fecha_update?: Date | string;
+};
+export type AlertaStockCreateOrConnectWithoutProductoTallaInput = {
+    where: Prisma.AlertaStockWhereUniqueInput;
+    create: Prisma.XOR<Prisma.AlertaStockCreateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput>;
+};
+export type AlertaStockCreateManyProductoTallaInputEnvelope = {
+    data: Prisma.AlertaStockCreateManyProductoTallaInput | Prisma.AlertaStockCreateManyProductoTallaInput[];
+    skipDuplicates?: boolean;
+};
+export type AlertaStockUpsertWithWhereUniqueWithoutProductoTallaInput = {
+    where: Prisma.AlertaStockWhereUniqueInput;
+    update: Prisma.XOR<Prisma.AlertaStockUpdateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedUpdateWithoutProductoTallaInput>;
+    create: Prisma.XOR<Prisma.AlertaStockCreateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedCreateWithoutProductoTallaInput>;
+};
+export type AlertaStockUpdateWithWhereUniqueWithoutProductoTallaInput = {
+    where: Prisma.AlertaStockWhereUniqueInput;
+    data: Prisma.XOR<Prisma.AlertaStockUpdateWithoutProductoTallaInput, Prisma.AlertaStockUncheckedUpdateWithoutProductoTallaInput>;
+};
+export type AlertaStockUpdateManyWithWhereWithoutProductoTallaInput = {
+    where: Prisma.AlertaStockScalarWhereInput;
+    data: Prisma.XOR<Prisma.AlertaStockUpdateManyMutationInput, Prisma.AlertaStockUncheckedUpdateManyWithoutProductoTallaInput>;
+};
 export type AlertaStockCreateManyProductoInput = {
     id?: number;
+    producto_talla_id?: number | null;
+    talla?: string | null;
     stock_minimo: number;
     mensaje?: string | null;
     activa?: boolean;
@@ -442,14 +580,18 @@ export type AlertaStockCreateManyProductoInput = {
     fecha_update?: Date | string;
 };
 export type AlertaStockUpdateWithoutProductoInput = {
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
     fecha_alerta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     fecha_update?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    productoTalla?: Prisma.ProductoTallaUpdateOneWithoutAlertasStockNestedInput;
 };
 export type AlertaStockUncheckedUpdateWithoutProductoInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -458,6 +600,47 @@ export type AlertaStockUncheckedUpdateWithoutProductoInput = {
 };
 export type AlertaStockUncheckedUpdateManyWithoutProductoInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
+    mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    fecha_alerta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fecha_update?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type AlertaStockCreateManyProductoTallaInput = {
+    id?: number;
+    producto_id: number;
+    talla?: string | null;
+    stock_minimo: number;
+    mensaje?: string | null;
+    activa?: boolean;
+    fecha_alerta?: Date | string;
+    fecha_update?: Date | string;
+};
+export type AlertaStockUpdateWithoutProductoTallaInput = {
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
+    mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    fecha_alerta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fecha_update?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    producto?: Prisma.ProductoUpdateOneRequiredWithoutAlertasStockNestedInput;
+};
+export type AlertaStockUncheckedUpdateWithoutProductoTallaInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
+    mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    fecha_alerta?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    fecha_update?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type AlertaStockUncheckedUpdateManyWithoutProductoTallaInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    talla?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     stock_minimo?: Prisma.IntFieldUpdateOperationsInput | number;
     mensaje?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
     activa?: Prisma.BoolFieldUpdateOperationsInput | boolean;
@@ -467,60 +650,77 @@ export type AlertaStockUncheckedUpdateManyWithoutProductoInput = {
 export type AlertaStockSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
+    talla?: boolean;
     stock_minimo?: boolean;
     mensaje?: boolean;
     activa?: boolean;
     fecha_alerta?: boolean;
     fecha_update?: boolean;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.AlertaStock$productoTallaArgs<ExtArgs>;
 }, ExtArgs["result"]["alertaStock"]>;
 export type AlertaStockSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
+    talla?: boolean;
     stock_minimo?: boolean;
     mensaje?: boolean;
     activa?: boolean;
     fecha_alerta?: boolean;
     fecha_update?: boolean;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.AlertaStock$productoTallaArgs<ExtArgs>;
 }, ExtArgs["result"]["alertaStock"]>;
 export type AlertaStockSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
+    talla?: boolean;
     stock_minimo?: boolean;
     mensaje?: boolean;
     activa?: boolean;
     fecha_alerta?: boolean;
     fecha_update?: boolean;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.AlertaStock$productoTallaArgs<ExtArgs>;
 }, ExtArgs["result"]["alertaStock"]>;
 export type AlertaStockSelectScalar = {
     id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
+    talla?: boolean;
     stock_minimo?: boolean;
     mensaje?: boolean;
     activa?: boolean;
     fecha_alerta?: boolean;
     fecha_update?: boolean;
 };
-export type AlertaStockOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "producto_id" | "stock_minimo" | "mensaje" | "activa" | "fecha_alerta" | "fecha_update", ExtArgs["result"]["alertaStock"]>;
+export type AlertaStockOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "producto_id" | "producto_talla_id" | "talla" | "stock_minimo" | "mensaje" | "activa" | "fecha_alerta" | "fecha_update", ExtArgs["result"]["alertaStock"]>;
 export type AlertaStockInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.AlertaStock$productoTallaArgs<ExtArgs>;
 };
 export type AlertaStockIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.AlertaStock$productoTallaArgs<ExtArgs>;
 };
 export type AlertaStockIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.AlertaStock$productoTallaArgs<ExtArgs>;
 };
 export type $AlertaStockPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "AlertaStock";
     objects: {
         producto: Prisma.$ProductoPayload<ExtArgs>;
+        productoTalla: Prisma.$ProductoTallaPayload<ExtArgs> | null;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: number;
         producto_id: number;
+        producto_talla_id: number | null;
+        talla: string | null;
         stock_minimo: number;
         mensaje: string | null;
         activa: boolean;
@@ -856,6 +1056,7 @@ export interface AlertaStockDelegate<ExtArgs extends runtime.Types.Extensions.In
 export interface Prisma__AlertaStockClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
     producto<T extends Prisma.ProductoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductoDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductoClient<runtime.Types.Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    productoTalla<T extends Prisma.AlertaStock$productoTallaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.AlertaStock$productoTallaArgs<ExtArgs>>): Prisma.Prisma__ProductoTallaClient<runtime.Types.Result.GetResult<Prisma.$ProductoTallaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -883,6 +1084,8 @@ export interface Prisma__AlertaStockClient<T, Null = never, ExtArgs extends runt
 export interface AlertaStockFieldRefs {
     readonly id: Prisma.FieldRef<"AlertaStock", 'Int'>;
     readonly producto_id: Prisma.FieldRef<"AlertaStock", 'Int'>;
+    readonly producto_talla_id: Prisma.FieldRef<"AlertaStock", 'Int'>;
+    readonly talla: Prisma.FieldRef<"AlertaStock", 'String'>;
     readonly stock_minimo: Prisma.FieldRef<"AlertaStock", 'Int'>;
     readonly mensaje: Prisma.FieldRef<"AlertaStock", 'String'>;
     readonly activa: Prisma.FieldRef<"AlertaStock", 'Boolean'>;
@@ -1265,6 +1468,24 @@ export type AlertaStockDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
      * Limit how many AlertaStocks to delete.
      */
     limit?: number;
+};
+/**
+ * AlertaStock.productoTalla
+ */
+export type AlertaStock$productoTallaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductoTalla
+     */
+    select?: Prisma.ProductoTallaSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductoTalla
+     */
+    omit?: Prisma.ProductoTallaOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProductoTallaInclude<ExtArgs> | null;
+    where?: Prisma.ProductoTallaWhereInput;
 };
 /**
  * AlertaStock without action

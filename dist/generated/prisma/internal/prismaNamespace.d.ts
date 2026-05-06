@@ -234,6 +234,7 @@ export declare const ModelName: {
     readonly Usuario: "Usuario";
     readonly Categoria: "Categoria";
     readonly Producto: "Producto";
+    readonly ProductoTalla: "ProductoTalla";
     readonly Pedido: "Pedido";
     readonly DetallePedido: "DetallePedido";
     readonly Carrito: "Carrito";
@@ -250,7 +251,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         omit: GlobalOmitOptions;
     };
     meta: {
-        modelProps: "usuario" | "categoria" | "producto" | "pedido" | "detallePedido" | "carrito" | "alertaStock";
+        modelProps: "usuario" | "categoria" | "producto" | "productoTalla" | "pedido" | "detallePedido" | "carrito" | "alertaStock";
         txIsolationLevel: TransactionIsolationLevel;
     };
     model: {
@@ -473,6 +474,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
                 count: {
                     args: Prisma.ProductoCountArgs<ExtArgs>;
                     result: runtime.Types.Utils.Optional<Prisma.ProductoCountAggregateOutputType> | number;
+                };
+            };
+        };
+        ProductoTalla: {
+            payload: Prisma.$ProductoTallaPayload<ExtArgs>;
+            fields: Prisma.ProductoTallaFieldRefs;
+            operations: {
+                findUnique: {
+                    args: Prisma.ProductoTallaFindUniqueArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload> | null;
+                };
+                findUniqueOrThrow: {
+                    args: Prisma.ProductoTallaFindUniqueOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>;
+                };
+                findFirst: {
+                    args: Prisma.ProductoTallaFindFirstArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload> | null;
+                };
+                findFirstOrThrow: {
+                    args: Prisma.ProductoTallaFindFirstOrThrowArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>;
+                };
+                findMany: {
+                    args: Prisma.ProductoTallaFindManyArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>[];
+                };
+                create: {
+                    args: Prisma.ProductoTallaCreateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>;
+                };
+                createMany: {
+                    args: Prisma.ProductoTallaCreateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                createManyAndReturn: {
+                    args: Prisma.ProductoTallaCreateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>[];
+                };
+                delete: {
+                    args: Prisma.ProductoTallaDeleteArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>;
+                };
+                update: {
+                    args: Prisma.ProductoTallaUpdateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>;
+                };
+                deleteMany: {
+                    args: Prisma.ProductoTallaDeleteManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateMany: {
+                    args: Prisma.ProductoTallaUpdateManyArgs<ExtArgs>;
+                    result: BatchPayload;
+                };
+                updateManyAndReturn: {
+                    args: Prisma.ProductoTallaUpdateManyAndReturnArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>[];
+                };
+                upsert: {
+                    args: Prisma.ProductoTallaUpsertArgs<ExtArgs>;
+                    result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductoTallaPayload>;
+                };
+                aggregate: {
+                    args: Prisma.ProductoTallaAggregateArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.AggregateProductoTalla>;
+                };
+                groupBy: {
+                    args: Prisma.ProductoTallaGroupByArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.ProductoTallaGroupByOutputType>[];
+                };
+                count: {
+                    args: Prisma.ProductoTallaCountArgs<ExtArgs>;
+                    result: runtime.Types.Utils.Optional<Prisma.ProductoTallaCountAggregateOutputType> | number;
                 };
             };
         };
@@ -814,6 +889,9 @@ export declare const UsuarioScalarFieldEnum: {
     readonly rol: "rol";
     readonly telefono: "telefono";
     readonly direccion: "direccion";
+    readonly direccion_calle: "direccion_calle";
+    readonly direccion_ciudad: "direccion_ciudad";
+    readonly direccion_codigo_postal: "direccion_codigo_postal";
     readonly fecha_registro: "fecha_registro";
 };
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum];
@@ -829,6 +907,7 @@ export declare const ProductoScalarFieldEnum: {
     readonly descripcion: "descripcion";
     readonly precio: "precio";
     readonly material: "material";
+    readonly usar_tallas: "usar_tallas";
     readonly stock: "stock";
     readonly stock_minimo: "stock_minimo";
     readonly imagen_url: "imagen_url";
@@ -838,6 +917,15 @@ export declare const ProductoScalarFieldEnum: {
     readonly categoria_id: "categoria_id";
 };
 export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typeof ProductoScalarFieldEnum];
+export declare const ProductoTallaScalarFieldEnum: {
+    readonly id: "id";
+    readonly talla: "talla";
+    readonly stock: "stock";
+    readonly activo: "activo";
+    readonly fecha_creada: "fecha_creada";
+    readonly producto_id: "producto_id";
+};
+export type ProductoTallaScalarFieldEnum = (typeof ProductoTallaScalarFieldEnum)[keyof typeof ProductoTallaScalarFieldEnum];
 export declare const PedidoScalarFieldEnum: {
     readonly id: "id";
     readonly usuario_id: "usuario_id";
@@ -845,12 +933,17 @@ export declare const PedidoScalarFieldEnum: {
     readonly total: "total";
     readonly metodo_pago: "metodo_pago";
     readonly estado: "estado";
+    readonly direccion_calle: "direccion_calle";
+    readonly direccion_ciudad: "direccion_ciudad";
+    readonly direccion_codigo_postal: "direccion_codigo_postal";
 };
 export type PedidoScalarFieldEnum = (typeof PedidoScalarFieldEnum)[keyof typeof PedidoScalarFieldEnum];
 export declare const DetallePedidoScalarFieldEnum: {
     readonly id: "id";
     readonly pedido_id: "pedido_id";
     readonly producto_id: "producto_id";
+    readonly producto_talla_id: "producto_talla_id";
+    readonly talla: "talla";
     readonly cantidad: "cantidad";
     readonly precio_unitario: "precio_unitario";
     readonly subtotal: "subtotal";
@@ -860,6 +953,7 @@ export declare const CarritoScalarFieldEnum: {
     readonly id: "id";
     readonly usuario_id: "usuario_id";
     readonly producto_id: "producto_id";
+    readonly producto_talla_id: "producto_talla_id";
     readonly cantidad: "cantidad";
     readonly fecha_agregado: "fecha_agregado";
 };
@@ -867,6 +961,8 @@ export type CarritoScalarFieldEnum = (typeof CarritoScalarFieldEnum)[keyof typeo
 export declare const AlertaStockScalarFieldEnum: {
     readonly id: "id";
     readonly producto_id: "producto_id";
+    readonly producto_talla_id: "producto_talla_id";
+    readonly talla: "talla";
     readonly stock_minimo: "stock_minimo";
     readonly mensaje: "mensaje";
     readonly activa: "activa";
@@ -1057,6 +1153,7 @@ export type GlobalOmitConfig = {
     usuario?: Prisma.UsuarioOmit;
     categoria?: Prisma.CategoriaOmit;
     producto?: Prisma.ProductoOmit;
+    productoTalla?: Prisma.ProductoTallaOmit;
     pedido?: Prisma.PedidoOmit;
     detallePedido?: Prisma.DetallePedidoOmit;
     carrito?: Prisma.CarritoOmit;

@@ -12,6 +12,7 @@ import {
   addToCartSchema,
   cartItemParamsSchema,
   updateCartItemQuantityBodySchema,
+  removeCartItemQuerySchema,
 } from "../validators/cart.schemas.js";
 
 const router = Router();
@@ -33,7 +34,10 @@ router.put(
 
 router.delete(
   "/items/:producto_id",
-  validate({ params: cartItemParamsSchema }),
+  validate({
+    params: cartItemParamsSchema,
+    query: removeCartItemQuerySchema,
+  }),
   removeCartItem
 );
 

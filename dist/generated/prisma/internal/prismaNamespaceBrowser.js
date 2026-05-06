@@ -42,6 +42,7 @@ export const ModelName = {
     Usuario: 'Usuario',
     Categoria: 'Categoria',
     Producto: 'Producto',
+    ProductoTalla: 'ProductoTalla',
     Pedido: 'Pedido',
     DetallePedido: 'DetallePedido',
     Carrito: 'Carrito',
@@ -64,6 +65,9 @@ export const UsuarioScalarFieldEnum = {
     rol: 'rol',
     telefono: 'telefono',
     direccion: 'direccion',
+    direccion_calle: 'direccion_calle',
+    direccion_ciudad: 'direccion_ciudad',
+    direccion_codigo_postal: 'direccion_codigo_postal',
     fecha_registro: 'fecha_registro'
 };
 export const CategoriaScalarFieldEnum = {
@@ -77,6 +81,7 @@ export const ProductoScalarFieldEnum = {
     descripcion: 'descripcion',
     precio: 'precio',
     material: 'material',
+    usar_tallas: 'usar_tallas',
     stock: 'stock',
     stock_minimo: 'stock_minimo',
     imagen_url: 'imagen_url',
@@ -85,18 +90,31 @@ export const ProductoScalarFieldEnum = {
     fecha_creacion: 'fecha_creacion',
     categoria_id: 'categoria_id'
 };
+export const ProductoTallaScalarFieldEnum = {
+    id: 'id',
+    talla: 'talla',
+    stock: 'stock',
+    activo: 'activo',
+    fecha_creada: 'fecha_creada',
+    producto_id: 'producto_id'
+};
 export const PedidoScalarFieldEnum = {
     id: 'id',
     usuario_id: 'usuario_id',
     fecha_pedido: 'fecha_pedido',
     total: 'total',
     metodo_pago: 'metodo_pago',
-    estado: 'estado'
+    estado: 'estado',
+    direccion_calle: 'direccion_calle',
+    direccion_ciudad: 'direccion_ciudad',
+    direccion_codigo_postal: 'direccion_codigo_postal'
 };
 export const DetallePedidoScalarFieldEnum = {
     id: 'id',
     pedido_id: 'pedido_id',
     producto_id: 'producto_id',
+    producto_talla_id: 'producto_talla_id',
+    talla: 'talla',
     cantidad: 'cantidad',
     precio_unitario: 'precio_unitario',
     subtotal: 'subtotal'
@@ -105,12 +123,15 @@ export const CarritoScalarFieldEnum = {
     id: 'id',
     usuario_id: 'usuario_id',
     producto_id: 'producto_id',
+    producto_talla_id: 'producto_talla_id',
     cantidad: 'cantidad',
     fecha_agregado: 'fecha_agregado'
 };
 export const AlertaStockScalarFieldEnum = {
     id: 'id',
     producto_id: 'producto_id',
+    producto_talla_id: 'producto_talla_id',
+    talla: 'talla',
     stock_minimo: 'stock_minimo',
     mensaje: 'mensaje',
     activa: 'activa',

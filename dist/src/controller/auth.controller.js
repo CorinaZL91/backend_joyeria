@@ -1,117 +1,52 @@
-import { Prisma, RolUsuario } from "../../generated/prisma/client.js";
-import { prisma } from "../config/prisma.js";
-import { comparePassword, hashPassword } from "../utils/hash.js";
-import { generateToken } from "../utils/jwt.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { AppError } from "../utils/appError.js";
+import { authService } from "../services/auth.service.js";
+const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 días
+};
 export const register = asyncHandler(async (req, res) => {
-    const { nombre, correo, password, telefono, direccion } = req.body;
-    const correoNormalizado = correo.trim().toLowerCase();
-    const existingUser = await prisma.usuario.findUnique({
-        where: { correo: correoNormalizado },
+    const data = await authService.register(req.body);
+    // 🔥 Guardar JWT en cookie httpOnly
+    res.cookie("token", data.token, cookieOptions);
+    res.status(201).json({
+        success: true,
+        message: "Usuario registrado correctamente",
+        data: {
+            user: data.user,
+        },
     });
-    if (existingUser) {
-        throw new AppError("Ya existe un usuario con ese correo", 409);
-    }
-    const hashedPassword = await hashPassword(password);
-    try {
-        const newUser = await prisma.usuario.create({
-            data: {
-                nombre: nombre.trim(),
-                correo: correoNormalizado,
-                password_hash: hashedPassword,
-                telefono: telefono.trim(),
-                direccion: direccion.trim(),
-                rol: RolUsuario.cliente,
-            },
-            select: {
-                id: true,
-                nombre: true,
-                correo: true,
-                telefono: true,
-                direccion: true,
-                rol: true,
-            },
-        });
-        const token = generateToken({
-            userId: newUser.id,
-            rol: newUser.rol,
-        });
-        res.status(201).json({
-            success: true,
-            message: "Usuario registrado correctamente",
-            data: {
-                token,
-                user: newUser,
-            },
-        });
-    }
-    catch (error) {
-        if (error instanceof Prisma.PrismaClientKnownRequestError &&
-            error.code === "P2002") {
-            const target = error.meta?.target || [];
-            if (target.includes("correo")) {
-                throw new AppError("Ya existe un usuario con ese correo", 409);
-            }
-            if (target.includes("telefono")) {
-                throw new AppError("Ya existe un usuario con ese teléfono", 409);
-            }
-            throw new AppError("Ya existe un dato duplicado", 409);
-        }
-        throw error;
-    }
 });
 export const login = asyncHandler(async (req, res) => {
-    const { correo, password } = req.body;
-    const correoNormalizado = correo.trim().toLowerCase();
-    const user = await prisma.usuario.findUnique({
-        where: { correo: correoNormalizado },
-    });
-    if (!user) {
-        throw new AppError("Credenciales inválidas", 401);
-    }
-    const isPasswordValid = await comparePassword(password, user.password_hash);
-    if (!isPasswordValid) {
-        throw new AppError("Credenciales inválidas", 401);
-    }
-    const token = generateToken({
-        userId: user.id,
-        rol: user.rol,
-    });
+    const data = await authService.login(req.body);
+    // 🔥 Guardar JWT en cookie httpOnly
+    res.cookie("token", data.token, cookieOptions);
     res.status(200).json({
         success: true,
         message: "Inicio de sesión exitoso",
         data: {
-            token,
-            user: {
-                id: user.id,
-                nombre: user.nombre,
-                correo: user.correo,
-                telefono: user.telefono,
-                direccion: user.direccion,
-                rol: user.rol,
-            },
+            user: data.user,
         },
+    });
+});
+export const logout = asyncHandler(async (_req, res) => {
+    res.clearCookie("token", {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+    });
+    res.status(200).json({
+        success: true,
+        message: "Sesión cerrada correctamente",
     });
 });
 export const me = asyncHandler(async (req, res) => {
     if (!req.user) {
         throw new AppError("No autenticado", 401);
     }
-    const user = await prisma.usuario.findUnique({
-        where: { id: req.user.userId },
-        select: {
-            id: true,
-            nombre: true,
-            correo: true,
-            telefono: true,
-            direccion: true,
-            rol: true,
-        },
-    });
-    if (!user) {
-        throw new AppError("Usuario no encontrado", 404);
-    }
+    const user = await authService.me(req.user.userId);
     res.status(200).json({
         success: true,
         data: user,

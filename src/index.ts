@@ -3,26 +3,41 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
+import cookieParser from "cookie-parser";
 
-/*Rutas */
+/* Rutas */
 import authRoutes from "./routes/auth.routes.js";
 import categoryRoutes from "./routes/category.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import cartRoutes from "./routes/cart.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import alertRoutes from "./routes/alert.routes.js";
+
 import { errorMiddleware } from "./middlewares/error.middleware.js";
 
 const app = express();
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+  })
+);
+
 app.use(morgan("common"));
-app.use(cors());
+
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    credentials: true,
+  })
+);
 
 app.get("/", (_req, res) => {
   res.json({
+    success: true,
     message: "Bienvenido a API Maison C&O Élégance",
     version: "1.0.0",
     routes: [
@@ -72,6 +87,11 @@ app.use(errorMiddleware);
 const port = process.env.PORT || 3000;
 
 console.log("Iniciando servidor...");
-app.listen(port, () => {
-  console.log(`Server corriendo en el puerto ${port}`);
-});
+
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => {
+    console.log(`Server corriendo en el puerto ${port}`);
+  });
+}
+
+export default app;

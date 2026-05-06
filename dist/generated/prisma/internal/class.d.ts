@@ -149,6 +149,17 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
+     * `prisma.productoTalla`: Exposes CRUD operations for the **ProductoTalla** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more ProductoTallas
+      * const productoTallas = await prisma.productoTalla.findMany()
+      * ```
+      */
+    get productoTalla(): Prisma.ProductoTallaDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
      * `prisma.pedido`: Exposes CRUD operations for the **Pedido** model.
       * Example usage:
       * ```ts

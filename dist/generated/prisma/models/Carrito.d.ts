@@ -16,18 +16,21 @@ export type CarritoAvgAggregateOutputType = {
     id: number | null;
     usuario_id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
     cantidad: number | null;
 };
 export type CarritoSumAggregateOutputType = {
     id: number | null;
     usuario_id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
     cantidad: number | null;
 };
 export type CarritoMinAggregateOutputType = {
     id: number | null;
     usuario_id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
     cantidad: number | null;
     fecha_agregado: Date | null;
 };
@@ -35,6 +38,7 @@ export type CarritoMaxAggregateOutputType = {
     id: number | null;
     usuario_id: number | null;
     producto_id: number | null;
+    producto_talla_id: number | null;
     cantidad: number | null;
     fecha_agregado: Date | null;
 };
@@ -42,6 +46,7 @@ export type CarritoCountAggregateOutputType = {
     id: number;
     usuario_id: number;
     producto_id: number;
+    producto_talla_id: number;
     cantidad: number;
     fecha_agregado: number;
     _all: number;
@@ -50,18 +55,21 @@ export type CarritoAvgAggregateInputType = {
     id?: true;
     usuario_id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     cantidad?: true;
 };
 export type CarritoSumAggregateInputType = {
     id?: true;
     usuario_id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     cantidad?: true;
 };
 export type CarritoMinAggregateInputType = {
     id?: true;
     usuario_id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     cantidad?: true;
     fecha_agregado?: true;
 };
@@ -69,6 +77,7 @@ export type CarritoMaxAggregateInputType = {
     id?: true;
     usuario_id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     cantidad?: true;
     fecha_agregado?: true;
 };
@@ -76,6 +85,7 @@ export type CarritoCountAggregateInputType = {
     id?: true;
     usuario_id?: true;
     producto_id?: true;
+    producto_talla_id?: true;
     cantidad?: true;
     fecha_agregado?: true;
     _all?: true;
@@ -160,6 +170,7 @@ export type CarritoGroupByOutputType = {
     id: number;
     usuario_id: number;
     producto_id: number;
+    producto_talla_id: number | null;
     cantidad: number;
     fecha_agregado: Date;
     _count: CarritoCountAggregateOutputType | null;
@@ -178,37 +189,44 @@ export type CarritoWhereInput = {
     id?: Prisma.IntFilter<"Carrito"> | number;
     usuario_id?: Prisma.IntFilter<"Carrito"> | number;
     producto_id?: Prisma.IntFilter<"Carrito"> | number;
+    producto_talla_id?: Prisma.IntNullableFilter<"Carrito"> | number | null;
     cantidad?: Prisma.IntFilter<"Carrito"> | number;
     fecha_agregado?: Prisma.DateTimeFilter<"Carrito"> | Date | string;
     usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>;
     producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>;
+    productoTalla?: Prisma.XOR<Prisma.ProductoTallaNullableScalarRelationFilter, Prisma.ProductoTallaWhereInput> | null;
 };
 export type CarritoOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrderInput | Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
     fecha_agregado?: Prisma.SortOrder;
     usuario?: Prisma.UsuarioOrderByWithRelationInput;
     producto?: Prisma.ProductoOrderByWithRelationInput;
+    productoTalla?: Prisma.ProductoTallaOrderByWithRelationInput;
 };
 export type CarritoWhereUniqueInput = Prisma.AtLeast<{
     id?: number;
-    usuario_id_producto_id?: Prisma.CarritoUsuario_idProducto_idCompoundUniqueInput;
+    usuario_id_producto_id_producto_talla_id?: Prisma.CarritoUsuario_idProducto_idProducto_talla_idCompoundUniqueInput;
     AND?: Prisma.CarritoWhereInput | Prisma.CarritoWhereInput[];
     OR?: Prisma.CarritoWhereInput[];
     NOT?: Prisma.CarritoWhereInput | Prisma.CarritoWhereInput[];
     usuario_id?: Prisma.IntFilter<"Carrito"> | number;
     producto_id?: Prisma.IntFilter<"Carrito"> | number;
+    producto_talla_id?: Prisma.IntNullableFilter<"Carrito"> | number | null;
     cantidad?: Prisma.IntFilter<"Carrito"> | number;
     fecha_agregado?: Prisma.DateTimeFilter<"Carrito"> | Date | string;
     usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>;
     producto?: Prisma.XOR<Prisma.ProductoScalarRelationFilter, Prisma.ProductoWhereInput>;
-}, "id" | "usuario_id_producto_id">;
+    productoTalla?: Prisma.XOR<Prisma.ProductoTallaNullableScalarRelationFilter, Prisma.ProductoTallaWhereInput> | null;
+}, "id" | "usuario_id_producto_id_producto_talla_id">;
 export type CarritoOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrderInput | Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
     fecha_agregado?: Prisma.SortOrder;
     _count?: Prisma.CarritoCountOrderByAggregateInput;
@@ -224,6 +242,7 @@ export type CarritoScalarWhereWithAggregatesInput = {
     id?: Prisma.IntWithAggregatesFilter<"Carrito"> | number;
     usuario_id?: Prisma.IntWithAggregatesFilter<"Carrito"> | number;
     producto_id?: Prisma.IntWithAggregatesFilter<"Carrito"> | number;
+    producto_talla_id?: Prisma.IntNullableWithAggregatesFilter<"Carrito"> | number | null;
     cantidad?: Prisma.IntWithAggregatesFilter<"Carrito"> | number;
     fecha_agregado?: Prisma.DateTimeWithAggregatesFilter<"Carrito"> | Date | string;
 };
@@ -232,11 +251,13 @@ export type CarritoCreateInput = {
     fecha_agregado?: Date | string;
     usuario: Prisma.UsuarioCreateNestedOneWithoutCarritoInput;
     producto: Prisma.ProductoCreateNestedOneWithoutCarritoInput;
+    productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutCarritoInput;
 };
 export type CarritoUncheckedCreateInput = {
     id?: number;
     usuario_id: number;
     producto_id: number;
+    producto_talla_id?: number | null;
     cantidad?: number;
     fecha_agregado?: Date | string;
 };
@@ -245,11 +266,13 @@ export type CarritoUpdateInput = {
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCarritoNestedInput;
     producto?: Prisma.ProductoUpdateOneRequiredWithoutCarritoNestedInput;
+    productoTalla?: Prisma.ProductoTallaUpdateOneWithoutCarritoNestedInput;
 };
 export type CarritoUncheckedUpdateInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     usuario_id?: Prisma.IntFieldUpdateOperationsInput | number;
     producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -257,6 +280,7 @@ export type CarritoCreateManyInput = {
     id?: number;
     usuario_id: number;
     producto_id: number;
+    producto_talla_id?: number | null;
     cantidad?: number;
     fecha_agregado?: Date | string;
 };
@@ -268,6 +292,7 @@ export type CarritoUncheckedUpdateManyInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     usuario_id?: Prisma.IntFieldUpdateOperationsInput | number;
     producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -279,14 +304,16 @@ export type CarritoListRelationFilter = {
 export type CarritoOrderByRelationAggregateInput = {
     _count?: Prisma.SortOrder;
 };
-export type CarritoUsuario_idProducto_idCompoundUniqueInput = {
+export type CarritoUsuario_idProducto_idProducto_talla_idCompoundUniqueInput = {
     usuario_id: number;
     producto_id: number;
+    producto_talla_id: number;
 };
 export type CarritoCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
     fecha_agregado?: Prisma.SortOrder;
 };
@@ -294,12 +321,14 @@ export type CarritoAvgOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
 };
 export type CarritoMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
     fecha_agregado?: Prisma.SortOrder;
 };
@@ -307,6 +336,7 @@ export type CarritoMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
     fecha_agregado?: Prisma.SortOrder;
 };
@@ -314,6 +344,7 @@ export type CarritoSumOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     usuario_id?: Prisma.SortOrder;
     producto_id?: Prisma.SortOrder;
+    producto_talla_id?: Prisma.SortOrder;
     cantidad?: Prisma.SortOrder;
 };
 export type CarritoCreateNestedManyWithoutUsuarioInput = {
@@ -392,14 +423,54 @@ export type CarritoUncheckedUpdateManyWithoutProductoNestedInput = {
     updateMany?: Prisma.CarritoUpdateManyWithWhereWithoutProductoInput | Prisma.CarritoUpdateManyWithWhereWithoutProductoInput[];
     deleteMany?: Prisma.CarritoScalarWhereInput | Prisma.CarritoScalarWhereInput[];
 };
+export type CarritoCreateNestedManyWithoutProductoTallaInput = {
+    create?: Prisma.XOR<Prisma.CarritoCreateWithoutProductoTallaInput, Prisma.CarritoUncheckedCreateWithoutProductoTallaInput> | Prisma.CarritoCreateWithoutProductoTallaInput[] | Prisma.CarritoUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.CarritoCreateOrConnectWithoutProductoTallaInput | Prisma.CarritoCreateOrConnectWithoutProductoTallaInput[];
+    createMany?: Prisma.CarritoCreateManyProductoTallaInputEnvelope;
+    connect?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+};
+export type CarritoUncheckedCreateNestedManyWithoutProductoTallaInput = {
+    create?: Prisma.XOR<Prisma.CarritoCreateWithoutProductoTallaInput, Prisma.CarritoUncheckedCreateWithoutProductoTallaInput> | Prisma.CarritoCreateWithoutProductoTallaInput[] | Prisma.CarritoUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.CarritoCreateOrConnectWithoutProductoTallaInput | Prisma.CarritoCreateOrConnectWithoutProductoTallaInput[];
+    createMany?: Prisma.CarritoCreateManyProductoTallaInputEnvelope;
+    connect?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+};
+export type CarritoUpdateManyWithoutProductoTallaNestedInput = {
+    create?: Prisma.XOR<Prisma.CarritoCreateWithoutProductoTallaInput, Prisma.CarritoUncheckedCreateWithoutProductoTallaInput> | Prisma.CarritoCreateWithoutProductoTallaInput[] | Prisma.CarritoUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.CarritoCreateOrConnectWithoutProductoTallaInput | Prisma.CarritoCreateOrConnectWithoutProductoTallaInput[];
+    upsert?: Prisma.CarritoUpsertWithWhereUniqueWithoutProductoTallaInput | Prisma.CarritoUpsertWithWhereUniqueWithoutProductoTallaInput[];
+    createMany?: Prisma.CarritoCreateManyProductoTallaInputEnvelope;
+    set?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    disconnect?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    delete?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    connect?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    update?: Prisma.CarritoUpdateWithWhereUniqueWithoutProductoTallaInput | Prisma.CarritoUpdateWithWhereUniqueWithoutProductoTallaInput[];
+    updateMany?: Prisma.CarritoUpdateManyWithWhereWithoutProductoTallaInput | Prisma.CarritoUpdateManyWithWhereWithoutProductoTallaInput[];
+    deleteMany?: Prisma.CarritoScalarWhereInput | Prisma.CarritoScalarWhereInput[];
+};
+export type CarritoUncheckedUpdateManyWithoutProductoTallaNestedInput = {
+    create?: Prisma.XOR<Prisma.CarritoCreateWithoutProductoTallaInput, Prisma.CarritoUncheckedCreateWithoutProductoTallaInput> | Prisma.CarritoCreateWithoutProductoTallaInput[] | Prisma.CarritoUncheckedCreateWithoutProductoTallaInput[];
+    connectOrCreate?: Prisma.CarritoCreateOrConnectWithoutProductoTallaInput | Prisma.CarritoCreateOrConnectWithoutProductoTallaInput[];
+    upsert?: Prisma.CarritoUpsertWithWhereUniqueWithoutProductoTallaInput | Prisma.CarritoUpsertWithWhereUniqueWithoutProductoTallaInput[];
+    createMany?: Prisma.CarritoCreateManyProductoTallaInputEnvelope;
+    set?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    disconnect?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    delete?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    connect?: Prisma.CarritoWhereUniqueInput | Prisma.CarritoWhereUniqueInput[];
+    update?: Prisma.CarritoUpdateWithWhereUniqueWithoutProductoTallaInput | Prisma.CarritoUpdateWithWhereUniqueWithoutProductoTallaInput[];
+    updateMany?: Prisma.CarritoUpdateManyWithWhereWithoutProductoTallaInput | Prisma.CarritoUpdateManyWithWhereWithoutProductoTallaInput[];
+    deleteMany?: Prisma.CarritoScalarWhereInput | Prisma.CarritoScalarWhereInput[];
+};
 export type CarritoCreateWithoutUsuarioInput = {
     cantidad?: number;
     fecha_agregado?: Date | string;
     producto: Prisma.ProductoCreateNestedOneWithoutCarritoInput;
+    productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutCarritoInput;
 };
 export type CarritoUncheckedCreateWithoutUsuarioInput = {
     id?: number;
     producto_id: number;
+    producto_talla_id?: number | null;
     cantidad?: number;
     fecha_agregado?: Date | string;
 };
@@ -431,6 +502,7 @@ export type CarritoScalarWhereInput = {
     id?: Prisma.IntFilter<"Carrito"> | number;
     usuario_id?: Prisma.IntFilter<"Carrito"> | number;
     producto_id?: Prisma.IntFilter<"Carrito"> | number;
+    producto_talla_id?: Prisma.IntNullableFilter<"Carrito"> | number | null;
     cantidad?: Prisma.IntFilter<"Carrito"> | number;
     fecha_agregado?: Prisma.DateTimeFilter<"Carrito"> | Date | string;
 };
@@ -438,10 +510,12 @@ export type CarritoCreateWithoutProductoInput = {
     cantidad?: number;
     fecha_agregado?: Date | string;
     usuario: Prisma.UsuarioCreateNestedOneWithoutCarritoInput;
+    productoTalla?: Prisma.ProductoTallaCreateNestedOneWithoutCarritoInput;
 };
 export type CarritoUncheckedCreateWithoutProductoInput = {
     id?: number;
     usuario_id: number;
+    producto_talla_id?: number | null;
     cantidad?: number;
     fecha_agregado?: Date | string;
 };
@@ -466,9 +540,44 @@ export type CarritoUpdateManyWithWhereWithoutProductoInput = {
     where: Prisma.CarritoScalarWhereInput;
     data: Prisma.XOR<Prisma.CarritoUpdateManyMutationInput, Prisma.CarritoUncheckedUpdateManyWithoutProductoInput>;
 };
+export type CarritoCreateWithoutProductoTallaInput = {
+    cantidad?: number;
+    fecha_agregado?: Date | string;
+    usuario: Prisma.UsuarioCreateNestedOneWithoutCarritoInput;
+    producto: Prisma.ProductoCreateNestedOneWithoutCarritoInput;
+};
+export type CarritoUncheckedCreateWithoutProductoTallaInput = {
+    id?: number;
+    usuario_id: number;
+    producto_id: number;
+    cantidad?: number;
+    fecha_agregado?: Date | string;
+};
+export type CarritoCreateOrConnectWithoutProductoTallaInput = {
+    where: Prisma.CarritoWhereUniqueInput;
+    create: Prisma.XOR<Prisma.CarritoCreateWithoutProductoTallaInput, Prisma.CarritoUncheckedCreateWithoutProductoTallaInput>;
+};
+export type CarritoCreateManyProductoTallaInputEnvelope = {
+    data: Prisma.CarritoCreateManyProductoTallaInput | Prisma.CarritoCreateManyProductoTallaInput[];
+    skipDuplicates?: boolean;
+};
+export type CarritoUpsertWithWhereUniqueWithoutProductoTallaInput = {
+    where: Prisma.CarritoWhereUniqueInput;
+    update: Prisma.XOR<Prisma.CarritoUpdateWithoutProductoTallaInput, Prisma.CarritoUncheckedUpdateWithoutProductoTallaInput>;
+    create: Prisma.XOR<Prisma.CarritoCreateWithoutProductoTallaInput, Prisma.CarritoUncheckedCreateWithoutProductoTallaInput>;
+};
+export type CarritoUpdateWithWhereUniqueWithoutProductoTallaInput = {
+    where: Prisma.CarritoWhereUniqueInput;
+    data: Prisma.XOR<Prisma.CarritoUpdateWithoutProductoTallaInput, Prisma.CarritoUncheckedUpdateWithoutProductoTallaInput>;
+};
+export type CarritoUpdateManyWithWhereWithoutProductoTallaInput = {
+    where: Prisma.CarritoScalarWhereInput;
+    data: Prisma.XOR<Prisma.CarritoUpdateManyMutationInput, Prisma.CarritoUncheckedUpdateManyWithoutProductoTallaInput>;
+};
 export type CarritoCreateManyUsuarioInput = {
     id?: number;
     producto_id: number;
+    producto_talla_id?: number | null;
     cantidad?: number;
     fecha_agregado?: Date | string;
 };
@@ -476,22 +585,26 @@ export type CarritoUpdateWithoutUsuarioInput = {
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     producto?: Prisma.ProductoUpdateOneRequiredWithoutCarritoNestedInput;
+    productoTalla?: Prisma.ProductoTallaUpdateOneWithoutCarritoNestedInput;
 };
 export type CarritoUncheckedUpdateWithoutUsuarioInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type CarritoUncheckedUpdateManyWithoutUsuarioInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type CarritoCreateManyProductoInput = {
     id?: number;
     usuario_id: number;
+    producto_talla_id?: number | null;
     cantidad?: number;
     fecha_agregado?: Date | string;
 };
@@ -499,16 +612,46 @@ export type CarritoUpdateWithoutProductoInput = {
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
     usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCarritoNestedInput;
+    productoTalla?: Prisma.ProductoTallaUpdateOneWithoutCarritoNestedInput;
 };
 export type CarritoUncheckedUpdateWithoutProductoInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     usuario_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type CarritoUncheckedUpdateManyWithoutProductoInput = {
     id?: Prisma.IntFieldUpdateOperationsInput | number;
     usuario_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_talla_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null;
+    cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
+    fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type CarritoCreateManyProductoTallaInput = {
+    id?: number;
+    usuario_id: number;
+    producto_id: number;
+    cantidad?: number;
+    fecha_agregado?: Date | string;
+};
+export type CarritoUpdateWithoutProductoTallaInput = {
+    cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
+    fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    usuario?: Prisma.UsuarioUpdateOneRequiredWithoutCarritoNestedInput;
+    producto?: Prisma.ProductoUpdateOneRequiredWithoutCarritoNestedInput;
+};
+export type CarritoUncheckedUpdateWithoutProductoTallaInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    usuario_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
+    fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+};
+export type CarritoUncheckedUpdateManyWithoutProductoTallaInput = {
+    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    usuario_id?: Prisma.IntFieldUpdateOperationsInput | number;
+    producto_id?: Prisma.IntFieldUpdateOperationsInput | number;
     cantidad?: Prisma.IntFieldUpdateOperationsInput | number;
     fecha_agregado?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
@@ -516,59 +659,71 @@ export type CarritoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id?: boolean;
     usuario_id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
     cantidad?: boolean;
     fecha_agregado?: boolean;
     usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.Carrito$productoTallaArgs<ExtArgs>;
 }, ExtArgs["result"]["carrito"]>;
 export type CarritoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     usuario_id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
     cantidad?: boolean;
     fecha_agregado?: boolean;
     usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.Carrito$productoTallaArgs<ExtArgs>;
 }, ExtArgs["result"]["carrito"]>;
 export type CarritoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     usuario_id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
     cantidad?: boolean;
     fecha_agregado?: boolean;
     usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.Carrito$productoTallaArgs<ExtArgs>;
 }, ExtArgs["result"]["carrito"]>;
 export type CarritoSelectScalar = {
     id?: boolean;
     usuario_id?: boolean;
     producto_id?: boolean;
+    producto_talla_id?: boolean;
     cantidad?: boolean;
     fecha_agregado?: boolean;
 };
-export type CarritoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "producto_id" | "cantidad" | "fecha_agregado", ExtArgs["result"]["carrito"]>;
+export type CarritoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "producto_id" | "producto_talla_id" | "cantidad" | "fecha_agregado", ExtArgs["result"]["carrito"]>;
 export type CarritoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.Carrito$productoTallaArgs<ExtArgs>;
 };
 export type CarritoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.Carrito$productoTallaArgs<ExtArgs>;
 };
 export type CarritoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>;
     producto?: boolean | Prisma.ProductoDefaultArgs<ExtArgs>;
+    productoTalla?: boolean | Prisma.Carrito$productoTallaArgs<ExtArgs>;
 };
 export type $CarritoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "Carrito";
     objects: {
         usuario: Prisma.$UsuarioPayload<ExtArgs>;
         producto: Prisma.$ProductoPayload<ExtArgs>;
+        productoTalla: Prisma.$ProductoTallaPayload<ExtArgs> | null;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
         id: number;
         usuario_id: number;
         producto_id: number;
+        producto_talla_id: number | null;
         cantidad: number;
         fecha_agregado: Date;
     }, ExtArgs["result"]["carrito"]>;
@@ -902,6 +1057,7 @@ export interface Prisma__CarritoClient<T, Null = never, ExtArgs extends runtime.
     readonly [Symbol.toStringTag]: "PrismaPromise";
     usuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
     producto<T extends Prisma.ProductoDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ProductoDefaultArgs<ExtArgs>>): Prisma.Prisma__ProductoClient<runtime.Types.Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>;
+    productoTalla<T extends Prisma.Carrito$productoTallaArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Carrito$productoTallaArgs<ExtArgs>>): Prisma.Prisma__ProductoTallaClient<runtime.Types.Result.GetResult<Prisma.$ProductoTallaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -930,6 +1086,7 @@ export interface CarritoFieldRefs {
     readonly id: Prisma.FieldRef<"Carrito", 'Int'>;
     readonly usuario_id: Prisma.FieldRef<"Carrito", 'Int'>;
     readonly producto_id: Prisma.FieldRef<"Carrito", 'Int'>;
+    readonly producto_talla_id: Prisma.FieldRef<"Carrito", 'Int'>;
     readonly cantidad: Prisma.FieldRef<"Carrito", 'Int'>;
     readonly fecha_agregado: Prisma.FieldRef<"Carrito", 'DateTime'>;
 }
@@ -1309,6 +1466,24 @@ export type CarritoDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
      * Limit how many Carritos to delete.
      */
     limit?: number;
+};
+/**
+ * Carrito.productoTalla
+ */
+export type Carrito$productoTallaArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProductoTalla
+     */
+    select?: Prisma.ProductoTallaSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the ProductoTalla
+     */
+    omit?: Prisma.ProductoTallaOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.ProductoTallaInclude<ExtArgs> | null;
+    where?: Prisma.ProductoTallaWhereInput;
 };
 /**
  * Carrito without action

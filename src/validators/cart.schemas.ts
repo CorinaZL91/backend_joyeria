@@ -6,7 +6,10 @@ const toNumber = (label: string) =>
   });
 
 const optionalTallaId = z.preprocess((value) => {
-  if (value === undefined || value === null || value === "") return undefined;
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
   return value;
 }, toNumber("La talla").int("La talla debe ser un entero").positive("La talla debe ser válida").optional());
 
@@ -36,6 +39,15 @@ export const updateCartItemQuantityBodySchema = z.object({
   producto_talla_id: optionalTallaId,
 });
 
-export const removeCartItemSchema = z.object({
+export const removeCartItemQuerySchema = z.object({
   producto_talla_id: optionalTallaId,
 });
+
+export type AddToCartInput = z.infer<typeof addToCartSchema>;
+export type CartItemParamsInput = z.infer<typeof cartItemParamsSchema>;
+export type UpdateCartItemQuantityInput = z.infer<
+  typeof updateCartItemQuantityBodySchema
+>;
+export type RemoveCartItemQueryInput = z.infer<
+  typeof removeCartItemQuerySchema
+>;

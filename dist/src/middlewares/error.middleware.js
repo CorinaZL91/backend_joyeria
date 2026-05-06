@@ -2,6 +2,18 @@ import { Prisma } from "../../generated/prisma/client.js";
 import { ZodError } from "zod";
 import { AppError } from "../utils/appError.js";
 export const errorMiddleware = (error, _req, res, _next) => {
+    console.error("========== ERROR BACKEND ==========");
+    console.error("Error completo:", error);
+    if (error instanceof Error) {
+        console.error("Nombre:", error.name);
+        console.error("Mensaje:", error.message);
+        console.error("Stack:", error.stack);
+    }
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        console.error("Código Prisma:", error.code);
+        console.error("Meta Prisma:", error.meta);
+    }
+    console.error("===================================");
     if (error instanceof AppError) {
         res.status(error.statusCode).json({
             success: false,
@@ -25,15 +37,13 @@ export const errorMiddleware = (error, _req, res, _next) => {
         });
         return;
     }
-    if (error instanceof Error) {
-        console.error("Error no controlado:", error);
-    }
-    else {
-        console.error("Error no controlado:", error);
-    }
     res.status(500).json({
         success: false,
-        message: "Error interno del servidor",
+        message: process.env.NODE_ENV === "production"
+            ? "Error interno del servidor"
+            : error instanceof Error
+                ? error.message
+                : "Error interno del servidor",
     });
 };
 //# sourceMappingURL=error.middleware.js.map

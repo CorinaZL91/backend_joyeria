@@ -3,9 +3,6 @@ import { prisma } from "../config/prisma.js";
 const productInclude = {
     categoria: true,
     tallas: {
-        where: {
-            activo: true,
-        },
         orderBy: {
             id: "asc",
         },

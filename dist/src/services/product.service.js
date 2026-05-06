@@ -18,11 +18,11 @@ const sumActiveTallasStockLocal = (tallas) => {
 };
 const getActiveExistingTallas = (tallas) => {
     return tallas
-        .filter((item) => item.activo)
+        .filter((item) => item.activo ?? true)
         .map((item) => ({
         talla: item.talla,
         stock: item.stock,
-        activo: item.activo,
+        activo: item.activo ?? true,
     }));
 };
 const buildProductFilters = (query, includeOutOfStock) => {
@@ -69,7 +69,6 @@ const buildProductFilters = (query, includeOutOfStock) => {
                     usar_tallas: true,
                     tallas: {
                         some: {
-                            activo: true,
                             stock: {
                                 gt: 0,
                             },

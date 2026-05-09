@@ -6,16 +6,11 @@ const tallasSelect = {
   producto_id: true,
   talla: true,
   stock: true,
+  activo: true,
 };
 
-const productInclude = {
+const publicProductInclude = {
   categoria: true,
-  tallas: {
-    select: tallasSelect,
-    orderBy: {
-      id: "asc" as const,
-    },
-  },
 };
 
 const adminProductInclude = {
@@ -30,30 +25,45 @@ const adminProductInclude = {
 
 export const productRepository = {
   findPublicProducts: async (where: Prisma.ProductoWhereInput) => {
-    return prisma.producto.findMany({
-      where,
-      include: productInclude,
-      orderBy: {
-        id: "desc",
-      },
-    });
+    try {
+      return await prisma.producto.findMany({
+        where,
+        include: publicProductInclude,
+        orderBy: {
+          id: "desc",
+        },
+      });
+    } catch (error) {
+      console.error("ERROR EN findPublicProducts:", error);
+      throw error;
+    }
   },
 
   findAdminProducts: async (where: Prisma.ProductoWhereInput) => {
-    return prisma.producto.findMany({
-      where,
-      include: adminProductInclude,
-      orderBy: {
-        id: "desc",
-      },
-    });
+    try {
+      return await prisma.producto.findMany({
+        where,
+        include: adminProductInclude,
+        orderBy: {
+          id: "desc",
+        },
+      });
+    } catch (error) {
+      console.error("ERROR EN findAdminProducts:", error);
+      throw error;
+    }
   },
 
   findByIdPublic: async (id: number) => {
-    return prisma.producto.findUnique({
-      where: { id },
-      include: productInclude,
-    });
+    try {
+      return await prisma.producto.findUnique({
+        where: { id },
+        include: publicProductInclude,
+      });
+    } catch (error) {
+      console.error("ERROR EN findByIdPublic:", error);
+      throw error;
+    }
   },
 
   findByIdAdmin: async (id: number) => {

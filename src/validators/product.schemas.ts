@@ -21,6 +21,23 @@ const toBoolean = (defaultValue?: boolean) =>
     defaultValue === undefined ? z.boolean().optional() : z.boolean()
   );
 
+const queryBoolean = z.preprocess((value) => {
+  if (value === undefined || value === null || value === "") {
+    return undefined;
+  }
+
+  if (typeof value === "boolean") return value;
+
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+
+    if (normalized === "true") return true;
+    if (normalized === "false") return false;
+  }
+
+  return undefined;
+}, z.boolean().optional());
+
 const toNumber = <T extends z.ZodTypeAny>(schema: T) =>
   z.preprocess((value) => {
     if (value === undefined || value === null || value === "") {
@@ -226,9 +243,9 @@ export const productQuerySchema = z.object({
       .optional()
   ),
 
-  activo: toBoolean(),
+  activo: queryBoolean,
 
-  admin: toBoolean(),
+  admin: queryBoolean,
 });
 
 export const productIdParamsSchema = z.object({

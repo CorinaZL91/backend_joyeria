@@ -6,7 +6,7 @@
   "scripts": {
     "seed": "tsx prisma/seed.ts",
     "build": "rimraf dist && prisma generate && tsc",
-    "start": "prisma migrate deploy && node dist/index.js",
+    "start": "prisma migrate deploy && node dist/src/index.js",
     "dev": "concurrently -k -n TSC,SERVER \"npm:dev:tsc\" \"npm:dev:server\"",
     "dev:tsc": "tsc -w",
     "dev:server": "tsx watch --clear-screen=false src/index.ts",

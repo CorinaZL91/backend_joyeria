@@ -3,18 +3,19 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { AppError } from "../utils/appError.js";
 import { authService } from "../services/auth.service.js";
 
+const isProduction = process.env.NODE_ENV === "production";
+
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  sameSite: "lax" as const,
-  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 días
+  secure: isProduction,
+  sameSite: isProduction ? ("none" as const) : ("lax" as const),
+  maxAge: 1000 * 60 * 60 * 24 * 7,
 };
 
 export const register = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     const data = await authService.register(req.body);
 
-    // 🔥 Guardar JWT en cookie httpOnly
     res.cookie("token", data.token, cookieOptions);
 
     res.status(201).json({
@@ -31,7 +32,6 @@ export const login = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     const data = await authService.login(req.body);
 
-    // 🔥 Guardar JWT en cookie httpOnly
     res.cookie("token", data.token, cookieOptions);
 
     res.status(200).json({
@@ -48,8 +48,8 @@ export const logout = asyncHandler(
   async (_req: Request, res: Response): Promise<void> => {
     res.clearCookie("token", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: isProduction,
+      sameSite: isProduction ? "none" : "lax",
     });
 
     res.status(200).json({

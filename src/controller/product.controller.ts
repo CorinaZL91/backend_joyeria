@@ -1,18 +1,29 @@
 import type { Request, Response } from "express";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { productService } from "../services/product.service.js";
-import type {
-  CreateProductInput,
-  ProductIdParamsInput,
-  ProductQueryInput,
-  UpdateProductInput,
+
+import {
+  productQuerySchema,
+  type CreateProductInput,
+  type ProductIdParamsInput,
+  type ProductQueryInput,
+  type UpdateProductInput,
 } from "../validators/product.schemas.js";
 
 export const getProducts = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
-    const query = req.query as unknown as ProductQueryInput;
+    const parsedQuery = productQuerySchema.safeParse(req.query);
 
-    const products = await productService.getProducts(query);
+    if (!parsedQuery.success) {
+      res.status(400).json({
+        success: false,
+        message: "Error de validación en filtros de productos",
+        errors: parsedQuery.error.flatten(),
+      });
+      return;
+    }
+
+    const products = await productService.getProducts(parsedQuery.data);
 
     res.status(200).json({
       success: true,
@@ -23,9 +34,18 @@ export const getProducts = asyncHandler(
 
 export const getAdminProducts = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
-    const query = req.query as unknown as ProductQueryInput;
+    const parsedQuery = productQuerySchema.safeParse(req.query);
 
-    const products = await productService.getAdminProducts(query);
+    if (!parsedQuery.success) {
+      res.status(400).json({
+        success: false,
+        message: "Error de validación en filtros de productos",
+        errors: parsedQuery.error.flatten(),
+      });
+      return;
+    }
+
+    const products = await productService.getAdminProducts(parsedQuery.data);
 
     res.status(200).json({
       success: true,
@@ -37,11 +57,21 @@ export const getAdminProducts = asyncHandler(
 export const getProductById = asyncHandler(
   async (req: Request, res: Response): Promise<void> => {
     const params = req.params as unknown as ProductIdParamsInput;
-    const query = req.query as unknown as ProductQueryInput;
+
+    const parsedQuery = productQuerySchema.safeParse(req.query);
+
+    if (!parsedQuery.success) {
+      res.status(400).json({
+        success: false,
+        message: "Error de validación en query",
+        errors: parsedQuery.error.flatten(),
+      });
+      return;
+    }
 
     const product = await productService.getProductById(
       params.id,
-      query.admin === true
+      parsedQuery.data.admin === true
     );
 
     res.status(200).json({

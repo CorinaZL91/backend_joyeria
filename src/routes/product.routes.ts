@@ -29,8 +29,7 @@ const productIdParamsSchema = z.object({
 });
 
 // catálogo
-router.get("/", validate({ query: productQuerySchema }), getProducts);
-
+router.get("/", getProducts);
 router.get(
   "/admin/all",
   authenticate,

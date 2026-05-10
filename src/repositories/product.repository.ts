@@ -11,6 +11,18 @@ const tallasSelect = {
 
 const publicProductInclude = {
   categoria: true,
+  tallas: {
+    where: {
+      activo: true,
+      stock: {
+        gt: 0,
+      },
+    },
+    select: tallasSelect,
+    orderBy: {
+      id: "asc" as const,
+    },
+  },
 };
 
 const adminProductInclude = {
@@ -57,7 +69,9 @@ export const productRepository = {
   findByIdPublic: async (id: number) => {
     try {
       return await prisma.producto.findUnique({
-        where: { id },
+        where: {
+          id,
+        },
         include: publicProductInclude,
       });
     } catch (error) {
@@ -67,21 +81,32 @@ export const productRepository = {
   },
 
   findByIdAdmin: async (id: number) => {
-    return prisma.producto.findUnique({
-      where: { id },
-      include: adminProductInclude,
-    });
+    try {
+      return await prisma.producto.findUnique({
+        where: {
+          id,
+        },
+        include: adminProductInclude,
+      });
+    } catch (error) {
+      console.error("ERROR EN findByIdAdmin:", error);
+      throw error;
+    }
   },
 
   findById: async (id: number) => {
     return prisma.producto.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
     });
   },
 
   findByIdWithTallas: async (id: number) => {
     return prisma.producto.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
       include: {
         tallas: {
           select: tallasSelect,
@@ -95,7 +120,9 @@ export const productRepository = {
 
   findCategoryById: async (id: number) => {
     return prisma.categoria.findUnique({
-      where: { id },
+      where: {
+        id,
+      },
     });
   },
 
@@ -143,7 +170,9 @@ export const productRepository = {
       }
 
       return tx.producto.update({
-        where: { id },
+        where: {
+          id,
+        },
         data,
         include: adminProductInclude,
       });
@@ -152,7 +181,9 @@ export const productRepository = {
 
   deactivateById: async (id: number) => {
     return prisma.producto.update({
-      where: { id },
+      where: {
+        id,
+      },
       data: {
         activo: false,
       },
